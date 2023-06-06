@@ -19,10 +19,6 @@ namespace ProjectVR.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (parameters is null)
-                return BadRequest(ModelState);
-            if (string.IsNullOrWhiteSpace(parameters.VrSet) && string.IsNullOrWhiteSpace(parameters.Game))
-                return Ok(_usersData.Users);
             List<Userinfo> foundUsers = _usersData.Users
                 .Where(u =>
                     (parameters.Game is null || u.Games.Any(g => g.Name.Contains(parameters.Game))) 
