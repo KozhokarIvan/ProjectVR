@@ -1,4 +1,7 @@
-
+using ProjectVR.BusinessLogic.Services;
+using ProjectVR.DataAccess.StaticData;
+using ProjectVR.Domain.Interfaces.Repositories;
+using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.WebAPI.StaticData;
 
 namespace ProjectVR.WebAPI
@@ -16,6 +19,8 @@ namespace ProjectVR.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddSingleton<UsersData>();
 
             var app = builder.Build();

@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectVR.Domain.Entities;
+using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.WebAPI.Contracts;
-using ProjectVR.WebAPI.Entities;
-using ProjectVR.WebAPI.StaticData;
 
 namespace ProjectVR.WebAPI.Controllers
 {
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UsersData _usersData;
-        public UsersController(UsersData usersData)
+        private readonly IUsersService _usersService;
+        public UsersController(IUsersService usersService)
         {
-            _usersData = usersData;
+            _usersService = usersService;
         }
         [Route("/users")]
         [HttpGet]
@@ -19,12 +19,7 @@ namespace ProjectVR.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            List<Userinfo> foundUsers = _usersData.Users
-                .Where(u =>
-                    (parameters.Game is null || u.Games.Any(g => g.Name.Contains(parameters.Game))) 
-                    &&
-                    (parameters.VrSet is null || u.VrSets.Any(vs => vs.Name.Contains(parameters.VrSet))))
-                .ToList();
+            List<Userinfo> foundUsers = _usersService.FindUsers(parameters.Game, parameters.VrSet);
             return Ok(foundUsers);
         }
     }

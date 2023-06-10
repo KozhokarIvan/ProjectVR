@@ -1,4 +1,4 @@
-﻿using ProjectVR.WebAPI.Entities;
+﻿using ProjectVR.Domain.Entities;
 
 namespace ProjectVR.WebAPI.StaticData
 {

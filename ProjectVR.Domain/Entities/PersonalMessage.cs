@@ -1,4 +1,4 @@
-﻿namespace ProjectVR.WebAPI.Entities
+﻿namespace ProjectVR.Domain.Entities
 {
     public class PersonalMessage
     {
