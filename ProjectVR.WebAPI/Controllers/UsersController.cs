@@ -5,6 +5,7 @@ using ProjectVR.WebAPI.Contracts;
 
 namespace ProjectVR.WebAPI.Controllers
 {
+    [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -13,14 +14,13 @@ namespace ProjectVR.WebAPI.Controllers
         {
             _usersService = usersService;
         }
-        [Route("/users")]
+
         [HttpGet]
-        public IActionResult Search([FromQuery] UsersSearchParameters parameters)
+        public IActionResult Search([FromQuery] UsersSearchRequest request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            List<Userinfo> foundUsers = _usersService.FindUsers(parameters.Game, parameters.VrSet);
+            List<Userinfo> foundUsers = _usersService.FindUsers(request.Game, request.VrSet);
             return Ok(foundUsers);
         }
+
     }
 }
