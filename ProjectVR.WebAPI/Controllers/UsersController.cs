@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Services;
-using ProjectVR.WebAPI.Contracts;
+using ProjectVR.WebAPI.Contracts.Requests;
 
 namespace ProjectVR.WebAPI.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace ProjectVR.WebAPI.Contracts
+﻿namespace ProjectVR.WebAPI.Contracts.Requests
 {
     public class UsersSearchRequest
     {

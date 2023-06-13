@@ -1,4 +1,5 @@
-﻿using ProjectVR.Domain.Entities;
+﻿using System.Collections.Generic;
+using ProjectVR.Domain.Entities;
 
 namespace ProjectVR.Domain.Interfaces.Repositories
 {

@@ -1,4 +1,7 @@
-﻿namespace ProjectVR.Domain.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProjectVR.Domain.Entities
 {
     public class Userinfo
     {
@@ -7,7 +10,7 @@
         public string? Avatar { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset LastSeen { get; set; }
-        public List<Game> Games { get; set; } = null!;
+        public List<Usergame> Games { get; set; } = null!;
         public List<VrSet> VrSets { get; set; } = null!;
     }
 }

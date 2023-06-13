@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ProjectVR.BusinessLogic.Services;
-using ProjectVR.DataAccess.StaticData;
+using ProjectVR.DataAccess.Repositories;
 using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.WebAPI.StaticData;
