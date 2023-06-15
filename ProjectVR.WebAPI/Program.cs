@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProjectVR.BusinessLogic.Services;
+using ProjectVR.DataAccess;
 using ProjectVR.DataAccess.Repositories;
 using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Interfaces.Services;
-using ProjectVR.WebAPI.StaticData;
 
 namespace ProjectVR.WebAPI
 {
@@ -22,9 +23,13 @@ namespace ProjectVR.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            string connectionString = builder.Configuration["ConnectionStrings:ProjectVR"];
+            builder.Services.AddDbContext<ProjectVRDbContext>(options =>
+                    options.UseNpgsql(connectionString));
+
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-            builder.Services.AddSingleton<UsersData>();
 
             var app = builder.Build();
 
@@ -38,7 +43,6 @@ namespace ProjectVR.WebAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

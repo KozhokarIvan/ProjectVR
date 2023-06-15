@@ -2,13 +2,13 @@
 
 namespace ProjectVR.DataAccess.Models
 {
-    public class UserVrset
+    public class UserVrSet
     {
         public int Id { get; set; }
-        public UserInfo User { get; set; }
-        public Guid UserGuid { get; set; }
-        public VrSet Vrset { get; set; }
-        public int VrsetId { get; set; }
+        public UserInfo Owner { get; set; } = null!;
+        public Guid OwnerGuid { get; set; }
+        public VrSet VrSet { get; set; } = null!;
+        public int VrSetId { get; set; }
         public bool IsFavorite { get; set; }
     }
 }

@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ProjectVR.DataAccess.Mapping.Extensions;
-using ProjectVR.DataAccess.Models;
 using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Repositories;
-using ProjectVR.WebAPI.StaticData;
 
 namespace ProjectVR.DataAccess.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly UsersData _usersData;
-        public UsersRepository(UsersData usersData)
+        private readonly ProjectVRDbContext _context;
+        public UsersRepository(ProjectVRDbContext context)
         {
-            _usersData = usersData;
+            _context = context;
         }
-        public List<Userinfo> FindUsers(string? game, string? vrset)
+        public async Task<List<UserInfo>> FindUsers(string? game, string? vrset)
         {
-            List<UserInfo> users = _usersData.Users
+            List<UserInfo> users = await _context.Usersinfo
                 .Where(u =>
-                (game is null || u.Games.Any(g => g.Game.Name.Contains(game, StringComparison.OrdinalIgnoreCase)))
+                (game == null || u.Games.Any(g => g.Game.Name.Contains(game, StringComparison.OrdinalIgnoreCase)))
                 &&
-                (vrset is null || u.Vrsets.Any(vs => vs.Name.Contains(vrset, StringComparison.OrdinalIgnoreCase))))
-                .ToList();
-            List<Userinfo> userEntities = users.Select(u => u.MapToDomainEntity()).ToList();
-            return userEntities;
+                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.Contains(vrset, StringComparison.OrdinalIgnoreCase))))
+                .Include(user => user.Games)
+                .ThenInclude(usergame => usergame.Game)
+                .Include(ui => ui.VrSets)
+                .ThenInclude(uservrset => uservrset.VrSet)
+                .Select(u => u.MapToDomainEntity())
+                .ToListAsync();
+            return users;
         }
     }
 }

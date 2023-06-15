@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Services;
@@ -17,9 +18,9 @@ namespace ProjectVR.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search([FromQuery] UsersSearchRequest request)
+        public async Task<IActionResult> Search([FromQuery] UsersSearchRequest request)
         {
-            List<Userinfo> foundUsers = _usersService.FindUsers(request.Game, request.VrSet);
+            List<UserInfo> foundUsers = await _usersService.FindUsers(request.Game, request.VrSet);
             return Ok(foundUsers);
         }
 
