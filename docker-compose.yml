@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  projectvr-database:
+    container_name: projectvr-database
+    image: postgres:latest
+    ports:
+      - 5433:5432
+    volumes: 
+        - dbvolume:/home/postgres/app/projectvrdb
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Password1
+  projectvr.webapi:
+    container_name: projectvr-webapi
+    image: ${DOCKER_REGISTRY-}projectvrwebapi
+    ports:
+      - 8080:443 
+      - 8081:80
+    build:
+      context: .
+      dockerfile: ProjectVR.WebAPI/Dockerfile
+    depends_on:
+      - projectvr-database
+    restart: always
+volumes:
+  dbvolume:    
