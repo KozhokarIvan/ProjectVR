@@ -20,9 +20,9 @@ namespace ProjectVR.DataAccess.Repositories
         {
             List<UserInfo> users = await _context.Usersinfo
                 .Where(u =>
-                (game == null || u.Games.Any(g => g.Game.Name.Contains(game, StringComparison.OrdinalIgnoreCase)))
+                (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
                 &&
-                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.Contains(vrset, StringComparison.OrdinalIgnoreCase))))
+                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper()))))
                 .Include(user => user.Games)
                 .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
