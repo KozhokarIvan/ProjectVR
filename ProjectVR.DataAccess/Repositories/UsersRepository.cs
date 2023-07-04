@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjectVR.DataAccess.Mapping.Extensions;
+using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Repositories;
 

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Services;
+using ProjectVR.WebAPI.Contracts.Mapping.Responses;
 using ProjectVR.WebAPI.Contracts.Requests;
+using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Controllers
 {
@@ -20,7 +21,11 @@ namespace ProjectVR.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] UsersSearchRequest request)
         {
-            List<UserInfo> foundUsers = await _usersService.FindUsers(request.Game, request.VrSet);
+            UsersSearchResponse[] foundUsers = (await _usersService
+                .FindUsers(request.Game, request.VrSet))
+                .Select(user => user.MapToDomainEntity())
+                .ToArray();
+
             return Ok(foundUsers);
         }
 

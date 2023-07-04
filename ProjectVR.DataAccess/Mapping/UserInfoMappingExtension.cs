@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using ProjectVR.DataAccess.Models;
 
-namespace ProjectVR.DataAccess.Mapping.Extensions
+namespace ProjectVR.DataAccess.Mapping
 {
     internal static class UserInfoMappingExtension
     {
