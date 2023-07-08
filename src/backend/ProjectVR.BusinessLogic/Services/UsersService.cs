@@ -16,5 +16,11 @@ namespace ProjectVR.BusinessLogic.Services
             List<UserInfo> users = await _usersRepository.FindUsers(game, vrset);
             return users;
         }
+
+        public async Task<List<UserInfo>> GetRandomUsers()
+        {
+            List<UserInfo> users = await _usersRepository.GetRandomUsers();
+            return users;
+        }
     }
 }

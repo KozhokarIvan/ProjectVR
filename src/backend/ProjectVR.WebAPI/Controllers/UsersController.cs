@@ -8,7 +8,7 @@ using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Controllers
 {
-    [Route("api/users")]
+    [Route("api/users/")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -23,6 +23,17 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .FindUsers(request.Game, request.VrSet))
+                .Select(user => user.MapToDomainEntity())
+                .ToArray();
+
+            return Ok(foundUsers);
+        }
+
+        [HttpGet("random")]
+        public async Task<IActionResult> GetRecommendations()
+        {
+            UsersSearchResponse[] foundUsers = (await _usersService
+                .GetRandomUsers())
                 .Select(user => user.MapToDomainEntity())
                 .ToArray();
 

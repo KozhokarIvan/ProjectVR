@@ -19,7 +19,7 @@ export default function Header(props: HeaderProps) : ReactElement<HeaderProps, F
     const searchUsers = async (searchText: string) => {
 
         if(searchText.length == 0){
-            await fetchUsers();
+            await fetchRandomUsers();
             return
         }
 
@@ -44,8 +44,8 @@ export default function Header(props: HeaderProps) : ReactElement<HeaderProps, F
         setUsers(users);
     };
     
-    const fetchUsers = async() => {
-        const request = "https://localhost:8080/api/users";
+    const fetchRandomUsers = async() => {
+        const request = "https://localhost:8080/api/users/random";
         const response = await fetch(request,
             {
                 method: "get"
@@ -80,9 +80,9 @@ export default function Header(props: HeaderProps) : ReactElement<HeaderProps, F
                 bordered 
                 color="secondary" 
                 auto
-                onPress={async (event) => {await fetchUsers()}}
+                onPress={async (event) => {await fetchRandomUsers()}}
                 >
-                    All users
+                    Random
                 </Button>
             </Navbar.Content>
             <Navbar.Content>

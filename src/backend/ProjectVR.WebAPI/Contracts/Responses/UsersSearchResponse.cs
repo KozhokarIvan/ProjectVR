@@ -1,5 +1,4 @@
 ﻿using System;
-using ProjectVR.DataAccess.Models;
 
 namespace ProjectVR.WebAPI.Contracts.Responses
 {

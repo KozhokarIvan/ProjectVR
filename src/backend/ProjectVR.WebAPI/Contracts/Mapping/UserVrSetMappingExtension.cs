@@ -11,6 +11,6 @@
                 IsFavorite = domainUserVrSet.IsFavorite,
             };
             return userVrSet;
-        } 
+        }
     }
 }

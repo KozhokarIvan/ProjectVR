@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +23,22 @@ namespace ProjectVR.DataAccess.Repositories
                 (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
                 &&
                 (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper()))))
+                .Include(user => user.Games)
+                .ThenInclude(usergame => usergame.Game)
+                .Include(ui => ui.VrSets)
+                .ThenInclude(uservrset => uservrset.VrSet)
+                .Select(u => u.MapToDomainEntity())
+                .ToListAsync();
+
+            return users;
+        }
+
+        public async Task<List<UserInfo>> GetRandomUsers()
+        {
+            List<UserInfo> users = await _context.Usersinfo
+                .AsNoTracking()
+                .OrderBy(u => EF.Functions.Random())
+                .Take(5)
                 .Include(user => user.Games)
                 .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)

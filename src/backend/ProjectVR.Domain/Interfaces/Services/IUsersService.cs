@@ -7,5 +7,6 @@ namespace ProjectVR.Domain.Interfaces.Services
     public interface IUsersService
     {
         public Task<List<UserInfo>> FindUsers(string? game, string? vrset);
+        public Task<List<UserInfo>> GetRandomUsers();
     }
 }
