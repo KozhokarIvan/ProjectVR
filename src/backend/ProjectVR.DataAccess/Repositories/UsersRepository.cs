@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace ProjectVR.DataAccess.Repositories
         public async Task<List<UserInfo>> FindUsers(string? game, string? vrset)
         {
             List<UserInfo> users = await _context.Usersinfo
+                .AsNoTracking()
                 .Where(u =>
                 (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
                 &&
@@ -28,6 +30,7 @@ namespace ProjectVR.DataAccess.Repositories
                 .ThenInclude(uservrset => uservrset.VrSet)
                 .Select(u => u.MapToDomainEntity())
                 .ToListAsync();
+
             return users;
         }
     }
