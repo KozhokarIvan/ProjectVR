@@ -9,7 +9,8 @@
                 GameId = domainUserGame.Game.Id,
                 Name = domainUserGame.Game.Name,
                 Rating = domainUserGame.Rating,
-                IsFavorite = domainUserGame.IsFavorite
+                IsFavorite = domainUserGame.IsFavorite,
+                Icon = domainUserGame.Game.Icon
             };
             return userGame;
         }

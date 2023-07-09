@@ -7,13 +7,15 @@ export interface Game{
   gameId: number,
   name: string,
   isFavorite: boolean,
-  rating?: number
+  rating?: number,
+  icon?: string
 }
 
 export interface VrSet{
   vrSetId: number,
   name: string,
-  isFavorite: boolean
+  isFavorite: boolean,
+  icon?: string
 }
 
 export interface UserInfo{

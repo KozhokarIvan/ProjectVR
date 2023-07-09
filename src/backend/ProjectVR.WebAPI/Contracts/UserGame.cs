@@ -6,5 +6,6 @@
         public string Name { get; set; } = null!;
         public int? Rating { get; set; }
         public bool IsFavorite { get; set; }
+        public string Icon { get; set; } = null!;
     }
 }

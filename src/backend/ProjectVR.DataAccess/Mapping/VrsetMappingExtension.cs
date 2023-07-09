@@ -9,7 +9,8 @@ namespace ProjectVR.DataAccess.Mapping
             Domain.Entities.VrSet vrsetEntity = new Domain.Entities.VrSet
             {
                 Id = vrset.Id,
-                Name = vrset.Name
+                Name = vrset.Name,
+                Icon = vrset.Icon
             };
             return vrsetEntity;
         }

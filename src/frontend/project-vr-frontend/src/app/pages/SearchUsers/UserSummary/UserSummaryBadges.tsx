@@ -21,14 +21,14 @@ export default function UserSummaryBadges(props : UserSummaryBadgesProps){
             <Row
             css={{gap: "10px"}}
             >
-                {vrsets.slice(0,3).map(vrset => <UserSummaryBadge key={vrset.vrSetId} text={vrset.name} isFavorite={vrset.isFavorite}/>)}
+                {vrsets.slice(0,3).map(vrset => <UserSummaryBadge key={vrset.vrSetId} text={vrset.name} image={vrset.icon ?? ""} isFavorite={vrset.isFavorite}/>)}
             </Row>
 
 
             <Row
             css={{gap:"10px"}}
             >
-                {games.slice(0,3).map(game => <UserSummaryBadge key={game.gameId} text={game.name} isFavorite={game.isFavorite}/>)}
+                {games.slice(0,3).map(game => <UserSummaryBadge key={game.gameId} text={game.name} image={game.icon ?? ""} isFavorite={game.isFavorite}/>)}
             </Row>
         </Grid.Container>
     );

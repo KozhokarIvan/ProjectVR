@@ -12,12 +12,12 @@ export default function UsersSummary(props: UsersSummary){
 
     return(
         <Container>
-            {users.map((user, index) =>{
+            {users.map(user =>{
                 return(
                 <>
                     <UserSummary
                     key={user.guid} 
-                    avatar={`https://i.pravatar.cc/${101+index}`} 
+                    avatar={user.avatar ?? "https://i.pravatar.cc/101"} 
                     username={user.username} 
                     vrsets={user.vrSets} 
                     games={user.games}/>

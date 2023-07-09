@@ -9,7 +9,8 @@ namespace ProjectVR.DataAccess.Mapping
             Domain.Entities.Game gameEntity = new Domain.Entities.Game
             {
                 Id = game.Id,
-                Name = game.Name
+                Name = game.Name,
+                Icon = game.Icon
             };
             return gameEntity;
         }
