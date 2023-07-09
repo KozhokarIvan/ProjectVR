@@ -1,4 +1,4 @@
-import { Container, Spacer } from "@nextui-org/react";
+import { Grid, Spacer } from "@nextui-org/react";
 import UserSummary from "@/app/pages/SearchUsers/UserSummary/UserSummary";
 import { UserInfo } from "@/app/pages/SearchUsers/SearchUsers";
 
@@ -11,10 +11,17 @@ export default function UsersSummary(props: UsersSummary){
     const users = props.users;
 
     return(
-        <Container>
+        <Grid.Container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        gap={3}
+        >
             {users.map(user =>{
                 return(
-                <>
+                <Grid
+                md={9}
+                >
                     <UserSummary
                     key={user.guid} 
                     avatar={user.avatar ?? "https://i.pravatar.cc/101"} 
@@ -23,9 +30,9 @@ export default function UsersSummary(props: UsersSummary){
                     games={user.games}/>
                     <Spacer y={1}
                     />
-                </>
+                </Grid>
                 );
             })}
-        </Container>
+        </Grid.Container>
     );
 }
