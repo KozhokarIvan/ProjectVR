@@ -23,18 +23,18 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .FindUsers(request.Game, request.VrSet))
-                .Select(user => user.MapToDomainEntity())
+                .Select(user => user.MapToApi())
                 .ToArray();
 
             return Ok(foundUsers);
         }
 
         [HttpGet("random")]
-        public async Task<IActionResult> GetRecommendations()
+        public async Task<IActionResult> GetRandomUsers()
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .GetRandomUsers())
-                .Select(user => user.MapToDomainEntity())
+                .Select(user => user.MapToApi())
                 .ToArray();
 
             return Ok(foundUsers);

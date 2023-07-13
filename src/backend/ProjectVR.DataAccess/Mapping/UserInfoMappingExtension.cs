@@ -14,8 +14,8 @@ namespace ProjectVR.DataAccess.Mapping
                 Avatar = userinfo.Avatar,
                 CreatedAt = userinfo.CreatedAt,
                 LastSeen = userinfo.LastSeen,
-                Games = userinfo.Games.Select(game => game.MapToDomainEntity()).ToList(),
-                VrSets = userinfo.VrSets.Select(vrset => vrset.MapToDomainEntity()).ToList()
+                Games = userinfo.Games.Select(game => game.MapToDomain()).ToList(),
+                VrSets = userinfo.VrSets.Select(vrset => vrset.MapToDomain()).ToList()
             };
             return userinfoEntity;
         }

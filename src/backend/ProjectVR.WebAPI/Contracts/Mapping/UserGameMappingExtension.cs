@@ -2,7 +2,7 @@
 {
     internal static class UserGameMappingExtension
     {
-        internal static UserGame MapToApiEntity(this Domain.Entities.UserGame domainUserGame)
+        internal static UserGame MapToApi(this Domain.Entities.UserGame domainUserGame)
         {
             UserGame userGame = new UserGame
             {

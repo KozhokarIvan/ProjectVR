@@ -4,11 +4,11 @@ namespace ProjectVR.DataAccess.Mapping
 {
     internal static class UserGameMappingExtension
     {
-        public static Domain.Entities.UserGame MapToDomainEntity(this UserGame game)
+        public static Domain.Entities.UserGame MapToDomain(this UserGame game)
         {
             Domain.Entities.UserGame gameEntity = new Domain.Entities.UserGame
             {
-                Game = game.Game.MapToDomainEntity(),
+                Game = game.Game.MapToDomain(),
                 IsFavorite = game.IsFavorite,
                 Rating = game.Rating
             };

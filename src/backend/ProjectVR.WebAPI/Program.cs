@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +32,7 @@ namespace ProjectVR.WebAPI
             builder.Services.AddSwaggerGen();
 
 
-            string connectionString = builder.Configuration.GetConnectionString("ProjectVR");
+            string connectionString = builder.Configuration.GetConnectionString(nameof(ProjectVRDbContext));
             builder.Services.AddDbContext<ProjectVRDbContext>(options =>
                     options.UseNpgsql(connectionString));
 
