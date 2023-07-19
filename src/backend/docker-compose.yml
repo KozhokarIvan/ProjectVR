@@ -23,5 +23,15 @@ services:
     depends_on:
       - projectvr-database
     restart: always
+  projectvr-seq:
+    container_name: projectvr-seq
+    image: datalust/seq:latest
+    ports:
+     - 5341:80
+    depends_on:
+     - projectvr.webapi
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
 volumes:
   dbvolume:    
