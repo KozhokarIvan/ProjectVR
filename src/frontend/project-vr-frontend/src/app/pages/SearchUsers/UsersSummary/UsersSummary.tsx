@@ -21,6 +21,7 @@ export default function UsersSummary(props: UsersSummary){
                 return(
                 <Grid
                 md={9}
+                key={user.guid}
                 >
                     <UserSummary
                     key={user.guid} 
