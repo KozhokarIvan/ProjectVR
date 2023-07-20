@@ -41,7 +41,7 @@ namespace ProjectVR.DataAccess.DataSeeding
             {
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("407898b1-cf14-42a1-9b74-775587f878da"),
                     Username = "vrenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -49,7 +49,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("309f1f3c-39a7-4701-b38e-aa68dafff1d7"),
                     Username = "skyrimenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -58,7 +58,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"),
                     Username = "falloutenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -66,7 +66,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"),
                     Username = "beatsaberenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -74,7 +74,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("385f17c9-46b2-49f8-9425-9824369f6e84"),
                     Username = "forestenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -82,7 +82,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("999c5da3-c747-44a1-b56d-416d403bb6c6"),
                     Username = "quest2enjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -90,7 +90,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
                     Username = "quest3enjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -98,7 +98,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
                     Username = "questproenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -106,7 +106,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("a646f675-bafc-4a9e-a162-ca132316db3c"),
                     Username = "valveindexenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -114,7 +114,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
                     Username = "viveenjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,
@@ -122,7 +122,7 @@ namespace ProjectVR.DataAccess.DataSeeding
                 },
                 new UserInfo
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("31ed4b17-5e00-4d84-9189-425eb242d893"),
                     Username = "vive2enjoyer",
                     CreatedAt = DateTimeOffset.Now,
                     LastSeen = DateTimeOffset.Now,

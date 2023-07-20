@@ -22,7 +22,7 @@ namespace ProjectVR.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.Game", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,16 +31,17 @@ namespace ProjectVR.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("games", (string)null);
+                    b.ToTable("Games");
 
                     b.HasData(
                         new
@@ -93,7 +94,7 @@ namespace ProjectVR.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserGame", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserGame", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,8 +111,8 @@ namespace ProjectVR.DataAccess.Migrations
                     b.Property<Guid>("OwnerGuid")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("Rating")
-                        .HasColumnType("integer");
+                    b.Property<byte?>("Rating")
+                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 
@@ -119,7 +120,7 @@ namespace ProjectVR.DataAccess.Migrations
 
                     b.HasIndex("OwnerGuid");
 
-                    b.ToTable("usergames", (string)null);
+                    b.ToTable("UserGames");
 
                     b.HasData(
                         new
@@ -128,7 +129,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -136,7 +137,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = true,
                             OwnerGuid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -144,7 +145,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -152,7 +153,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
-                            Rating = 95
+                            Rating = (byte)95
                         },
                         new
                         {
@@ -160,7 +161,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("309f1f3c-39a7-4701-b38e-aa68dafff1d7"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -168,7 +169,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = true,
                             OwnerGuid = new Guid("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -176,7 +177,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -184,7 +185,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 8,
                             IsFavorite = true,
                             OwnerGuid = new Guid("385f17c9-46b2-49f8-9425-9824369f6e84"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -192,7 +193,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
-                            Rating = 98
+                            Rating = (byte)98
                         },
                         new
                         {
@@ -200,7 +201,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = true,
                             OwnerGuid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
-                            Rating = 87
+                            Rating = (byte)87
                         },
                         new
                         {
@@ -208,7 +209,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
-                            Rating = 90
+                            Rating = (byte)90
                         },
                         new
                         {
@@ -216,7 +217,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
-                            Rating = 65
+                            Rating = (byte)65
                         },
                         new
                         {
@@ -224,7 +225,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -232,7 +233,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = true,
                             OwnerGuid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -240,7 +241,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -248,7 +249,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
-                            Rating = 77
+                            Rating = (byte)77
                         },
                         new
                         {
@@ -256,7 +257,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = false,
                             OwnerGuid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
-                            Rating = 63
+                            Rating = (byte)63
                         },
                         new
                         {
@@ -264,7 +265,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = false,
                             OwnerGuid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
-                            Rating = 55
+                            Rating = (byte)55
                         },
                         new
                         {
@@ -272,7 +273,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = false,
                             OwnerGuid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
-                            Rating = 59
+                            Rating = (byte)59
                         },
                         new
                         {
@@ -280,7 +281,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
-                            Rating = 50
+                            Rating = (byte)50
                         },
                         new
                         {
@@ -288,7 +289,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -296,7 +297,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = true,
                             OwnerGuid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -304,7 +305,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -312,7 +313,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = true,
                             OwnerGuid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -320,7 +321,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = true,
                             OwnerGuid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -328,7 +329,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = false,
                             OwnerGuid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
-                            Rating = 74
+                            Rating = (byte)74
                         },
                         new
                         {
@@ -336,7 +337,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = false,
                             OwnerGuid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
-                            Rating = 69
+                            Rating = (byte)69
                         },
                         new
                         {
@@ -344,7 +345,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
-                            Rating = 62
+                            Rating = (byte)62
                         },
                         new
                         {
@@ -352,7 +353,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 3,
                             IsFavorite = false,
                             OwnerGuid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
-                            Rating = 73
+                            Rating = (byte)73
                         },
                         new
                         {
@@ -360,7 +361,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 4,
                             IsFavorite = false,
                             OwnerGuid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
-                            Rating = 64
+                            Rating = (byte)64
                         },
                         new
                         {
@@ -368,7 +369,7 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 1,
                             IsFavorite = true,
                             OwnerGuid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
-                            Rating = 100
+                            Rating = (byte)100
                         },
                         new
                         {
@@ -376,18 +377,19 @@ namespace ProjectVR.DataAccess.Migrations
                             GameId = 6,
                             IsFavorite = false,
                             OwnerGuid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
-                            Rating = 47
+                            Rating = (byte)47
                         });
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserInfo", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserInfo", b =>
                 {
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Avatar")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -397,104 +399,105 @@ namespace ProjectVR.DataAccess.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
 
                     b.HasKey("Guid");
 
-                    b.ToTable("usersinfo", (string)null);
+                    b.ToTable("Usersinfo");
 
                     b.HasData(
                         new
                         {
                             Guid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
                             Avatar = "https://media.forgecdn.net/avatars/479/187/637776165451218467.jpeg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3283), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3315), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5709), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5737), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "vrenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("309f1f3c-39a7-4701-b38e-aa68dafff1d7"),
                             Avatar = "https://yt3.ggpht.com/ytc/AKedOLT2-arf4z54qiWMx3T8WXuP7BKT6iMEIzBrU4uG=s900-c-k-c0x00ffffff-no-rj",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3319), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3320), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5742), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5743), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "skyrimenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"),
                             Avatar = "https://avatars.akamai.steamstatic.com/6a991cedbf9caf7e0dfd32c5f17f13820c818bf8_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3323), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3324), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5790), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5791), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "falloutenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"),
                             Avatar = "https://modelsaber.com/files/saber/1607719628/original.png",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5794), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5795), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "beatsaberenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("385f17c9-46b2-49f8-9425-9824369f6e84"),
                             Avatar = "https://avatars.akamai.steamstatic.com/e49df9e19ca580ebd13d8d6b69c43a6c9bad8ac0_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3328), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3329), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "forestenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
                             Avatar = "https://cdn4.iconfinder.com/data/icons/vr-avatars/512/VR8-1024.png",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3332), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3332), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "quest2enjoyer"
                         },
                         new
                         {
                             Guid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
                             Avatar = "https://avatars.akamai.steamstatic.com/07a8f40c65079d2a6caf4af91a5e466517cd7a19_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3345), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3346), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "quest3enjoyer"
                         },
                         new
                         {
                             Guid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
                             Avatar = "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3348), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3349), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5808), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5809), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "questproenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
                             Avatar = "https://avatars.akamai.steamstatic.com/b3c041f3eb316e0edf16e6ba36f426b433e16cee_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3384), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3385), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5811), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5812), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "valveindexenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
                             Avatar = "https://avatars.akamai.steamstatic.com/3388c1a9ff4cb271d0794154ff5e3405fae7b661_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3389), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3389), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5814), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5815), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "viveenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
                             Avatar = "https://avatars.akamai.steamstatic.com/fc13bb1f59388dc6070a14f9224b6f697e08a4d3_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3392), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 9, 4, 35, 3, 923, DateTimeKind.Unspecified).AddTicks(3392), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "vive2enjoyer"
                         });
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserVrSet", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserVrSet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -517,7 +520,7 @@ namespace ProjectVR.DataAccess.Migrations
 
                     b.HasIndex("VrSetId");
 
-                    b.ToTable("uservrsets", (string)null);
+                    b.ToTable("UserVrSets");
 
                     b.HasData(
                         new
@@ -613,7 +616,7 @@ namespace ProjectVR.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.VrSet", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.VrSet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -622,16 +625,17 @@ namespace ProjectVR.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("vrsets", (string)null);
+                    b.ToTable("VrSets");
 
                     b.HasData(
                         new
@@ -672,15 +676,15 @@ namespace ProjectVR.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserGame", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserGame", b =>
                 {
-                    b.HasOne("ProjectVR.DataAccess.Models.Game", "Game")
+                    b.HasOne("ProjectVR.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectVR.DataAccess.Models.UserInfo", "Owner")
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "Owner")
                         .WithMany("Games")
                         .HasForeignKey("OwnerGuid")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -691,15 +695,15 @@ namespace ProjectVR.DataAccess.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserVrSet", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserVrSet", b =>
                 {
-                    b.HasOne("ProjectVR.DataAccess.Models.UserInfo", "Owner")
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "Owner")
                         .WithMany("VrSets")
                         .HasForeignKey("OwnerGuid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectVR.DataAccess.Models.VrSet", "VrSet")
+                    b.HasOne("ProjectVR.DataAccess.Entities.VrSet", "VrSet")
                         .WithMany()
                         .HasForeignKey("VrSetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -710,7 +714,7 @@ namespace ProjectVR.DataAccess.Migrations
                     b.Navigation("VrSet");
                 });
 
-            modelBuilder.Entity("ProjectVR.DataAccess.Models.UserInfo", b =>
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserInfo", b =>
                 {
                     b.Navigation("Games");
 
