@@ -28,7 +28,7 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .FindUsers(request.Game, request.VrSet))
-                .Select(user => user.MapToResponse())
+                .Select(user => user.MapToSearchResponse())
                 .ToArray();
             return Ok(foundUsers);
         }
@@ -38,7 +38,7 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .GetRandomUsers())
-                .Select(user => user.MapToResponse())
+                .Select(user => user.MapToSearchResponse())
                 .ToArray();
 
             return Ok(foundUsers);

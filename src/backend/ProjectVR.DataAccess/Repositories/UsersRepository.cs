@@ -48,5 +48,16 @@ namespace ProjectVR.DataAccess.Repositories
 
             return users;
         }
+
+        public async Task<UserInfo?> GetUserByUsername(string username)
+        {
+            var foundUser = await _context.Usersinfo
+                .AsNoTracking()
+                .SingleOrDefaultAsync(u => u.Username == username);
+            if (foundUser is null) return null;
+            UserInfo? user = foundUser.MapToDomainModel();
+
+            return user;
+        }
     }
 }

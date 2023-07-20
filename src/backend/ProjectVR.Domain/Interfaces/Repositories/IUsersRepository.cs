@@ -7,5 +7,6 @@ namespace ProjectVR.Domain.Interfaces.Repositories
     {
         public Task<UserInfo[]> FindUsers(string? game, string? vrset);
         public Task<UserInfo[]> GetRandomUsers();
+        public Task<UserInfo?> GetUserByUsername(string username);
     }
 }

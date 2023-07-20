@@ -52,6 +52,7 @@ namespace ProjectVR.WebAPI
                         options.UseNpgsql(connectionString));
 
                 builder.Services.AddScoped<IUsersService, UsersService>();
+                builder.Services.AddScoped<IAuthService, AuthService>();
                 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
                 var app = builder.Build();
