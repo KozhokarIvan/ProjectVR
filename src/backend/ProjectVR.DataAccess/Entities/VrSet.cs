@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class VrSet
     {
@@ -18,9 +18,13 @@ namespace ProjectVR.DataAccess.Models
 
             builder
                 .Property(vrset => vrset.Name)
+                .HasMaxLength(Domain.Models.VrSet.MaxVrSetNameLength)
                 .IsRequired();
 
-            builder.ToTable("vrsets");
+            builder
+                .Property(vrset => vrset.Icon)
+                .HasMaxLength(Domain.Models.VrSet.MaxVrSetIconLength)
+                .IsRequired(false);
         }
     }
 }

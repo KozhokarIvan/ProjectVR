@@ -1,4 +1,4 @@
-﻿namespace ProjectVR.Domain.Entities
+﻿namespace ProjectVR.Domain.Models
 {
     public class UserVrSet
     {

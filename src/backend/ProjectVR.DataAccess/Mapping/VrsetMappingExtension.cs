@@ -1,12 +1,12 @@
-﻿using ProjectVR.DataAccess.Models;
+﻿using ProjectVR.DataAccess.Entities;
 
 namespace ProjectVR.DataAccess.Mapping
 {
     internal static class VrsetMappingExtension
     {
-        public static Domain.Entities.VrSet MapToDomain(this VrSet vrset)
+        public static Domain.Models.VrSet MapToDomainModel(this VrSet vrset)
         {
-            Domain.Entities.VrSet vrsetEntity = new Domain.Entities.VrSet
+            Domain.Models.VrSet vrsetEntity = new Domain.Models.VrSet
             {
                 Id = vrset.Id,
                 Name = vrset.Name,

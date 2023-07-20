@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class UserInfo
     {
@@ -12,8 +12,8 @@ namespace ProjectVR.DataAccess.Models
         public string? Avatar { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset LastSeen { get; set; }
-        public List<UserGame> Games { get; set; } = new List<UserGame>();
-        public List<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
+        public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
+        public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
 
     }
     internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
@@ -25,10 +25,12 @@ namespace ProjectVR.DataAccess.Models
 
             builder
                 .Property(userinfo => userinfo.Username)
+                .HasMaxLength(Domain.Models.UserInfo.MaxUsernameLength)
                 .IsRequired();
 
             builder
                 .Property(userinfo => userinfo.Avatar)
+                .HasMaxLength(Domain.Models.UserInfo.MaxAvatarLength)
                 .IsRequired(false);
 
             builder
@@ -46,8 +48,6 @@ namespace ProjectVR.DataAccess.Models
             builder
                 .HasMany(userinfo => userinfo.VrSets)
                 .WithOne(vrset => vrset.Owner);
-
-            builder.ToTable("usersinfo");
         }
     }
 }

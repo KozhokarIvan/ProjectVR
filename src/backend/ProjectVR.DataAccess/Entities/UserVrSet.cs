@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class UserVrSet
     {
@@ -33,8 +33,6 @@ namespace ProjectVR.DataAccess.Models
                 .HasOne(uVrSet => uVrSet.VrSet)
                 .WithMany()
                 .HasForeignKey(vrset => vrset.VrSetId);
-
-            builder.ToTable("uservrsets");
         }
     }
 }

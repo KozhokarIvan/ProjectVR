@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectVR.DataAccess.Models;
-using ProjectVR.WebAPI.StaticData;
+using ProjectVR.DataAccess.DataSeeding;
+using ProjectVR.DataAccess.Entities;
 
 namespace ProjectVR.DataAccess
 {

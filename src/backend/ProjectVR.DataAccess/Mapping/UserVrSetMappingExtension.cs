@@ -1,14 +1,14 @@
-﻿using ProjectVR.DataAccess.Models;
+﻿using ProjectVR.DataAccess.Entities;
 
 namespace ProjectVR.DataAccess.Mapping
 {
     internal static class UserVrSetMappingExtension
     {
-        internal static Domain.Entities.UserVrSet MapToDomain(this UserVrSet userVrSet)
+        internal static Domain.Models.UserVrSet MapToDomainModel(this UserVrSet userVrSet)
         {
-            Domain.Entities.UserVrSet userVrSetEntity = new Domain.Entities.UserVrSet
+            Domain.Models.UserVrSet userVrSetEntity = new Domain.Models.UserVrSet
             {
-                VrSet = userVrSet.VrSet.MapToDomain(),
+                VrSet = userVrSet.VrSet.MapToDomainModel(),
                 IsFavorite = userVrSet.IsFavorite
             };
             return userVrSetEntity;

@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.WebAPI.Contracts.Mapping.Responses;
 using ProjectVR.WebAPI.Contracts.Requests;
 using ProjectVR.WebAPI.Contracts.Responses;
+
 
 namespace ProjectVR.WebAPI.Controllers
 {
@@ -12,9 +15,11 @@ namespace ProjectVR.WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly ILogger<UsersController> _logger;
         private readonly IUsersService _usersService;
-        public UsersController(IUsersService usersService)
+        public UsersController(ILogger<UsersController> logger, IUsersService usersService)
         {
+            _logger = logger;
             _usersService = usersService;
         }
 
@@ -23,9 +28,8 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .FindUsers(request.Game, request.VrSet))
-                .Select(user => user.MapToApi())
+                .Select(user => user.MapToResponse())
                 .ToArray();
-
             return Ok(foundUsers);
         }
 
@@ -34,7 +38,7 @@ namespace ProjectVR.WebAPI.Controllers
         {
             UsersSearchResponse[] foundUsers = (await _usersService
                 .GetRandomUsers())
-                .Select(user => user.MapToApi())
+                .Select(user => user.MapToResponse())
                 .ToArray();
 
             return Ok(foundUsers);

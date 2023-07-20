@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class Game
     {
@@ -19,9 +19,13 @@ namespace ProjectVR.DataAccess.Models
 
             builder
                 .Property(game => game.Name)
+                .HasMaxLength(Domain.Models.Game.MaxGameNameLength)
                 .IsRequired();
 
-            builder.ToTable("games");
+            builder
+                .Property(game => game.Icon)
+                .HasMaxLength(Domain.Models.Game.MaxGameIconLength)
+                .IsRequired(false);
         }
     }
 }

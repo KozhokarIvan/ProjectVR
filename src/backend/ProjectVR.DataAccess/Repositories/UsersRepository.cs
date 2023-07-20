@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjectVR.DataAccess.Mapping;
-using ProjectVR.Domain.Entities;
 using ProjectVR.Domain.Interfaces.Repositories;
+using ProjectVR.Domain.Models;
 
 namespace ProjectVR.DataAccess.Repositories
 {
@@ -15,9 +15,9 @@ namespace ProjectVR.DataAccess.Repositories
         {
             _context = context;
         }
-        public async Task<List<UserInfo>> FindUsers(string? game, string? vrset)
+        public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
         {
-            List<UserInfo> users = await _context.Usersinfo
+            UserInfo[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .Where(u =>
                 (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
@@ -27,15 +27,15 @@ namespace ProjectVR.DataAccess.Repositories
                 .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
                 .ThenInclude(uservrset => uservrset.VrSet)
-                .Select(u => u.MapToDomainEntity())
-                .ToListAsync();
+                .Select(u => u.MapToDomainModel())
+                .ToArrayAsync() ?? Array.Empty<UserInfo>();
 
             return users;
         }
 
-        public async Task<List<UserInfo>> GetRandomUsers()
+        public async Task<UserInfo[]> GetRandomUsers()
         {
-            List<UserInfo> users = await _context.Usersinfo
+            UserInfo[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .OrderBy(u => EF.Functions.Random())
                 .Take(5)
@@ -43,8 +43,8 @@ namespace ProjectVR.DataAccess.Repositories
                 .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
                 .ThenInclude(uservrset => uservrset.VrSet)
-                .Select(u => u.MapToDomainEntity())
-                .ToListAsync();
+                .Select(u => u.MapToDomainModel())
+                .ToArrayAsync() ?? Array.Empty<UserInfo>();
 
             return users;
         }

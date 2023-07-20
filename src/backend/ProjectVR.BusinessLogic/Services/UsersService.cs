@@ -1,6 +1,6 @@
-﻿using ProjectVR.Domain.Entities;
-using ProjectVR.Domain.Interfaces.Repositories;
+﻿using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Interfaces.Services;
+using ProjectVR.Domain.Models;
 
 namespace ProjectVR.BusinessLogic.Services
 {
@@ -11,15 +11,15 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _usersRepository = userRepository;
         }
-        public async Task<List<UserInfo>> FindUsers(string? game, string? vrset)
+        public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
         {
-            List<UserInfo> users = await _usersRepository.FindUsers(game, vrset);
+            UserInfo[] users = await _usersRepository.FindUsers(game, vrset);
             return users;
         }
 
-        public async Task<List<UserInfo>> GetRandomUsers()
+        public async Task<UserInfo[]> GetRandomUsers()
         {
-            List<UserInfo> users = await _usersRepository.GetRandomUsers();
+            UserInfo[] users = await _usersRepository.GetRandomUsers();
             return users;
         }
     }

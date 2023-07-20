@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class UserGame
     {
@@ -12,7 +12,7 @@ namespace ProjectVR.DataAccess.Models
         public Game Game { get; set; }
         public int GameId { get; set; }
         public bool IsFavorite { get; set; }
-        public int? Rating { get; set; }
+        public byte? Rating { get; set; }
     }
     internal class UserGameConfiguration : IEntityTypeConfiguration<UserGame>
     {
@@ -37,8 +37,6 @@ namespace ProjectVR.DataAccess.Models
             builder
                 .Property(usergame => usergame.IsFavorite)
                 .IsRequired();
-
-            builder.ToTable("usergames");
         }
     }
 }

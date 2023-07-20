@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using ProjectVR.Domain.Entities;
+using ProjectVR.Domain.Models;
 using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Contracts.Mapping.Responses
 {
     internal static class UsersSearchResponseMappingExtension
     {
-        internal static UsersSearchResponse MapToApi(this UserInfo domainEntity)
+        internal static UsersSearchResponse MapToResponse(this UserInfo domainEntity)
         {
             UsersSearchResponse usersSearchResponse = new UsersSearchResponse
             {

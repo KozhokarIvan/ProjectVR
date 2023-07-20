@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProjectVR.DataAccess.Models;
+using ProjectVR.DataAccess.Entities;
 
-namespace ProjectVR.WebAPI.StaticData
+namespace ProjectVR.DataAccess.DataSeeding
 {
     internal class SeedingData
     {

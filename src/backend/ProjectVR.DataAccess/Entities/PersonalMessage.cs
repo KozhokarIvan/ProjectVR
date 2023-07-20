@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectVR.DataAccess.Models
+namespace ProjectVR.DataAccess.Entities
 {
     public class PersonalMessage
     {
