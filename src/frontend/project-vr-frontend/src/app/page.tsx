@@ -15,7 +15,6 @@ export default function Home() {
   });
 
   const [isDark, setDark] = useState<boolean>(true);
-
   useEffect(() => {
     let theme = window.localStorage.getItem("data-theme");
     setDark(theme === "dark");

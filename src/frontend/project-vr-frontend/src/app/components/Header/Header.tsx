@@ -8,18 +8,24 @@ import {
   User,
   changeTheme,
   useTheme,
+  Popover,
+  Dropdown,
 } from "@nextui-org/react";
-import { FC, ReactElement } from "react";
-import { UserInfo } from "@/app/pages/SearchUsers/SearchUsers";
+import { FC, ReactElement, useState } from "react";
+import { LoggedUser, UserInfo } from "@/app/pages/SearchUsers/SearchUsers";
+import LoginModal from "../LoginModal/LoginModal";
 
 export interface HeaderProps {
   setUsers: (users: UserInfo[]) => void;
+  loggedUser: LoggedUser | null;
+  setLoggedUser: (user: LoggedUser | null) => void;
 }
 
-export default function Header(
-  props: HeaderProps
-): ReactElement<HeaderProps, FC> {
-  const { setUsers } = props;
+export default function Header({
+  setUsers,
+  loggedUser,
+  setLoggedUser,
+}: HeaderProps) {
   const { type, isDark } = useTheme();
 
   const handleChange = () => {
@@ -66,6 +72,9 @@ export default function Header(
     setUsers(users);
   };
 
+  const [loginModalVisible, setLoginModalVIsible] = useState<boolean>(false);
+  const openLoginModalHandler = () => setLoginModalVIsible(true);
+  const closeLoginModalHandler = () => setLoginModalVIsible(false);
   return (
     <Navbar as="header" variant="sticky">
       <Navbar.Brand>
@@ -98,15 +107,49 @@ export default function Header(
       </Navbar.Content>
       <Navbar.Content>
         <Switch color="secondary" checked={isDark} onChange={handleChange} />
-        <Link href="#">
-          <User
-            name="username#1234"
-            size="lg"
-            zoomed
-            pointer
-            src="https://i.pravatar.cc/100"
-          />
-        </Link>
+
+        {loggedUser != null ? (
+          <Dropdown>
+            <Dropdown.Trigger>
+              <User
+                name={loggedUser.username}
+                src={loggedUser.avatar}
+                size="lg"
+                zoomed
+                pointer
+              />
+            </Dropdown.Trigger>
+            <Dropdown.Menu
+              color="secondary"
+              variant="solid"
+              onAction={key => {
+                if (key.toString() == "logout") {
+                  setLoggedUser(null);
+                }
+              }}
+            >
+              <Dropdown.Item key="profile">Profile</Dropdown.Item>
+              <Dropdown.Item key="logout" color="error" withDivider>
+                Log Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <Button
+            auto
+            color="secondary"
+            bordered
+            onPress={openLoginModalHandler}
+          >
+            Sign In
+          </Button>
+        )}
+        <LoginModal
+          visible={loginModalVisible}
+          openHandler={openLoginModalHandler}
+          closeHandler={closeLoginModalHandler}
+          setLoggedUser={setLoggedUser}
+        />
       </Navbar.Content>
     </Navbar>
   );
