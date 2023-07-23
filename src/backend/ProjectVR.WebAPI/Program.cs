@@ -37,7 +37,7 @@ namespace ProjectVR.WebAPI
                 builder.Services.AddCors(options =>
                     options.AddPolicy("CorsPolicy", builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000");
+                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
                     }));
                 builder.Services.AddControllers();
 

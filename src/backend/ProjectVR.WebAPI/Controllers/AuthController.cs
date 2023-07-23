@@ -8,6 +8,7 @@ using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Controllers
 {
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
