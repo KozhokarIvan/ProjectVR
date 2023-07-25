@@ -54,6 +54,7 @@ namespace ProjectVR.WebAPI
                 builder.Services.AddScoped<IUsersService, UsersService>();
                 builder.Services.AddScoped<IAuthService, AuthService>();
                 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+                builder.Services.AddScoped<IFriendsService, FriendsService>();
 
                 var app = builder.Build();
 

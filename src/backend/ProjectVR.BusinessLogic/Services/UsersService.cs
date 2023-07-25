@@ -11,6 +11,7 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _usersRepository = userRepository;
         }
+
         public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
         {
             UserInfo[] users = await _usersRepository.FindUsers(game, vrset);

@@ -22,6 +22,58 @@ namespace ProjectVR.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.Friend", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("AcceptedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FromUserGuid")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ToUserGuid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserGuid");
+
+                    b.HasIndex("ToUserGuid");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.FriendRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("FromUserGuid")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("SentAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ToUserGuid")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserGuid");
+
+                    b.HasIndex("ToUserGuid");
+
+                    b.ToTable("FriendRequests");
+                });
+
             modelBuilder.Entity("ProjectVR.DataAccess.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -411,88 +463,88 @@ namespace ProjectVR.DataAccess.Migrations
                         {
                             Guid = new Guid("407898b1-cf14-42a1-9b74-775587f878da"),
                             Avatar = "https://media.forgecdn.net/avatars/479/187/637776165451218467.jpeg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5709), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5737), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5054), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5087), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "vrenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("309f1f3c-39a7-4701-b38e-aa68dafff1d7"),
                             Avatar = "https://yt3.ggpht.com/ytc/AKedOLT2-arf4z54qiWMx3T8WXuP7BKT6iMEIzBrU4uG=s900-c-k-c0x00ffffff-no-rj",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5742), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5743), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5093), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5094), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "skyrimenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"),
                             Avatar = "https://avatars.akamai.steamstatic.com/6a991cedbf9caf7e0dfd32c5f17f13820c818bf8_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5790), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5791), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5098), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5099), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "falloutenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"),
                             Avatar = "https://modelsaber.com/files/saber/1607719628/original.png",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5794), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5795), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5101), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5102), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "beatsaberenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("385f17c9-46b2-49f8-9425-9824369f6e84"),
                             Avatar = "https://avatars.akamai.steamstatic.com/e49df9e19ca580ebd13d8d6b69c43a6c9bad8ac0_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5104), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5105), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "forestenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"),
                             Avatar = "https://cdn4.iconfinder.com/data/icons/vr-avatars/512/VR8-1024.png",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5109), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5109), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "quest2enjoyer"
                         },
                         new
                         {
                             Guid = new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
                             Avatar = "https://avatars.akamai.steamstatic.com/07a8f40c65079d2a6caf4af91a5e466517cd7a19_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5112), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5113), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "quest3enjoyer"
                         },
                         new
                         {
                             Guid = new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
                             Avatar = "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5808), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5809), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5116), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5116), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "questproenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"),
                             Avatar = "https://avatars.akamai.steamstatic.com/b3c041f3eb316e0edf16e6ba36f426b433e16cee_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5811), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5812), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5119), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5120), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "valveindexenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
                             Avatar = "https://avatars.akamai.steamstatic.com/3388c1a9ff4cb271d0794154ff5e3405fae7b661_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5814), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5815), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5124), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5125), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "viveenjoyer"
                         },
                         new
                         {
                             Guid = new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"),
                             Avatar = "https://avatars.akamai.steamstatic.com/fc13bb1f59388dc6070a14f9224b6f697e08a4d3_medium.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)),
-                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5127), new TimeSpan(0, 3, 0, 0, 0)),
+                            LastSeen = new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5128), new TimeSpan(0, 3, 0, 0, 0)),
                             Username = "vive2enjoyer"
                         });
                 });
@@ -676,6 +728,44 @@ namespace ProjectVR.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.Friend", b =>
+                {
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "From")
+                        .WithMany("Friends")
+                        .HasForeignKey("FromUserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "To")
+                        .WithMany()
+                        .HasForeignKey("ToUserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
+                });
+
+            modelBuilder.Entity("ProjectVR.DataAccess.Entities.FriendRequest", b =>
+                {
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "From")
+                        .WithMany("OutgoingFriendRequests")
+                        .HasForeignKey("FromUserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectVR.DataAccess.Entities.UserInfo", "To")
+                        .WithMany("IncomingFriendRequests")
+                        .HasForeignKey("ToUserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
+                });
+
             modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserGame", b =>
                 {
                     b.HasOne("ProjectVR.DataAccess.Entities.Game", "Game")
@@ -716,7 +806,13 @@ namespace ProjectVR.DataAccess.Migrations
 
             modelBuilder.Entity("ProjectVR.DataAccess.Entities.UserInfo", b =>
                 {
+                    b.Navigation("Friends");
+
                     b.Navigation("Games");
+
+                    b.Navigation("IncomingFriendRequests");
+
+                    b.Navigation("OutgoingFriendRequests");
 
                     b.Navigation("VrSets");
                 });

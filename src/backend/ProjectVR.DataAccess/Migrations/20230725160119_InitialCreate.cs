@@ -58,6 +58,60 @@ namespace ProjectVR.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FriendRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FromUserGuid = table.Column<Guid>(type: "uuid", nullable: false),
+                    ToUserGuid = table.Column<Guid>(type: "uuid", nullable: false),
+                    SentAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_Usersinfo_FromUserGuid",
+                        column: x => x.FromUserGuid,
+                        principalTable: "Usersinfo",
+                        principalColumn: "Guid",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_Usersinfo_ToUserGuid",
+                        column: x => x.ToUserGuid,
+                        principalTable: "Usersinfo",
+                        principalColumn: "Guid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Friends",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FromUserGuid = table.Column<Guid>(type: "uuid", nullable: false),
+                    ToUserGuid = table.Column<Guid>(type: "uuid", nullable: false),
+                    AcceptedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Friends", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Friends_Usersinfo_FromUserGuid",
+                        column: x => x.FromUserGuid,
+                        principalTable: "Usersinfo",
+                        principalColumn: "Guid",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Friends_Usersinfo_ToUserGuid",
+                        column: x => x.ToUserGuid,
+                        principalTable: "Usersinfo",
+                        principalColumn: "Guid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserGames",
                 columns: table => new
                 {
@@ -132,17 +186,17 @@ namespace ProjectVR.DataAccess.Migrations
                 columns: new[] { "Guid", "Avatar", "CreatedAt", "LastSeen", "Username" },
                 values: new object[,]
                 {
-                    { new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"), "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5808), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5809), new TimeSpan(0, 3, 0, 0, 0)), "questproenjoyer" },
-                    { new Guid("309f1f3c-39a7-4701-b38e-aa68dafff1d7"), "https://yt3.ggpht.com/ytc/AKedOLT2-arf4z54qiWMx3T8WXuP7BKT6iMEIzBrU4uG=s900-c-k-c0x00ffffff-no-rj", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5742), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5743), new TimeSpan(0, 3, 0, 0, 0)), "skyrimenjoyer" },
-                    { new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"), "https://avatars.akamai.steamstatic.com/fc13bb1f59388dc6070a14f9224b6f697e08a4d3_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5817), new TimeSpan(0, 3, 0, 0, 0)), "vive2enjoyer" },
-                    { new Guid("385f17c9-46b2-49f8-9425-9824369f6e84"), "https://avatars.akamai.steamstatic.com/e49df9e19ca580ebd13d8d6b69c43a6c9bad8ac0_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5798), new TimeSpan(0, 3, 0, 0, 0)), "forestenjoyer" },
-                    { new Guid("407898b1-cf14-42a1-9b74-775587f878da"), "https://media.forgecdn.net/avatars/479/187/637776165451218467.jpeg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5709), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5737), new TimeSpan(0, 3, 0, 0, 0)), "vrenjoyer" },
-                    { new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"), "https://avatars.akamai.steamstatic.com/07a8f40c65079d2a6caf4af91a5e466517cd7a19_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5806), new TimeSpan(0, 3, 0, 0, 0)), "quest3enjoyer" },
-                    { new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"), "https://avatars.akamai.steamstatic.com/3388c1a9ff4cb271d0794154ff5e3405fae7b661_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5814), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5815), new TimeSpan(0, 3, 0, 0, 0)), "viveenjoyer" },
-                    { new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"), "https://cdn4.iconfinder.com/data/icons/vr-avatars/512/VR8-1024.png", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 3, 0, 0, 0)), "quest2enjoyer" },
-                    { new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"), "https://avatars.akamai.steamstatic.com/b3c041f3eb316e0edf16e6ba36f426b433e16cee_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5811), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5812), new TimeSpan(0, 3, 0, 0, 0)), "valveindexenjoyer" },
-                    { new Guid("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"), "https://modelsaber.com/files/saber/1607719628/original.png", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5794), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5795), new TimeSpan(0, 3, 0, 0, 0)), "beatsaberenjoyer" },
-                    { new Guid("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"), "https://avatars.akamai.steamstatic.com/6a991cedbf9caf7e0dfd32c5f17f13820c818bf8_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5790), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 20, 19, 12, 53, 459, DateTimeKind.Unspecified).AddTicks(5791), new TimeSpan(0, 3, 0, 0, 0)), "falloutenjoyer" }
+                    { new Guid("2f5598a2-a160-47d0-a36a-09c54f29aa28"), "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5116), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5116), new TimeSpan(0, 3, 0, 0, 0)), "questproenjoyer" },
+                    { new Guid("309f1f3c-39a7-4701-b38e-aa68dafff1d7"), "https://yt3.ggpht.com/ytc/AKedOLT2-arf4z54qiWMx3T8WXuP7BKT6iMEIzBrU4uG=s900-c-k-c0x00ffffff-no-rj", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5093), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5094), new TimeSpan(0, 3, 0, 0, 0)), "skyrimenjoyer" },
+                    { new Guid("31ed4b17-5e00-4d84-9189-425eb242d893"), "https://avatars.akamai.steamstatic.com/fc13bb1f59388dc6070a14f9224b6f697e08a4d3_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5127), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5128), new TimeSpan(0, 3, 0, 0, 0)), "vive2enjoyer" },
+                    { new Guid("385f17c9-46b2-49f8-9425-9824369f6e84"), "https://avatars.akamai.steamstatic.com/e49df9e19ca580ebd13d8d6b69c43a6c9bad8ac0_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5104), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5105), new TimeSpan(0, 3, 0, 0, 0)), "forestenjoyer" },
+                    { new Guid("407898b1-cf14-42a1-9b74-775587f878da"), "https://media.forgecdn.net/avatars/479/187/637776165451218467.jpeg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5054), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5087), new TimeSpan(0, 3, 0, 0, 0)), "vrenjoyer" },
+                    { new Guid("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"), "https://avatars.akamai.steamstatic.com/07a8f40c65079d2a6caf4af91a5e466517cd7a19_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5112), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5113), new TimeSpan(0, 3, 0, 0, 0)), "quest3enjoyer" },
+                    { new Guid("83331ccb-485a-4dd3-b77f-8d4f7d812505"), "https://avatars.akamai.steamstatic.com/3388c1a9ff4cb271d0794154ff5e3405fae7b661_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5124), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5125), new TimeSpan(0, 3, 0, 0, 0)), "viveenjoyer" },
+                    { new Guid("999c5da3-c747-44a1-b56d-416d403bb6c6"), "https://cdn4.iconfinder.com/data/icons/vr-avatars/512/VR8-1024.png", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5109), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5109), new TimeSpan(0, 3, 0, 0, 0)), "quest2enjoyer" },
+                    { new Guid("a646f675-bafc-4a9e-a162-ca132316db3c"), "https://avatars.akamai.steamstatic.com/b3c041f3eb316e0edf16e6ba36f426b433e16cee_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5119), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5120), new TimeSpan(0, 3, 0, 0, 0)), "valveindexenjoyer" },
+                    { new Guid("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"), "https://modelsaber.com/files/saber/1607719628/original.png", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5101), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5102), new TimeSpan(0, 3, 0, 0, 0)), "beatsaberenjoyer" },
+                    { new Guid("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"), "https://avatars.akamai.steamstatic.com/6a991cedbf9caf7e0dfd32c5f17f13820c818bf8_medium.jpg", new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5098), new TimeSpan(0, 3, 0, 0, 0)), new DateTimeOffset(new DateTime(2023, 7, 25, 19, 1, 19, 45, DateTimeKind.Unspecified).AddTicks(5099), new TimeSpan(0, 3, 0, 0, 0)), "falloutenjoyer" }
                 });
 
             migrationBuilder.InsertData(
@@ -218,6 +272,26 @@ namespace ProjectVR.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_FriendRequests_FromUserGuid",
+                table: "FriendRequests",
+                column: "FromUserGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendRequests_ToUserGuid",
+                table: "FriendRequests",
+                column: "ToUserGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friends_FromUserGuid",
+                table: "Friends",
+                column: "FromUserGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friends_ToUserGuid",
+                table: "Friends",
+                column: "ToUserGuid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserGames_GameId",
                 table: "UserGames",
                 column: "GameId");
@@ -241,6 +315,12 @@ namespace ProjectVR.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FriendRequests");
+
+            migrationBuilder.DropTable(
+                name: "Friends");
+
             migrationBuilder.DropTable(
                 name: "UserGames");
 

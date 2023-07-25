@@ -15,6 +15,20 @@ namespace ProjectVR.DataAccess.Repositories
         {
             _context = context;
         }
+        public async Task<FriendRequest?> GetFriendRequestByUserGuids(Guid fromUserGuid, Guid toUserGuid)
+        {
+            Entities.FriendRequest? result = await _context.FriendRequests
+                .Include(request => request.From)
+                .ThenInclude(user => user.OutgoingFriendRequests)
+                .Include(request => request.To)
+                .SingleOrDefaultAsync(fr => fr.ToUserGuid == fromUserGuid && fr.FromUserGuid == toUserGuid);
+            if (result is null) return null;
+            UserInfo from = result.From.MapToDomainModel();
+            UserInfo to = result.To.MapToDomainModel();
+            FriendRequest friendRequest = result.MapToDomainModel(from, to);
+            return friendRequest;
+        }
+
         public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
         {
             UserInfo[] users = await _context.Usersinfo
@@ -58,6 +72,34 @@ namespace ProjectVR.DataAccess.Repositories
             UserInfo? user = foundUser.MapToDomainModel();
 
             return user;
+        }
+        public async Task<bool> CreateFriendAndDeleteFriendRequest(Guid userWhoSentGuid, Guid userWhoAcceptedGuid)
+        {
+            Entities.Friend friendEntry = new Entities.Friend()
+            {
+                FromUserGuid = userWhoSentGuid,
+                ToUserGuid = userWhoAcceptedGuid,
+                AcceptedAt = DateTime.UtcNow
+            };
+            await _context.Friends.AddAsync(friendEntry);
+            _context.FriendRequests.Remove(await _context.FriendRequests
+                .SingleAsync(req => req.From.Guid == userWhoSentGuid && req.To.Guid == userWhoAcceptedGuid));
+            await _context.SaveChangesAsync();
+            bool isFriendAdded = true;
+            bool isFriendRequestDeleted = true;
+            return isFriendRequestDeleted && isFriendAdded;
+        }
+        public async Task<bool> CreateFriendRequest(Guid from, Guid to)
+        {
+            await _context.FriendRequests.AddAsync(new Entities.FriendRequest()
+            {
+                FromUserGuid = from,
+                ToUserGuid = to,
+                SentAt = DateTime.UtcNow
+            });
+            await _context.SaveChangesAsync();
+            bool isCreated = true;
+            return isCreated;
         }
     }
 }

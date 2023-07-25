@@ -15,7 +15,10 @@ namespace ProjectVR.Domain.Models
         public string? Avatar { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset LastSeen { get; set; }
-        public List<UserGame> Games { get; set; } = null!;
-        public List<UserVrSet> VrSets { get; set; } = null!;
+        public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
+        public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
+        public ICollection<FriendRequest> OutgoingRequests { get; set; } = new List<FriendRequest>();
+        public ICollection<FriendRequest> IncomingRequests { get; set; } = new List<FriendRequest>();
+        public ICollection<Friend> Friends { get; set; } = new List<Friend>();
     }
 }

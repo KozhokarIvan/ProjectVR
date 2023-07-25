@@ -16,6 +16,8 @@ namespace ProjectVR.DataAccess
         public DbSet<UserInfo> Usersinfo { get; set; }
         public DbSet<UserGame> UserGames { get; set; }
         public DbSet<UserVrSet> UserVrSets { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<Friend> Friends { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

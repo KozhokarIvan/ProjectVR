@@ -1,23 +1,43 @@
 ﻿using System.Linq;
-using ProjectVR.DataAccess.Entities;
+using ProjectVR.Domain.Models;
 
 namespace ProjectVR.DataAccess.Mapping
 {
     internal static class UserInfoMappingExtension
     {
-        public static Domain.Models.UserInfo MapToDomainModel(this UserInfo userinfo)
+        public static UserInfo MapToDomainModel(this Entities.UserInfo userinfoEntity)
         {
-            Domain.Models.UserInfo userinfoEntity = new Domain.Models.UserInfo
+            UserInfo userinfo = userinfoEntity.MapToDomainModelWithoutFriendsInfo();
+            userinfo.OutgoingRequests = userinfoEntity.OutgoingFriendRequests
+                .Select(r => 
+                    r.MapToDomainModel(r.From.MapToDomainModelWithoutFriendsInfo(), r.To.MapToDomainModelWithoutFriendsInfo()))
+                .ToArray();
+
+            userinfo.IncomingRequests = userinfoEntity.IncomingFriendRequests
+                .Select(r => 
+                    r.MapToDomainModel(r.From.MapToDomainModelWithoutFriendsInfo(), r.To.MapToDomainModelWithoutFriendsInfo()))
+                .ToArray();
+
+            userinfo.Friends = userinfoEntity.Friends
+                .Select(f =>
+                    f.MapToDomainModel(f.From.MapToDomainModelWithoutFriendsInfo(), f.To.MapToDomainModelWithoutFriendsInfo()))
+                .ToArray();
+
+            return userinfo;
+        }
+        public static UserInfo MapToDomainModelWithoutFriendsInfo(this Entities.UserInfo userinfoEntity)
+        {
+            UserInfo userinfo = new UserInfo
             {
-                Guid = userinfo.Guid,
-                Username = userinfo.Username,
-                Avatar = userinfo.Avatar,
-                CreatedAt = userinfo.CreatedAt,
-                LastSeen = userinfo.LastSeen,
-                Games = userinfo.Games.Select(game => game.MapToDomainModel()).ToList(),
-                VrSets = userinfo.VrSets.Select(vrset => vrset.MapToDomainModel()).ToList()
+                Guid = userinfoEntity.Guid,
+                Username = userinfoEntity.Username,
+                Avatar = userinfoEntity.Avatar,
+                CreatedAt = userinfoEntity.CreatedAt,
+                LastSeen = userinfoEntity.LastSeen,
+                Games = userinfoEntity.Games.Select(game => game.MapToDomainModel()).ToArray(),
+                VrSets = userinfoEntity.VrSets.Select(vrset => vrset.MapToDomainModel()).ToArray(),
             };
-            return userinfoEntity;
+            return userinfo;
         }
     }
 }
