@@ -32,7 +32,7 @@ namespace ProjectVR.WebAPI.Controllers
 
             if (!Guid.TryParse(loggedUserHeader, out Guid loggedUserGuid))
             {
-                return base.BadRequest("Failed to parse passed loggerUserGuid");
+                return BadRequest("Failed to parse passed loggerUserGuid");
             }
             if (loggedUserGuid == request.UserToAddGuid) return BadRequest("You cant add yourself");
             bool isAdded = await _friendsService.AddFriend(loggedUserGuid, request.UserToAddGuid);
