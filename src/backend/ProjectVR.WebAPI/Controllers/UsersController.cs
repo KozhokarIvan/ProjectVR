@@ -39,20 +39,26 @@ namespace ProjectVR.WebAPI.Controllers
             return isAdded ? Ok("Success") : BadRequest("Something went wrong");
         }
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] UsersSearchRequest request)
+        public async Task<IActionResult> Search([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, [FromQuery] UsersSearchRequest request)
         {
+            Guid? loggedUserGuid = null;
+            if (!string.IsNullOrWhiteSpace(loggedUserHeader) && Guid.TryParse(loggedUserHeader, out Guid loggedUserGuidFromParse))
+                loggedUserGuid = loggedUserGuidFromParse;
             UsersSearchResponse[] foundUsers = (await _usersService
-                .FindUsers(request.Game, request.VrSet))
+                .FindUsers(request.Game, request.VrSet, loggedUserGuid))
                 .Select(user => user.MapToSearchResponse())
                 .ToArray();
             return Ok(foundUsers);
         }
 
         [HttpGet("random")]
-        public async Task<IActionResult> GetRandomUsers()
+        public async Task<IActionResult> GetRandomUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader)
         {
+            Guid? loggedUserGuid = null;
+            if (!string.IsNullOrWhiteSpace(loggedUserHeader) && Guid.TryParse(loggedUserHeader, out Guid loggedUserGuidFromParse))
+                loggedUserGuid = loggedUserGuidFromParse;
             UsersSearchResponse[] foundUsers = (await _usersService
-                .GetRandomUsers())
+                .GetRandomUsers(loggedUserGuid))
                 .Select(user => user.MapToSearchResponse())
                 .ToArray();
 

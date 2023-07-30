@@ -59,9 +59,15 @@ export default function SearchUsers() {
     userFromCookie
   );
   useEffect(() => {
+    const headers = loggedUser
+      ? {
+          loggedUserGuid: loggedUser.userGuid,
+        }
+      : undefined;
     const fetchUsers = async () => {
       const data = await fetch("https://localhost:8080/api/users", {
         method: "get",
+        headers: headers,
       });
 
       const users = await data.json();

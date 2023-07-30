@@ -35,17 +35,18 @@ export default function Header({
   };
 
   const searchUsers = async (searchText: string) => {
-    if (searchText.length == 0) {
-      await fetchRandomUsers();
-      return;
-    }
-
-    if (searchText.length < 3) {
+    if (searchText.length < 3 && searchText.length > 0) {
       return;
     }
     const baseUrl = "https://localhost:8080/api/";
+    const headers = loggedUser
+      ? {
+          loggedUserGuid: loggedUser.userGuid,
+        }
+      : undefined;
     const requestParameters = {
       method: "get",
+      headers: headers,
     };
 
     const vrSetsRequest =
@@ -65,8 +66,14 @@ export default function Header({
 
   const fetchRandomUsers = async () => {
     const request = "https://localhost:8080/api/users/random";
+    const headers = loggedUser
+      ? {
+          loggedUserGuid: loggedUser.userGuid,
+        }
+      : undefined;
     const response = await fetch(request, {
       method: "get",
+      headers: headers,
     });
     const users = await response.json();
     setUsers(users);

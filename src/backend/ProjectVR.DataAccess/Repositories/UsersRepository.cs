@@ -45,14 +45,17 @@ namespace ProjectVR.DataAccess.Repositories
             return doesRequestExist;
         }
 
-        public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
+        public async Task<UserInfo[]> FindUsers(string? game, string? vrset, Guid? userGuidToExclude = null)
         {
+            bool isThereUserToExclude = userGuidToExclude is null;
             UserInfo[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .Where(u =>
                 (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
                 &&
-                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper()))))
+                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper())))
+                && 
+                isThereUserToExclude ? true : u.Guid != userGuidToExclude)
                 .Include(user => user.Games)
                 .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
@@ -63,11 +66,13 @@ namespace ProjectVR.DataAccess.Repositories
             return users;
         }
 
-        public async Task<UserInfo[]> GetRandomUsers()
+        public async Task<UserInfo[]> GetRandomUsers(Guid? userGuidToExclude = null)
         {
+            bool isThereUserToExclude = userGuidToExclude is null;
             UserInfo[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .OrderBy(u => EF.Functions.Random())
+                .Where(u => isThereUserToExclude ? true : u.Guid != userGuidToExclude)
                 .Take(5)
                 .Include(user => user.Games)
                 .ThenInclude(usergame => usergame.Game)
@@ -83,7 +88,7 @@ namespace ProjectVR.DataAccess.Repositories
         {
             var foundUser = await _context.Usersinfo
                 .AsNoTracking()
-                .SingleOrDefaultAsync(u => u.Username == username);
+                .FirstOrDefaultAsync(u => u.Username == username);
             if (foundUser is null) return null;
             UserInfo? user = foundUser.MapToDomainModel();
 
