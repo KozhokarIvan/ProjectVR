@@ -14,8 +14,6 @@ namespace ProjectVR.DataAccess.Entities
         public DateTimeOffset LastSeen { get; set; }
         public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
         public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
-        public ICollection<FriendRequest> OutgoingFriendRequests { get; set; } = new List<FriendRequest>();
-        public ICollection<FriendRequest> IncomingFriendRequests { get; set; } = new List<FriendRequest>();
         public ICollection<Friend> Friends { get; set; } = new List<Friend>();
     }
     internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
@@ -52,16 +50,6 @@ namespace ProjectVR.DataAccess.Entities
                 .HasMany(userinfo => userinfo.VrSets)
                 .WithOne(vrset => vrset.Owner)
                 .HasForeignKey(vrset => vrset.OwnerGuid);
-
-            builder
-                .HasMany(userinfo => userinfo.IncomingFriendRequests)
-                .WithOne(friendRequest => friendRequest.To)
-                .HasForeignKey(friendRequest => friendRequest.ToUserGuid);
-
-            builder
-                .HasMany(userinfo => userinfo.OutgoingFriendRequests)
-                .WithOne(friendRequest => friendRequest.From)
-                .HasForeignKey(friendRequest => friendRequest.FromUserGuid);
 
             builder
                 .HasMany(userinfo => userinfo.Friends)

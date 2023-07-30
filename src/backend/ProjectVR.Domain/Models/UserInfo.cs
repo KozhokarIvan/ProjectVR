@@ -17,8 +17,6 @@ namespace ProjectVR.Domain.Models
         public DateTimeOffset LastSeen { get; set; }
         public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
         public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
-        public ICollection<FriendRequest> OutgoingRequests { get; set; } = new List<FriendRequest>();
-        public ICollection<FriendRequest> IncomingRequests { get; set; } = new List<FriendRequest>();
         public ICollection<Friend> Friends { get; set; } = new List<Friend>();
     }
 }

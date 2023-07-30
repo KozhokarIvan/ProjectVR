@@ -15,18 +15,34 @@ namespace ProjectVR.DataAccess.Repositories
         {
             _context = context;
         }
-        public async Task<FriendRequest?> GetFriendRequestByUserGuids(Guid fromUserGuid, Guid toUserGuid)
+
+        public async Task<bool> AcceptFriendRequest(Guid userThatSentRequestGuid, Guid userThatAcceptedRequestGuid)
         {
-            Entities.FriendRequest? result = await _context.FriendRequests
-                .Include(request => request.From)
-                .ThenInclude(user => user.OutgoingFriendRequests)
-                .Include(request => request.To)
-                .SingleOrDefaultAsync(fr => fr.ToUserGuid == fromUserGuid && fr.FromUserGuid == toUserGuid);
-            if (result is null) return null;
-            UserInfo from = result.From.MapToDomainModel();
-            UserInfo to = result.To.MapToDomainModel();
-            FriendRequest friendRequest = result.MapToDomainModel(from, to);
-            return friendRequest;
+            var request = await _context.Friends
+                .FirstOrDefaultAsync(f => f.FromUserGuid == userThatSentRequestGuid && f.ToUserGuid == userThatAcceptedRequestGuid);
+            if (request is null) return false;
+            request.AcceptedAt = DateTimeOffset.Now;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task CreateFriendRequest(Guid fromUserGuid, Guid toUserGuid)
+        {
+            var request = new Entities.Friend
+            {
+                FromUserGuid = fromUserGuid,
+                ToUserGuid = toUserGuid
+            };
+            await _context.Friends.AddAsync(request);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> RequestExists(Guid fromUserGuid, Guid toUserGuid)
+        {
+            bool doesRequestExist = await _context.Friends
+                .AsNoTracking()
+                .AnyAsync(friend => friend.FromUserGuid == fromUserGuid && friend.ToUserGuid == toUserGuid);
+            return doesRequestExist;
         }
 
         public async Task<UserInfo[]> FindUsers(string? game, string? vrset)
@@ -72,34 +88,6 @@ namespace ProjectVR.DataAccess.Repositories
             UserInfo? user = foundUser.MapToDomainModel();
 
             return user;
-        }
-        public async Task<bool> CreateFriendAndDeleteFriendRequest(Guid userWhoSentGuid, Guid userWhoAcceptedGuid)
-        {
-            Entities.Friend friendEntry = new Entities.Friend()
-            {
-                FromUserGuid = userWhoSentGuid,
-                ToUserGuid = userWhoAcceptedGuid,
-                AcceptedAt = DateTime.UtcNow
-            };
-            await _context.Friends.AddAsync(friendEntry);
-            _context.FriendRequests.Remove(await _context.FriendRequests
-                .SingleAsync(req => req.From.Guid == userWhoSentGuid && req.To.Guid == userWhoAcceptedGuid));
-            await _context.SaveChangesAsync();
-            bool isFriendAdded = true;
-            bool isFriendRequestDeleted = true;
-            return isFriendRequestDeleted && isFriendAdded;
-        }
-        public async Task<bool> CreateFriendRequest(Guid from, Guid to)
-        {
-            await _context.FriendRequests.AddAsync(new Entities.FriendRequest()
-            {
-                FromUserGuid = from,
-                ToUserGuid = to,
-                SentAt = DateTime.UtcNow
-            });
-            await _context.SaveChangesAsync();
-            bool isCreated = true;
-            return isCreated;
         }
     }
 }

@@ -43,16 +43,16 @@ namespace ProjectVR.DataAccess.DataSeeding
                 {
                     Guid = Guid.Parse("407898b1-cf14-42a1-9b74-775587f878da"),
                     Username = "vrenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://media.forgecdn.net/avatars/479/187/637776165451218467.jpeg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("309f1f3c-39a7-4701-b38e-aa68dafff1d7"),
                     Username = "skyrimenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://yt3.ggpht.com/ytc/AKedOLT2-arf4z54qiWMx3T8WXuP7BKT6iMEIzBrU4uG=s900-c-k-c0x00ffffff-no-rj"
 
                 },
@@ -60,72 +60,72 @@ namespace ProjectVR.DataAccess.DataSeeding
                 {
                     Guid = Guid.Parse("fbfa8300-e0fd-410b-a7be-4357eb0fc6bc"),
                     Username = "falloutenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/6a991cedbf9caf7e0dfd32c5f17f13820c818bf8_medium.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("ca7a6018-0cf2-45da-a54c-0de1e7401bb4"),
                     Username = "beatsaberenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://modelsaber.com/files/saber/1607719628/original.png"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("385f17c9-46b2-49f8-9425-9824369f6e84"),
                     Username = "forestenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/e49df9e19ca580ebd13d8d6b69c43a6c9bad8ac0_medium.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("999c5da3-c747-44a1-b56d-416d403bb6c6"),
                     Username = "quest2enjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://cdn4.iconfinder.com/data/icons/vr-avatars/512/VR8-1024.png"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("4ebe0fb3-d0c2-4474-8ffa-d1640bff6de4"),
                     Username = "quest3enjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/07a8f40c65079d2a6caf4af91a5e466517cd7a19_medium.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("2f5598a2-a160-47d0-a36a-09c54f29aa28"),
                     Username = "questproenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("a646f675-bafc-4a9e-a162-ca132316db3c"),
                     Username = "valveindexenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/b3c041f3eb316e0edf16e6ba36f426b433e16cee_medium.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("83331ccb-485a-4dd3-b77f-8d4f7d812505"),
                     Username = "viveenjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/3388c1a9ff4cb271d0794154ff5e3405fae7b661_medium.jpg"
                 },
                 new UserInfo
                 {
                     Guid = Guid.Parse("31ed4b17-5e00-4d84-9189-425eb242d893"),
                     Username = "vive2enjoyer",
-                    CreatedAt = DateTimeOffset.Now,
-                    LastSeen = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                    LastSeen = DateTimeOffset.ParseExact("2023-05-31", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                     Avatar = "https://avatars.akamai.steamstatic.com/fc13bb1f59388dc6070a14f9224b6f697e08a4d3_medium.jpg"
                 }
             };

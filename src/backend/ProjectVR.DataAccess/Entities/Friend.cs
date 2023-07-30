@@ -11,7 +11,7 @@ namespace ProjectVR.DataAccess.Entities
         public Guid FromUserGuid { get; set; }
         public UserInfo To { get; set; } = null!;
         public Guid ToUserGuid { get; set; }
-        public DateTimeOffset AcceptedAt { get; set; }
+        public DateTimeOffset? AcceptedAt { get; set; }
     }
     internal class FriendsConfiguration : IEntityTypeConfiguration<Friend>
     {
@@ -31,7 +31,7 @@ namespace ProjectVR.DataAccess.Entities
 
             builder
                 .Property(friend => friend.AcceptedAt)
-                .IsRequired();
+                .IsRequired(false);
         }
     }
 }

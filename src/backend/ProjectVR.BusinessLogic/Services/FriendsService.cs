@@ -1,6 +1,5 @@
 ﻿using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Interfaces.Services;
-using ProjectVR.Domain.Models;
 
 namespace ProjectVR.BusinessLogic.Services
 {
@@ -11,18 +10,16 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _usersRepository = usersRepository;
         }
-        public async Task<bool> AddFriend(Guid from, Guid to)
+        public async Task<bool> AddFriend(Guid fromUserGuid, Guid toUserGuid)
         {
-
-            FriendRequest? request = await _usersRepository.GetFriendRequestByUserGuids(from, to);
-            bool doesRequestExist = request is not null;
-            if (!doesRequestExist)
+            bool requestExists = await _usersRepository.RequestExists(toUserGuid, fromUserGuid);
+            if (requestExists)
             {
-                bool isRequested = await _usersRepository.CreateFriendRequest(from, to);
-                return isRequested;
+                bool isAccepted = await _usersRepository.AcceptFriendRequest(toUserGuid, fromUserGuid);
+                return isAccepted;
             }
-            bool isAdded = await _usersRepository.CreateFriendAndDeleteFriendRequest(to, from);
-            return isAdded;
+            await _usersRepository.CreateFriendRequest(fromUserGuid, toUserGuid);
+            return true;
         }
     }
 }
