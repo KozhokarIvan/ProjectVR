@@ -5,11 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ProjectVR.BusinessLogic.Services;
 using ProjectVR.DataAccess;
-using ProjectVR.DataAccess.Repositories;
-using ProjectVR.Domain.Interfaces.Repositories;
-using ProjectVR.Domain.Interfaces.Services;
+using ProjectVR.WebAPI.Extensions;
 using Serilog;
 
 namespace ProjectVR.WebAPI
@@ -51,10 +48,8 @@ namespace ProjectVR.WebAPI
                 builder.Services.AddDbContext<ProjectVRDbContext>(options =>
                         options.UseNpgsql(connectionString));
 
-                builder.Services.AddScoped<IUsersService, UsersService>();
-                builder.Services.AddScoped<IAuthService, AuthService>();
-                builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-                builder.Services.AddScoped<IFriendsService, FriendsService>();
+                builder.Services.AddBusinessLogic();
+                builder.Services.AddDataAccess();
 
                 var app = builder.Build();
 
