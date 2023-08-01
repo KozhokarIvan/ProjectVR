@@ -8,6 +8,7 @@ namespace ProjectVR.DataAccess.Mapping
         {
             Domain.Models.UserGame gameEntity = new Domain.Models.UserGame
             {
+                GameId = userGame.Game.Id,
                 GameIcon = userGame.Game.Icon,
                 GameName = userGame.Game.Name,
                 IsFavorite = userGame.IsFavorite,

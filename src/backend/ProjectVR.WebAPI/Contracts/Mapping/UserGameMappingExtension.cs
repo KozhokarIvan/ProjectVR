@@ -6,6 +6,7 @@
         {
             UserGame userGame = new UserGame
             {
+                GameId = domainUserGame.GameId,
                 GameName = domainUserGame.GameName,
                 Rating = domainUserGame.Rating,
                 IsFavorite = domainUserGame.IsFavorite,
