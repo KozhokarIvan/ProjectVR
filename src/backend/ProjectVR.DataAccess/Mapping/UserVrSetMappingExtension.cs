@@ -8,7 +8,8 @@ namespace ProjectVR.DataAccess.Mapping
         {
             Domain.Models.UserVrSet userVrSetEntity = new Domain.Models.UserVrSet
             {
-                VrSet = userVrSet.VrSet.MapToDomainModel(),
+                VrSetIcon = userVrSet.VrSet.Icon,
+                VrSetName = userVrSet.VrSet.Name,
                 IsFavorite = userVrSet.IsFavorite
             };
             return userVrSetEntity;

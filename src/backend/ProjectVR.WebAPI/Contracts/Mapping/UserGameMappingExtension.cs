@@ -6,11 +6,10 @@
         {
             UserGame userGame = new UserGame
             {
-                GameId = domainUserGame.Game.Id,
-                Name = domainUserGame.Game.Name,
+                GameName = domainUserGame.GameName,
                 Rating = domainUserGame.Rating,
                 IsFavorite = domainUserGame.IsFavorite,
-                Icon = domainUserGame.Game.Icon
+                GameIcon = domainUserGame.GameIcon
             };
             return userGame;
         }

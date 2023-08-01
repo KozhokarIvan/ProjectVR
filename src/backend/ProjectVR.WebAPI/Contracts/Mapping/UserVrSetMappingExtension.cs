@@ -6,10 +6,9 @@
         {
             UserVrSet userVrSet = new UserVrSet
             {
-                VrSetId = domainUserVrSet.VrSet.Id,
-                Name = domainUserVrSet.VrSet.Name,
+                VrSetName = domainUserVrSet.VrSetName,
                 IsFavorite = domainUserVrSet.IsFavorite,
-                Icon = domainUserVrSet.VrSet.Icon
+                VrSetIcon = domainUserVrSet.VrSetIcon
             };
             return userVrSet;
         }

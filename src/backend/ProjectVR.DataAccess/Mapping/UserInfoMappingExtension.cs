@@ -7,17 +7,6 @@ namespace ProjectVR.DataAccess.Mapping
     {
         public static UserInfo MapToDomainModel(this Entities.UserInfo userinfoEntity)
         {
-            UserInfo userinfo = userinfoEntity.MapToDomainModelWithoutFriendsInfo();
-
-            userinfo.Friends = userinfoEntity.Friends
-                .Select(f =>
-                    f.MapToDomainModel(f.From.MapToDomainModelWithoutFriendsInfo(), f.To.MapToDomainModelWithoutFriendsInfo()))
-                .ToArray();
-
-            return userinfo;
-        }
-        public static UserInfo MapToDomainModelWithoutFriendsInfo(this Entities.UserInfo userinfoEntity)
-        {
             UserInfo userinfo = new UserInfo
             {
                 Guid = userinfoEntity.Guid,
