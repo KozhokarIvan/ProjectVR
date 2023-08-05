@@ -2,7 +2,9 @@
 {
     public class UserVrSet
     {
-        public VrSet VrSet { get; set; } = null!;
+        public int VrSetId { get; set; }
+        public string VrSetName { get; set; } = null!;
+        public string VrSetIcon { get; set; } = null!;
         public bool IsFavorite { get; set; }
     }
 }

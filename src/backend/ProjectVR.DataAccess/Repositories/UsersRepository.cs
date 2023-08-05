@@ -16,81 +16,52 @@ namespace ProjectVR.DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<bool> AcceptFriendRequest(Guid userThatSentRequestGuid, Guid userThatAcceptedRequestGuid)
-        {
-            var request = await _context.Friends
-                .FirstOrDefaultAsync(f => f.FromUserGuid == userThatSentRequestGuid && f.ToUserGuid == userThatAcceptedRequestGuid);
-            if (request is null) return false;
-            request.AcceptedAt = DateTimeOffset.Now;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task CreateFriendRequest(Guid fromUserGuid, Guid toUserGuid)
-        {
-            var request = new Entities.Friend
-            {
-                FromUserGuid = fromUserGuid,
-                ToUserGuid = toUserGuid
-            };
-            await _context.Friends.AddAsync(request);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> RequestExists(Guid fromUserGuid, Guid toUserGuid)
-        {
-            bool doesRequestExist = await _context.Friends
-                .AsNoTracking()
-                .AnyAsync(friend => friend.FromUserGuid == fromUserGuid && friend.ToUserGuid == toUserGuid);
-            return doesRequestExist;
-        }
-
-        public async Task<UserInfo[]> FindUsers(string? game, string? vrset, Guid? userGuidToExclude = null)
+        public async Task<UserSummary[]> FindUsers(string? game, string? vrset, Guid? userGuidToExclude = null)
         {
             bool isThereUserToExclude = userGuidToExclude is null;
-            UserInfo[] users = await _context.Usersinfo
+            UserSummary[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .Where(u =>
                 (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
                 &&
                 (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper())))
-                && 
+                &&
                 isThereUserToExclude ? true : u.Guid != userGuidToExclude)
                 .Include(user => user.Games)
-                .ThenInclude(usergame => usergame.Game)
+                    .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
-                .ThenInclude(uservrset => uservrset.VrSet)
+                    .ThenInclude(uservrset => uservrset.VrSet)
                 .Select(u => u.MapToDomainModel())
-                .ToArrayAsync() ?? Array.Empty<UserInfo>();
+                .ToArrayAsync() ?? Array.Empty<UserSummary>();
 
             return users;
         }
 
-        public async Task<UserInfo[]> GetRandomUsers(Guid? userGuidToExclude = null)
+        public async Task<UserSummary[]> GetRandomUsers(Guid? userGuidToExclude = null)
         {
             bool isThereUserToExclude = userGuidToExclude is null;
-            UserInfo[] users = await _context.Usersinfo
+            UserSummary[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .OrderBy(u => EF.Functions.Random())
                 .Where(u => isThereUserToExclude ? true : u.Guid != userGuidToExclude)
                 .Take(5)
                 .Include(user => user.Games)
-                .ThenInclude(usergame => usergame.Game)
+                    .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
-                .ThenInclude(uservrset => uservrset.VrSet)
+                    .ThenInclude(uservrset => uservrset.VrSet)
                 .Select(u => u.MapToDomainModel())
-                .ToArrayAsync() ?? Array.Empty<UserInfo>();
+                .ToArrayAsync() ?? Array.Empty<UserSummary>();
 
             return users;
         }
 
-        public async Task<UserInfo?> GetUserByUsername(string username)
+        public async Task<UserSummary?> GetUserByUsername(string username)
         {
             var foundUser = await _context.Usersinfo
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Username == username);
             if (foundUser is null) return null;
-            UserInfo? user = foundUser.MapToDomainModel();
+            UserSummary? user = foundUser.MapToDomainModel();
 
             return user;
         }

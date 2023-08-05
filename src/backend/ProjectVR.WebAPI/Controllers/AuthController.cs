@@ -23,7 +23,7 @@ namespace ProjectVR.WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest credentials)
         {
-            Domain.Models.UserInfo? foundUser = await _authService.Login(credentials.Username);
+            Domain.Models.UserSummary? foundUser = await _authService.Login(credentials.Username);
             if (foundUser is null) return NotFound("Unknown user");
             LoginResponse user = foundUser.MapToLoginResponse();
             return Ok(user);

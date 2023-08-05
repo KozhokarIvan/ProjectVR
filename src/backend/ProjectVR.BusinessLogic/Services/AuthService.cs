@@ -11,9 +11,9 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _usersRepository = usersRepository;
         }
-        public async Task<UserInfo?> Login(string username)
+        public async Task<UserSummary?> Login(string username)
         {
-            UserInfo? loggedUser = await _usersRepository.GetUserByUsername(username);
+            UserSummary? loggedUser = await _usersRepository.GetUserByUsername(username);
             return loggedUser;
         }
     }

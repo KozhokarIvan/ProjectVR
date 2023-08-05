@@ -6,7 +6,7 @@ namespace ProjectVR.WebAPI.Contracts.Mapping.Responses
 {
     internal static class UsersSearchResponseMappingExtension
     {
-        internal static UsersSearchResponse MapToSearchResponse(this UserInfo domainEntity)
+        internal static UsersSearchResponse MapToSearchResponse(this UserSummary domainEntity)
         {
             UsersSearchResponse usersSearchResponse = new UsersSearchResponse
             {

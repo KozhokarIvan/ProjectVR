@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectVR.Domain.Models
 {
-    public class UserInfo
+    public class UserSummary
     {
         public const int MштUsernameLength = 4;
         public const int MaxUsernameLength = 32;
@@ -17,6 +17,5 @@ namespace ProjectVR.Domain.Models
         public DateTimeOffset LastSeen { get; set; }
         public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
         public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
-        public ICollection<Friend> Friends { get; set; } = new List<Friend>();
     }
 }

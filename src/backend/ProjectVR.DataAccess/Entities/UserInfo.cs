@@ -25,12 +25,12 @@ namespace ProjectVR.DataAccess.Entities
 
             builder
                 .Property(userinfo => userinfo.Username)
-                .HasMaxLength(Domain.Models.UserInfo.MaxUsernameLength)
+                .HasMaxLength(Domain.Models.UserSummary.MaxUsernameLength)
                 .IsRequired();
 
             builder
                 .Property(userinfo => userinfo.Avatar)
-                .HasMaxLength(Domain.Models.UserInfo.MaxAvatarLength)
+                .HasMaxLength(Domain.Models.UserSummary.MaxAvatarLength)
                 .IsRequired(false);
 
             builder

@@ -18,6 +18,7 @@ namespace ProjectVR.WebAPI.Extensions
         internal static IServiceCollection AddDataAccess(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
+            serviceCollection.AddScoped<IFriendsRepository, FriendsRepository>();
             return serviceCollection;
         }
     }

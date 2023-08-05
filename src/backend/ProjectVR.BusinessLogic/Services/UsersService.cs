@@ -12,15 +12,15 @@ namespace ProjectVR.BusinessLogic.Services
             _usersRepository = userRepository;
         }
 
-        public async Task<UserInfo[]> FindUsers(string? game, string? vrset, Guid? userToExcludeGuid = null)
+        public async Task<UserSummary[]> FindUsers(string? game, string? vrset, Guid? userToExcludeGuid = null)
         {
-            UserInfo[] users = await _usersRepository.FindUsers(game, vrset, userToExcludeGuid);
+            UserSummary[] users = await _usersRepository.FindUsers(game, vrset, userToExcludeGuid);
             return users;
         }
 
-        public async Task<UserInfo[]> GetRandomUsers(Guid? userToExcludeGuid = null)
+        public async Task<UserSummary[]> GetRandomUsers(Guid? userToExcludeGuid = null)
         {
-            UserInfo[] users = await _usersRepository.GetRandomUsers(userToExcludeGuid);
+            UserSummary[] users = await _usersRepository.GetRandomUsers(userToExcludeGuid);
             return users;
         }
     }

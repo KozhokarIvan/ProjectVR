@@ -5,9 +5,9 @@ namespace ProjectVR.DataAccess.Mapping
 {
     internal static class UserInfoMappingExtension
     {
-        public static UserInfo MapToDomainModel(this Entities.UserInfo userinfoEntity)
+        public static UserSummary MapToDomainModel(this Entities.UserInfo userinfoEntity)
         {
-            UserInfo userinfo = new UserInfo
+            UserSummary userinfo = new UserSummary
             {
                 Guid = userinfoEntity.Guid,
                 Username = userinfoEntity.Username,
