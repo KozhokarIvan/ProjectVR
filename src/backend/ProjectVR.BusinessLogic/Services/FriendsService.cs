@@ -27,7 +27,7 @@ namespace ProjectVR.BusinessLogic.Services
             var friend = await _friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendUserGuid);
             if (friend is null)
                 return false;
-            var result = await _friendsRepository.AddFriendEntryDate(friend.Id, DateTimeOffset.Now);
+            var result = await _friendsRepository.AddAcceptedAtDate(friend.Id, DateTimeOffset.Now);
             return result;
         }
 
@@ -55,7 +55,7 @@ namespace ProjectVR.BusinessLogic.Services
             }
             else
             {
-                var result = await _friendsRepository.ClearFriendEntryDate(friend.Id);
+                var result = await _friendsRepository.ClearAcceptedAtDate(friend.Id);
                 return result;
             }
         }

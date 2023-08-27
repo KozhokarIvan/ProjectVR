@@ -35,7 +35,7 @@ namespace ProjectVR.DataAccess.Repositories
             return friend?.MapToDomain();
         }
 
-        public async Task<bool> AddFriendEntryDate(int friendEntryId, DateTimeOffset date)
+        public async Task<bool> AddAcceptedAtDate(int friendEntryId, DateTimeOffset date)
         {
             var friendEntry = await _context.Friends.FirstOrDefaultAsync(f => f.Id == friendEntryId);
             if (friendEntry is null)
@@ -45,7 +45,7 @@ namespace ProjectVR.DataAccess.Repositories
             return true;
         }
 
-        public async Task<bool> ClearFriendEntryDate(int friendEntryId)
+        public async Task<bool> ClearAcceptedAtDate(int friendEntryId)
         {
             var friendEntry = await _context.Friends.FirstOrDefaultAsync(f => f.Id == friendEntryId);
             if (friendEntry is null)
