@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Interfaces.Repositories;
+using ProjectVR.Domain.Models;
 
 namespace ProjectVR.DataAccess.Repositories
 {
@@ -13,23 +15,24 @@ namespace ProjectVR.DataAccess.Repositories
         {
             _context = context;
         }
-        public async Task<int?> GetExactFriendEntryIdByUsersGuids(Guid fromUserGuid, Guid toUserGuid)
+        public async Task<Friend?> GetExactFriendEntryByUsersGuids(Guid fromUserGuid, Guid toUserGuid)
         {
-            var friendEntry = await _context.Friends
+            var friend = await _context.Friends
                 .AsNoTracking()
                 .Where(f => f.FromUserGuid == fromUserGuid && f.ToUserGuid == toUserGuid)
                 .FirstOrDefaultAsync();
-            return friendEntry?.Id;
+            return friend?.MapToDomain();
         }
-        public async Task<int?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid)
+        public async Task<Friend?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid)
         {
-            var friendEntry = await _context.Friends
+            var friend = await _context.Friends
                 .AsNoTracking()
                 .Where(f =>
-                    f.FromUserGuid == firstUserGuid && f.ToUserGuid == secondUserGuid ||
+                    f.FromUserGuid == firstUserGuid && f.ToUserGuid == secondUserGuid 
+                    ||
                     f.ToUserGuid == firstUserGuid && f.FromUserGuid == secondUserGuid)
                 .FirstOrDefaultAsync();
-            return friendEntry?.Id;
+            return friend?.MapToDomain();
         }
 
         public async Task<bool> AddFriendEntryDate(int friendEntryId, DateTimeOffset date)

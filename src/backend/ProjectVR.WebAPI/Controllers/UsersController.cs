@@ -29,21 +29,24 @@ namespace ProjectVR.WebAPI.Controllers
             Guid? loggedUserGuid = null;
             if (!string.IsNullOrWhiteSpace(loggedUserHeader) && Guid.TryParse(loggedUserHeader, out Guid loggedUserGuidFromParse))
                 loggedUserGuid = loggedUserGuidFromParse;
-            UsersSearchResponse[] foundUsers = (await _usersService
-                .FindUsers(request.Game, request.VrSet, loggedUserGuid))
+            var users = await _usersService
+                .FindUsersByGameOrVrset(request.Game, request.VrSet, request.Offset, request.Limit, loggedUserGuid);
+            var result = users
                 .Select(user => user.MapToSearchResponse())
                 .ToArray();
-            return Ok(foundUsers);
+            return Ok(users);
         }
 
-        [HttpGet("random")]
-        public async Task<IActionResult> GetRandomUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader)
+        [HttpGet("random/{limit:int}")]
+        public async Task<IActionResult> GetRandomUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, int limit)
         {
+            if (limit <= 0)
+                return BadRequest("limit can not be less than 1");
             Guid? loggedUserGuid = null;
             if (!string.IsNullOrWhiteSpace(loggedUserHeader) && Guid.TryParse(loggedUserHeader, out Guid loggedUserGuidFromParse))
                 loggedUserGuid = loggedUserGuidFromParse;
             UsersSearchResponse[] foundUsers = (await _usersService
-                .GetRandomUsers(loggedUserGuid))
+                .GetRandomUsers(limit,loggedUserGuid))
                 .Select(user => user.MapToSearchResponse())
                 .ToArray();
 

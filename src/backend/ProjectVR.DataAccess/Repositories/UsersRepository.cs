@@ -16,39 +16,43 @@ namespace ProjectVR.DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<UserSummary[]> FindUsers(string? game, string? vrset, Guid? userGuidToExclude = null)
+        public async Task<UserSummary[]> FindUsersByGameOrVrset(string? game, string? vrset, int offset, int limit, Guid? ignoredUserGuid = null)
         {
-            bool isThereUserToExclude = userGuidToExclude is null;
             UserSummary[] users = await _context.Usersinfo
-                .AsNoTracking()
-                .Where(u =>
-                (game == null || u.Games.Any(g => g.Game.Name.ToUpper().Contains(game.ToUpper())))
+            .AsNoTracking()
+            .Where(u =>
+                game == null || u.Games.Any(g => EF.Functions.ILike(g.Game.Name, game))
                 &&
-                (vrset == null || u.VrSets.Any(vs => vs.VrSet.Name.ToUpper().Contains(vrset.ToUpper())))
+                vrset == null || u.VrSets.Any(v => EF.Functions.ILike(v.VrSet.Name, game))
+                ||
+                vrset == null || u.VrSets.Any(v => EF.Functions.ILike(v.VrSet.Name, vrset)
                 &&
-                isThereUserToExclude ? true : u.Guid != userGuidToExclude)
-                .Include(user => user.Games)
-                    .ThenInclude(usergame => usergame.Game)
-                .Include(ui => ui.VrSets)
-                    .ThenInclude(uservrset => uservrset.VrSet)
+                game == null || u.Games.Any(g => EF.Functions.ILike(g.Game.Name, vrset))
+                && !ignoredUserGuid.HasValue ? true : u.Guid != ignoredUserGuid
+                && !ignoredUserGuid.HasValue ? true : u.Friends.Any(f => f.ToUserGuid != ignoredUserGuid && f.FromUserGuid != ignoredUserGuid)))
+             .Include(user => user.Games)
+                .ThenInclude(usergame => usergame.Game)
+            .Include(ui => ui.VrSets)
+                .ThenInclude(uservrset => uservrset.VrSet)
+                .Skip(offset)
+                .Take(limit)
                 .Select(u => u.MapToDomainModel())
                 .ToArrayAsync() ?? Array.Empty<UserSummary>();
 
             return users;
         }
 
-        public async Task<UserSummary[]> GetRandomUsers(Guid? userGuidToExclude = null)
+        public async Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? ignoredUserGuid = null)
         {
-            bool isThereUserToExclude = userGuidToExclude is null;
             UserSummary[] users = await _context.Usersinfo
                 .AsNoTracking()
                 .OrderBy(u => EF.Functions.Random())
-                .Where(u => isThereUserToExclude ? true : u.Guid != userGuidToExclude)
-                .Take(5)
+                .Where(u => !ignoredUserGuid.HasValue ? true : u.Guid != ignoredUserGuid)
                 .Include(user => user.Games)
                     .ThenInclude(usergame => usergame.Game)
                 .Include(ui => ui.VrSets)
                     .ThenInclude(uservrset => uservrset.VrSet)
+                .Take(numberOfUsers)
                 .Select(u => u.MapToDomainModel())
                 .ToArrayAsync() ?? Array.Empty<UserSummary>();
 

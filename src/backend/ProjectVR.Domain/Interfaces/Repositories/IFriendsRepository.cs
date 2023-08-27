@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ProjectVR.Domain.Models;
 
 namespace ProjectVR.Domain.Interfaces.Repositories
 {
     public interface IFriendsRepository
     {
-        public Task CreateFriendEntry(Guid fromUserGuid, Guid toUserGuid);
-        public Task<int?> GetExactFriendEntryIdByUsersGuids(Guid fromUserGuid, Guid toUserGuid);
-        public Task<int?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid);
-        public Task<bool> ClearFriendEntryDate(int friendEntryId);
-        public Task<bool> AddFriendEntryDate(int friendEntryId, DateTimeOffset date);
-        public Task<bool> DeleteFriendEntry(int friendEntryId);
+        Task CreateFriendEntry(Guid userGuid, Guid friendUserGuid);
+        Task<Friend?> GetExactFriendEntryByUsersGuids(Guid userGuid, Guid friendUserGuid);
+        Task<Friend?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid);
+        Task<bool> ClearFriendEntryDate(int friendEntryId);
+        Task<bool> AddFriendEntryDate(int friendEntryId, DateTimeOffset date);
+        Task<bool> DeleteFriendEntry(int friendEntryId);
     }
 }

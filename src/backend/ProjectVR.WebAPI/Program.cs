@@ -44,12 +44,8 @@ namespace ProjectVR.WebAPI
 
                 builder.Services.AddHttpLogging(options => { });
 
-                string connectionString = builder.Configuration.GetConnectionString(nameof(ProjectVRDbContext));
-                builder.Services.AddDbContext<ProjectVRDbContext>(options =>
-                        options.UseNpgsql(connectionString));
-
                 builder.Services.AddBusinessLogic();
-                builder.Services.AddDataAccess();
+                builder.Services.AddDataAccess(builder.Configuration);
 
                 var app = builder.Build();
 

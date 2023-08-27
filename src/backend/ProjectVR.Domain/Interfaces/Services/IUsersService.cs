@@ -6,7 +6,7 @@ namespace ProjectVR.Domain.Interfaces.Services
 {
     public interface IUsersService
     {
-        public Task<UserSummary[]> FindUsers(string? game, string? vrset, Guid? userToExcludeGuid = null);
-        public Task<UserSummary[]> GetRandomUsers(Guid? userToExcludeGuid = null);
+        Task<UserSummary[]> FindUsersByGameOrVrset(string? game, string? vrset, int offset, int limit, Guid? signedUser = null);
+        Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUser = null);
     }
 }

@@ -14,8 +14,8 @@ namespace ProjectVR.WebAPI.Controllers
         {
             _friendsService = friendsService;
         }
-        [HttpPost("{userToAdd:guid}")]
-        public async Task<IActionResult> SendFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userToAdd)
+        [HttpPost("{friendGuid:guid}")]
+        public async Task<IActionResult> SendFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid friendGuid)
         {
             if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
 
@@ -24,11 +24,11 @@ namespace ProjectVR.WebAPI.Controllers
                 return BadRequest("Failed to parse passed loggerUserGuid");
             }
 
-            var result = await _friendsService.SendFriendRequest(loggedUserGuid, userToAdd);
+            var result = await _friendsService.SendFriendRequest(loggedUserGuid, friendGuid);
             return result ? Ok("Successfully sent friend request") : BadRequest("Something went wrong");
         }
-        [HttpPost("requests/{userToAccept:guid}")]
-        public async Task<IActionResult> AcceptFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userToAccept)
+        [HttpPut("requests/{userGuid:guid}")]
+        public async Task<IActionResult> AcceptFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userGuid)
         {
             if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
 
@@ -37,11 +37,11 @@ namespace ProjectVR.WebAPI.Controllers
                 return BadRequest("Failed to parse passed loggerUserGuid");
             }
 
-            var result = await _friendsService.AcceptFriendRequest(userToAccept, loggedUserGuid);
+            var result = await _friendsService.AcceptFriendRequest(userGuid, loggedUserGuid);
             return result ? Ok("Successfully accepted friend request") : BadRequest("Something went wrong");
         }
-        [HttpDelete("requests/{userToDecline:guid}")]
-        public async Task<IActionResult> DeclineFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userToDecline)
+        [HttpDelete("requests/{userGuid:guid}")]
+        public async Task<IActionResult> DeclineFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userGuid)
         {
             if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
 
@@ -50,12 +50,12 @@ namespace ProjectVR.WebAPI.Controllers
                 return BadRequest("Failed to parse passed loggerUserGuid");
             }
 
-            var result = await _friendsService.DeclineFriendRequest(userToDecline, loggedUserGuid);
+            var result = await _friendsService.DeclineFriendRequest(userGuid, loggedUserGuid);
             return result ? Ok("Successfully declined friend request") : BadRequest("Something went wrong");
         }
 
-        [HttpDelete("friendToDelete:guid")]
-        public async Task<IActionResult> DeleteFriend([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid friendToDelete)
+        [HttpDelete("{friendGuid:guid}")]
+        public async Task<IActionResult> DeleteFriend([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid friendGuid)
         {
             if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
 
@@ -64,20 +64,8 @@ namespace ProjectVR.WebAPI.Controllers
                 return BadRequest("Failed to parse passed loggerUserGuid");
             }
 
-            var result = await _friendsService.DeleteFriend(loggedUserGuid, friendToDelete);
+            var result = await _friendsService.DeleteFriend(loggedUserGuid, friendGuid);
             return result ? Ok("Successfully deleted friend") : BadRequest("Something went wrong");
-        }
-        [HttpPut("requests/{userToCancel:guid}")]
-        public async Task<IActionResult> CancelFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader, Guid userToCancel)
-        {
-            if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
-
-            if (!Guid.TryParse(loggedUserHeader, out Guid loggedUserGuid))
-            {
-                return BadRequest("Failed to parse passed loggerUserGuid");
-            }
-            var result = await _friendsService.CancelFriendRequest(loggedUserGuid, userToCancel);
-            return result ? Ok("Successfully cancelled friend request") : BadRequest("Something went wrong");
         }
     }
 }

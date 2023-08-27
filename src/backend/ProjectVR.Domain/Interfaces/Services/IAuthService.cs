@@ -5,6 +5,6 @@ namespace ProjectVR.Domain.Interfaces.Services
 {
     public interface IAuthService
     {
-        public Task<UserSummary?> Login(string username);
+        Task<UserSummary?> Login(string username);
     }
 }

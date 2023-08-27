@@ -10,53 +10,54 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _friendsRepository = friendsRepository;
         }
-
-        public async Task<bool> AcceptFriendRequest(Guid fromUserGuid, Guid toUserGuid)
+        public async Task<bool> SendFriendRequest(Guid userGuid, Guid friendUserGuid)
         {
-            var friendEntryId = await _friendsRepository.GetExactFriendEntryIdByUsersGuids(fromUserGuid, toUserGuid);
-            if (!friendEntryId.HasValue)
+            var friendRequestFrom = await _friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendUserGuid);
+            if (friendRequestFrom is not null)
                 return false;
-            var result = await _friendsRepository.AddFriendEntryDate(friendEntryId.Value, DateTimeOffset.Now);
-            return result;
-        }
-
-        public async Task<bool> CancelFriendRequest(Guid fromUserGuid, Guid toUserGuid)
-        {
-            var friendEntryId = await _friendsRepository.GetExactFriendEntryIdByUsersGuids(fromUserGuid, toUserGuid);
-            if (!friendEntryId.HasValue)
+            var friendRequestTo = await _friendsRepository.GetExactFriendEntryByUsersGuids(friendUserGuid, userGuid);
+            if (friendRequestTo is not null)
                 return false;
-            var result = await _friendsRepository.DeleteFriendEntry(friendEntryId.Value);
-            return result;
-        }
-
-        public async Task<bool> DeclineFriendRequest(Guid fromUserGuid, Guid toUserGuid)
-        {
-            var friendEntryId = await _friendsRepository.GetExactFriendEntryIdByUsersGuids(fromUserGuid, toUserGuid);
-            if (!friendEntryId.HasValue)
-                return false;
-            var result = await _friendsRepository.DeleteFriendEntry(friendEntryId.Value);
-            return result;
-        }
-
-        public async Task<bool> DeleteFriend(Guid firstUserGuid, Guid secondUserGuid)
-        {
-            var friendEntryId = await _friendsRepository.GetFriendEntryByUserGuids(firstUserGuid, secondUserGuid);
-            if (!friendEntryId.HasValue)
-                return false;
-            var result = await _friendsRepository.ClearFriendEntryDate(friendEntryId.Value);
-            return result;
-        }
-
-        public async Task<bool> SendFriendRequest(Guid fromUserGuid, Guid toUserGuid)
-        {
-            var friendRequestFromId = await _friendsRepository.GetExactFriendEntryIdByUsersGuids(fromUserGuid, toUserGuid);
-            if (friendRequestFromId.HasValue)
-                return false;
-            var friendRequestToId = await _friendsRepository.GetExactFriendEntryIdByUsersGuids(toUserGuid, fromUserGuid);
-            if (friendRequestToId.HasValue)
-                return false;
-            await _friendsRepository.CreateFriendEntry(fromUserGuid, toUserGuid);
+            await _friendsRepository.CreateFriendEntry(userGuid, friendUserGuid);
             return true;
+        }
+
+        public async Task<bool> AcceptFriendRequest(Guid userGuid, Guid friendUserGuid)
+        {
+            var friend = await _friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendUserGuid);
+            if (friend is null)
+                return false;
+            var result = await _friendsRepository.AddFriendEntryDate(friend.Id, DateTimeOffset.Now);
+            return result;
+        }
+
+        public async Task<bool> DeclineFriendRequest(Guid firstUserGuid, Guid secondUserGuid)
+        {
+            var friend = await _friendsRepository.GetFriendEntryByUserGuids(firstUserGuid, secondUserGuid);
+            if (friend is null)
+                return false;
+            var result = await _friendsRepository.DeleteFriendEntry(friend.Id);
+            return result;
+        }
+
+        public async Task<bool> DeleteFriend(Guid userGuid, Guid deletedUserGuid)
+        {
+            var friend = await _friendsRepository.GetFriendEntryByUserGuids(userGuid, deletedUserGuid);
+            if (friend is null)
+                return false;
+            if (friend.FromUserGuid == userGuid)
+            {
+                var isDeleted = await _friendsRepository.DeleteFriendEntry(friend.Id);
+                if (!isDeleted)
+                    return false;
+                await _friendsRepository.CreateFriendEntry(deletedUserGuid, userGuid);
+                return true;
+            }
+            else
+            {
+                var result = await _friendsRepository.ClearFriendEntryDate(friend.Id);
+                return result;
+            }
         }
     }
 }

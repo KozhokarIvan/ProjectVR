@@ -6,8 +6,8 @@ namespace ProjectVR.Domain.Interfaces.Repositories
 {
     public interface IUsersRepository
     {
-        public Task<UserSummary[]> FindUsers(string? gameName, string? vrsetName, Guid? userToExcludeGuid = null);
-        public Task<UserSummary[]> GetRandomUsers(Guid? userToExcludeGuid = null);
-        public Task<UserSummary?> GetUserByUsername(string username);
+        Task<UserSummary[]> FindUsersByGameOrVrset(string? gameName, string? vrsetName, int offset, int limit, Guid? ignoredUserGuid = null);
+        Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? ignoredUserGuid = null);
+        Task<UserSummary?> GetUserByUsername(string username);
     }
 }

@@ -5,10 +5,9 @@ namespace ProjectVR.Domain.Interfaces.Services
 {
     public interface IFriendsService
     {
-        public Task<bool> SendFriendRequest(Guid fromUserGuid, Guid toUserGuid);
-        public Task<bool> AcceptFriendRequest(Guid fromUserGuid, Guid toUserGuid);
-        public Task<bool> CancelFriendRequest(Guid fromUserGuid, Guid toUserGuid);
-        public Task<bool> DeclineFriendRequest(Guid fromUserGuid, Guid toUserGuid);
-        public Task<bool> DeleteFriend(Guid firstUserGuid, Guid secondUserGuid);
+        Task<bool> SendFriendRequest(Guid userGuid, Guid friendUserGuid);
+        Task<bool> AcceptFriendRequest(Guid userGuid, Guid friendUserGuid);
+        Task<bool> DeclineFriendRequest(Guid firstUserGuid, Guid secondUserGuid);
+        Task<bool> DeleteFriend(Guid userGuid, Guid deletedFriendUserGuid);
     }
 }
