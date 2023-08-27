@@ -6,7 +6,7 @@ namespace ProjectVR.BusinessLogic.Services
     public class FriendsService : IFriendsService
     {
         private readonly IFriendsRepository _friendsRepository;
-        public FriendsService(IFriendsRepository friendsRepository, IUsersRepository usersRepository)
+        public FriendsService(IFriendsRepository friendsRepository)
         {
             _friendsRepository = friendsRepository;
         }

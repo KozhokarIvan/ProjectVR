@@ -1,6 +1,6 @@
 ﻿namespace ProjectVR.WebAPI.Contracts.Requests
 {
-    public class UsersSearchRequest
+    public class GetUsersRequest
     {
         public string? Game { get; set; }
         public string? VrSet { get; set; }

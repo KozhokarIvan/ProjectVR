@@ -11,16 +11,20 @@ namespace ProjectVR.BusinessLogic.Services
         {
             _usersRepository = userRepository;
         }
-
-        public async Task<UserSummary[]> FindUsersByGameOrVrset(string? game, string? vrset, int offset, int limit, Guid? signedUser = null)
+        public async Task<UserSummary[]> FindUsersByGameOrVrSet(string query, int offset, int limit, Guid? signedUserGuid = null)
         {
-            UserSummary[] users = await _usersRepository.FindUsersByGameOrVrset(game, vrset, offset, limit, signedUser);
+            UserSummary[] users = await _usersRepository.FindUsersByGameOrVrSet(query, offset, limit, signedUserGuid);
+            return users;
+        }
+        public async Task<UserSummary[]> FindUsersByGameAndVrset(string? game, string? vrset, int offset, int limit, Guid? signedUserGuid = null)
+        {
+            UserSummary[] users = await _usersRepository.FindUsersByGameAndVrset(game, vrset, offset, limit, signedUserGuid);
             return users;
         }
 
-        public async Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUser = null)
+        public async Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null)
         {
-            UserSummary[] users = await _usersRepository.GetRandomUsers(numberOfUsers, signedUser);
+            UserSummary[] users = await _usersRepository.GetRandomUsers(numberOfUsers, signedUserGuid);
             return users;
         }
     }

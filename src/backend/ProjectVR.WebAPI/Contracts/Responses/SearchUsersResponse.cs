@@ -2,7 +2,7 @@
 
 namespace ProjectVR.WebAPI.Contracts.Responses
 {
-    public class UsersSearchResponse
+    public class SearchUsersResponse
     {
         public Guid Guid { get; set; }
         public string Username { get; set; } = null!;

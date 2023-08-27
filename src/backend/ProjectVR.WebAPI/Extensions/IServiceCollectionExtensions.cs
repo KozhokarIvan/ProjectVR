@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectVR.BusinessLogic.Services;
@@ -20,7 +21,8 @@ namespace ProjectVR.WebAPI.Extensions
         }
         internal static IServiceCollection AddDataAccess(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            string connectionString =  configuration.GetConnectionString(nameof(ProjectVRDbContext));
+            string connectionString = configuration.GetConnectionString(nameof(ProjectVRDbContext))
+                                      ?? throw new ArgumentNullException($"Connection string with name {nameof(ProjectVRDbContext)} is not set");
             serviceCollection.AddDbContext<ProjectVRDbContext>(options =>
                     options.UseNpgsql(connectionString));
             serviceCollection.AddScoped<IUsersRepository, UsersRepository>();

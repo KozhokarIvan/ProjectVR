@@ -4,11 +4,11 @@ using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Contracts.Mapping.Responses
 {
-    internal static class UsersSearchResponseMappingExtension
+    internal static class GetRandomUsersResponseMappingExtension
     {
-        internal static UsersSearchResponse MapToSearchResponse(this UserSummary domainEntity)
+        internal static GetRandomUsersResponse MapToGetRandomUsersResponse(this UserSummary domainEntity)
         {
-            UsersSearchResponse usersSearchResponse = new UsersSearchResponse
+            GetRandomUsersResponse user = new GetRandomUsersResponse
             {
                 Guid = domainEntity.Guid,
                 Username = domainEntity.Username,
@@ -16,7 +16,7 @@ namespace ProjectVR.WebAPI.Contracts.Mapping.Responses
                 Games = domainEntity.Games.Select(game => game.MapToApi()).ToArray(),
                 VrSets = domainEntity.VrSets.Select(vrset => vrset.MapToApi()).ToArray()
             };
-            return usersSearchResponse;
+            return user;
         }
     }
 }

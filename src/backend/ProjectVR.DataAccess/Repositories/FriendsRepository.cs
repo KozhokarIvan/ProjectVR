@@ -28,7 +28,7 @@ namespace ProjectVR.DataAccess.Repositories
             var friend = await _context.Friends
                 .AsNoTracking()
                 .Where(f =>
-                    f.FromUserGuid == firstUserGuid && f.ToUserGuid == secondUserGuid 
+                    f.FromUserGuid == firstUserGuid && f.ToUserGuid == secondUserGuid
                     ||
                     f.ToUserGuid == firstUserGuid && f.FromUserGuid == secondUserGuid)
                 .FirstOrDefaultAsync();
