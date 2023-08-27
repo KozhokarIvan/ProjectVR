@@ -4,8 +4,8 @@ namespace ProjectVR.WebAPI.Contracts.Responses
 {
     public class LoginResponse
     {
-        public Guid UserGuid { get; set; }
-        public string Username { get; set; } = null!;
-        public string? Avatar { get; set; }
+        public Guid UserGuid { get; init; }
+        public string Username { get; init; } = null!;
+        public string? Avatar { get; init; }
     }
 }

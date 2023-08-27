@@ -2,9 +2,9 @@
 {
     public class GetUsersRequest
     {
-        public string? Game { get; set; }
-        public string? VrSet { get; set; }
-        public int Offset { get; set; }
-        public int Limit { get; set; }
+        public string? Game { get; init; }
+        public string? VrSet { get; init; }
+        public int Offset { get; init; }
+        public int Limit { get; init; }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class SearchUsersRequest
     {
-        public string SearchQuery { get; set; } = string.Empty;
-        public int Limit { get; set; }
-        public int Offset { get; set; }
+        public string SearchQuery { get; init; } = string.Empty;
+        public int Limit { get; init; }
+        public int Offset { get; init; }
     }
 }
