@@ -6,26 +6,29 @@ namespace ProjectVR.BusinessLogic.Services
     public class FriendsService : IFriendsService
     {
         private readonly IFriendsRepository _friendsRepository;
+
         public FriendsService(IFriendsRepository friendsRepository)
         {
             _friendsRepository = friendsRepository;
         }
+
         public async Task<bool> SendFriendRequest(Guid userGuid, Guid friendUserGuid)
         {
-            var friendRequestFrom = await _friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendUserGuid);
-            if (friendRequestFrom is not null)
+            if (userGuid == friendUserGuid)
                 return false;
-            var friendRequestTo = await _friendsRepository.GetExactFriendEntryByUsersGuids(friendUserGuid, userGuid);
-            if (friendRequestTo is not null)
+            var friendRequest = await _friendsRepository.GetFriendEntryByUserGuids(userGuid, friendUserGuid);
+            if (friendRequest is not null)
                 return false;
             await _friendsRepository.CreateFriendEntry(userGuid, friendUserGuid);
             return true;
         }
 
-        public async Task<bool> AcceptFriendRequest(Guid userGuid, Guid friendUserGuid)
+        public async Task<bool> AcceptFriendRequest(Guid accepterUserGuid, Guid senderUserGuid)
         {
-            var friend = await _friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendUserGuid);
+            var friend = await _friendsRepository.GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid);
             if (friend is null)
+                return false;
+            if (friend.SenderUserGuid == accepterUserGuid)
                 return false;
             var result = await _friendsRepository.AddAcceptedAtDate(friend.Id, DateTimeOffset.Now);
             return result;
@@ -45,7 +48,7 @@ namespace ProjectVR.BusinessLogic.Services
             var friend = await _friendsRepository.GetFriendEntryByUserGuids(userGuid, deletedUserGuid);
             if (friend is null)
                 return false;
-            if (friend.FromUserGuid == userGuid)
+            if (friend.SenderUserGuid == userGuid)
             {
                 var isDeleted = await _friendsRepository.DeleteFriendEntry(friend.Id);
                 if (!isDeleted)
@@ -53,11 +56,8 @@ namespace ProjectVR.BusinessLogic.Services
                 await _friendsRepository.CreateFriendEntry(deletedUserGuid, userGuid);
                 return true;
             }
-            else
-            {
-                var result = await _friendsRepository.ClearAcceptedAtDate(friend.Id);
-                return result;
-            }
+            var result = await _friendsRepository.ClearAcceptedAtDate(friend.Id);
+            return result;
         }
     }
 }

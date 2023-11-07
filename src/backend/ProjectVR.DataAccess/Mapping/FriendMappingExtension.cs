@@ -8,8 +8,8 @@ namespace ProjectVR.DataAccess.Mapping
             => new Friend
             {
                 Id = friendEntity.Id,
-                FromUserGuid = friendEntity.FromUserGuid,
-                ToUserGuid = friendEntity.ToUserGuid
+                SenderUserGuid = friendEntity.FromUserGuid,
+                AccepterUserGuid = friendEntity.ToUserGuid
             };
     }
 }

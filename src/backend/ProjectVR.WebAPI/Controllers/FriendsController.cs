@@ -37,7 +37,7 @@ namespace ProjectVR.WebAPI.Controllers
                 return BadRequest("Failed to parse passed loggerUserGuid");
             }
 
-            var result = await _friendsService.AcceptFriendRequest(userGuid, loggedUserGuid);
+            var result = await _friendsService.AcceptFriendRequest(loggedUserGuid, userGuid);
             return result ? Ok("Successfully accepted friend request") : BadRequest("Something went wrong");
         }
         [HttpDelete("requests/{userGuid:guid}")]

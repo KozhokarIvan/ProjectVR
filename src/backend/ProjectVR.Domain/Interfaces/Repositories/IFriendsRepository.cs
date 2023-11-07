@@ -16,8 +16,8 @@ namespace ProjectVR.Domain.Interfaces.Repositories
         /// <summary>
         /// Возвращает заявку в друзья, при этом <paramref name="userGuid"/> это обязательно Guid отправителя, а <paramref name="friendUserGuid"/> - получателя
         /// </summary>
-        /// <param name="userGuid"></param>
-        /// <param name="friendUserGuid"></param>
+        /// <param name="userGuid">Guid отправителя</param>
+        /// <param name="friendUserGuid">Guid получателя</param>
         /// <returns>Заявка в друзья. null если такой заявки не найдено</returns>
         Task<Friend?> GetExactFriendEntryByUsersGuids(Guid userGuid, Guid friendUserGuid);
 

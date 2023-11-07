@@ -14,15 +14,16 @@ namespace ProjectVR.Domain.Interfaces.Services
         Task<bool> SendFriendRequest(Guid userGuid, Guid friendUserGuid);
 
         /// <summary>
-        /// Принимает заявку от пользователя с Guid <paramref name="friendUserGuid"/> пользователю <paramref name="userGuid"/>
+        /// Принимает заявку от пользователя с Guid <paramref name="senderUserGuid"/> пользователю <paramref name="accepterUserGuid"/>
         /// </summary>
-        /// <param name="userGuid">Guid получателя</param>
-        /// <param name="friendUserGuid">Guid отправителя</param>
+        /// <param name="accepterUserGuid">Guid получателя</param>
+        /// <param name="senderUserGuid">Guid отправителя</param>
         /// <returns>Была ли заявка успешно принята</returns>
-        Task<bool> AcceptFriendRequest(Guid userGuid, Guid friendUserGuid);
+        Task<bool> AcceptFriendRequest(Guid accepterUserGuid, Guid senderUserGuid);
 
         /// <summary>
         /// Отменяет или отклоняет заявку между пользователями <paramref name="firstUserGuid"/> и <paramref name="secondUserGuid"/>
+        /// (в зависимости от того кто отправитель, а кто получатель)
         /// </summary>
         /// <param name="firstUserGuid">Guid первого пользователя</param>
         /// <param name="secondUserGuid">Guid второго пользователя</param>

@@ -29,10 +29,12 @@ namespace ProjectVR.WebAPI
                 // Add services to the container.
 
                 builder.Services.AddCors(options =>
-                    options.AddPolicy("CorsPolicy", builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
-                    }));
+                    options.AddPolicy("CorsPolicy",
+                        builder =>
+                        {
+                            builder.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader()
+                                .AllowAnyMethod();
+                        }));
                 builder.Services.AddControllers();
 
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
