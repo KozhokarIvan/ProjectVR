@@ -1,37 +1,44 @@
-version: '3.4'
+﻿version: '3.9'
 
 services:
-  projectvr-database:
-    container_name: projectvr-database
-    image: postgres:latest
+  projectvr_database:
+    container_name: ${PROJECTVR_DATABASE_CONTAINER_NAME}
+    image: postgres:15.4
     ports:
-      - 5433:5432
-    volumes: 
-        - dbvolume:/home/postgres/app/projectvrdb
+      - "${PROJECTVR_DATABASE_EXTERNAL_PORT}:${PROJECTVR_DATABASE_INTERNAL_PORT}"
+    volumes:
+      - projectvrdb:/home/postgres/app/projectvrdb
     restart: always
     environment:
-      POSTGRES_PASSWORD: Password1
-  projectvr.webapi:
-    container_name: projectvr-webapi
-    image: ${DOCKER_REGISTRY-}projectvrwebapi
+      POSTGRES_PASSWORD: ${PROJECTVR_DATABASE_PASSWORD}
+  
+  projectvr_webapi:
+    container_name: ${PROJECTVR_API_CONTAINER_NAME}
+    image: projectvrwebapi
     ports:
-      - 8080:443 
-      - 8081:80
+      - "${PROJECTVR_API_EXTERNAL_PORT_HTTPS}:${PROJECTVR_API_INTERNAL_PORT_HTTPS}"
+      - "${PROJECTVR_API_EXTERNAL_PORT_HTTP}:${PROJECTVR_API_INTERNAL_PORT_HTTP}"
     build:
       context: .
       dockerfile: ProjectVR.WebAPI/Dockerfile
     depends_on:
-      - projectvr-database
+      - projectvr_database
     restart: always
-  projectvr-seq:
-    container_name: projectvr-seq
+    environment:
+      - ASPNETCORE_URLS=http://+:${PROJECTVR_API_INTERNAL_PORT_HTTP}
+      - Monitoring__SeqPort=${PROJECTVR_API_SEQ_INTERNAL_PORT}
+      - Monitoring__SeqHost=${PROJECTVR_API_SEQ_CONTAINER_NAME}
+      - ConnectionStrings__ProjectVRDbContext=Host=${PROJECTVR_DATABASE_CONTAINER_NAME};Port=${PROJECTVR_DATABASE_INTERNAL_PORT};Database=${PROJECTVR_DATABASE_NAME};Username=${PROJECTVR_DATABASE_USERNAME};Password=${PROJECTVR_DATABASE_PASSWORD};
+  
+  projectvr_seq:
+    container_name: ${PROJECTVR_API_SEQ_CONTAINER_NAME}
     image: datalust/seq:latest
     ports:
-     - 5341:80
+      - "${PROJECTVR_API_SEQ_EXTERNAL_PORT}:${PROJECTVR_API_SEQ_INTERNAL_PORT}"
     depends_on:
-     - projectvr.webapi
+      - projectvr_webapi
     restart: always
     environment:
       ACCEPT_EULA: "Y"
 volumes:
-  dbvolume:    
+  projectvrdb:    
