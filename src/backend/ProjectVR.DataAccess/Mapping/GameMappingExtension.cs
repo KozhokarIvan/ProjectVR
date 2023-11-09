@@ -1,18 +1,17 @@
-﻿using ProjectVR.DataAccess.Entities;
+﻿using ProjectVR.Domain.Models;
 
-namespace ProjectVR.DataAccess.Mapping
+namespace ProjectVR.DataAccess.Mapping;
+
+internal static class GameMappingExtension
 {
-    internal static class GameMappingExtension
+    public static Game MapToDomainModel(this Entities.Game game)
     {
-        public static Domain.Models.Game MapToDomainModel(this Game game)
+        var gameEntity = new Game
         {
-            Domain.Models.Game gameEntity = new Domain.Models.Game
-            {
-                Id = game.Id,
-                Name = game.Name,
-                Icon = game.Icon
-            };
-            return gameEntity;
-        }
+            Id = game.Id,
+            Name = game.Name,
+            Icon = game.Icon
+        };
+        return gameEntity;
     }
 }

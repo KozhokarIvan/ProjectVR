@@ -1,17 +1,16 @@
-﻿namespace ProjectVR.WebAPI.Contracts.Mapping
+﻿namespace ProjectVR.WebAPI.Contracts.Mapping;
+
+internal static class UserVrSetMappingExtension
 {
-    internal static class UserVrSetMappingExtension
+    internal static UserVrSet MapToApi(this Domain.Models.UserVrSet domainUserVrSet)
     {
-        internal static UserVrSet MapToApi(this Domain.Models.UserVrSet domainUserVrSet)
+        var userVrSet = new UserVrSet
         {
-            UserVrSet userVrSet = new UserVrSet
-            {
-                VrSetId = domainUserVrSet.VrSetId,
-                VrSetName = domainUserVrSet.VrSetName,
-                IsFavorite = domainUserVrSet.IsFavorite,
-                VrSetIcon = domainUserVrSet.VrSetIcon
-            };
-            return userVrSet;
-        }
+            VrSetId = domainUserVrSet.VrSetId,
+            VrSetName = domainUserVrSet.VrSetName,
+            IsFavorite = domainUserVrSet.IsFavorite,
+            VrSetIcon = domainUserVrSet.VrSetIcon
+        };
+        return userVrSet;
     }
 }

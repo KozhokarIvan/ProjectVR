@@ -1,18 +1,17 @@
-﻿namespace ProjectVR.WebAPI.Contracts.Mapping
+﻿namespace ProjectVR.WebAPI.Contracts.Mapping;
+
+internal static class UserGameMappingExtension
 {
-    internal static class UserGameMappingExtension
+    internal static UserGame MapToApi(this Domain.Models.UserGame domainUserGame)
     {
-        internal static UserGame MapToApi(this Domain.Models.UserGame domainUserGame)
+        var userGame = new UserGame
         {
-            UserGame userGame = new UserGame
-            {
-                GameId = domainUserGame.GameId,
-                GameName = domainUserGame.GameName,
-                Rating = domainUserGame.Rating,
-                IsFavorite = domainUserGame.IsFavorite,
-                GameIcon = domainUserGame.GameIcon
-            };
-            return userGame;
-        }
+            GameId = domainUserGame.GameId,
+            GameName = domainUserGame.GameName,
+            Rating = domainUserGame.Rating,
+            IsFavorite = domainUserGame.IsFavorite,
+            GameIcon = domainUserGame.GameIcon
+        };
+        return userGame;
     }
 }

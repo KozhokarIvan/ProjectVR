@@ -1,23 +1,23 @@
 ﻿using System.Linq;
+using ProjectVR.DataAccess.Entities;
 using ProjectVR.Domain.Models;
 
-namespace ProjectVR.DataAccess.Mapping
+namespace ProjectVR.DataAccess.Mapping;
+
+internal static class UserInfoMappingExtension
 {
-    internal static class UserInfoMappingExtension
+    public static UserSummary MapToDomainModel(this UserInfo userinfoEntity)
     {
-        public static UserSummary MapToDomainModel(this Entities.UserInfo userinfoEntity)
+        var userinfo = new UserSummary
         {
-            UserSummary userinfo = new UserSummary
-            {
-                Guid = userinfoEntity.Guid,
-                Username = userinfoEntity.Username,
-                Avatar = userinfoEntity.Avatar,
-                CreatedAt = userinfoEntity.CreatedAt,
-                LastSeen = userinfoEntity.LastSeen,
-                Games = userinfoEntity.Games.Select(game => game.MapToDomainModel()).ToArray(),
-                VrSets = userinfoEntity.VrSets.Select(vrset => vrset.MapToDomainModel()).ToArray(),
-            };
-            return userinfo;
-        }
+            Guid = userinfoEntity.Guid,
+            Username = userinfoEntity.Username,
+            Avatar = userinfoEntity.Avatar,
+            CreatedAt = userinfoEntity.CreatedAt,
+            LastSeen = userinfoEntity.LastSeen,
+            Games = userinfoEntity.Games.Select(game => game.MapToDomainModel()).ToArray(),
+            VrSets = userinfoEntity.VrSets.Select(vrset => vrset.MapToDomainModel()).ToArray()
+        };
+        return userinfo;
     }
 }

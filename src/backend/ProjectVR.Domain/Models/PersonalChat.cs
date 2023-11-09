@@ -1,9 +1,8 @@
-﻿namespace ProjectVR.Domain.Models
+﻿namespace ProjectVR.Domain.Models;
+
+public class PersonalChat
 {
-    public class PersonalChat
-    {
-        public int Id { get; set; }
-        public UserSummary FirstUser { get; set; } = null!;
-        public UserSummary SecondUser { get; set; } = null!;
-    }
+    public int Id { get; set; }
+    public UserSummary FirstUser { get; set; } = null!;
+    public UserSummary SecondUser { get; set; } = null!;
 }

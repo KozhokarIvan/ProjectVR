@@ -87,7 +87,7 @@ public class FriendsServiceTests
         //arrange
         var senderUserGuid = Guid.NewGuid();
         var accepterUserGuid = Guid.NewGuid();
-        var friend = new Friend()
+        var friend = new Friend
         {
             Id = 1,
             SenderUserGuid = senderUserGuid,
@@ -118,7 +118,7 @@ public class FriendsServiceTests
         //arrange
         var senderUserGuid = Guid.NewGuid();
         var accepterUserGuid = Guid.NewGuid();
-        var friend = new Friend()
+        var friend = new Friend
         {
             Id = 1,
             SenderUserGuid = accepterUserGuid,
@@ -175,7 +175,7 @@ public class FriendsServiceTests
         //arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
-        var friend = new Friend()
+        var friend = new Friend
         {
             Id = 1,
             SenderUserGuid = friendGuid,
@@ -211,7 +211,7 @@ public class FriendsServiceTests
         //arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
-        var friend = new Friend()
+        var friend = new Friend
         {
             Id = 1,
             SenderUserGuid = userGuid,
@@ -276,7 +276,7 @@ public class FriendsServiceTests
         //arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
-        var friend = new Friend()
+        var friend = new Friend
         {
             Id = 1,
             SenderUserGuid = userGuid,

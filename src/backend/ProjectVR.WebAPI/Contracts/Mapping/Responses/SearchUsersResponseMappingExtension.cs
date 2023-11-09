@@ -2,21 +2,20 @@
 using ProjectVR.Domain.Models;
 using ProjectVR.WebAPI.Contracts.Responses;
 
-namespace ProjectVR.WebAPI.Contracts.Mapping.Responses
+namespace ProjectVR.WebAPI.Contracts.Mapping.Responses;
+
+internal static class SearchUsersResponseMappingExtension
 {
-    internal static class SearchUsersResponseMappingExtension
+    internal static SearchUsersResponse MapToSearchResponse(this UserSummary domainEntity)
     {
-        internal static SearchUsersResponse MapToSearchResponse(this UserSummary domainEntity)
+        var getUsersResponse = new SearchUsersResponse
         {
-            SearchUsersResponse getUsersResponse = new SearchUsersResponse
-            {
-                Guid = domainEntity.Guid,
-                Username = domainEntity.Username,
-                Avatar = domainEntity.Avatar,
-                Games = domainEntity.Games.Select(game => game.MapToApi()).ToArray(),
-                VrSets = domainEntity.VrSets.Select(vrset => vrset.MapToApi()).ToArray()
-            };
-            return getUsersResponse;
-        }
+            Guid = domainEntity.Guid,
+            Username = domainEntity.Username,
+            Avatar = domainEntity.Avatar,
+            Games = domainEntity.Games.Select(game => game.MapToApi()).ToArray(),
+            VrSets = domainEntity.VrSets.Select(vrset => vrset.MapToApi()).ToArray()
+        };
+        return getUsersResponse;
     }
 }

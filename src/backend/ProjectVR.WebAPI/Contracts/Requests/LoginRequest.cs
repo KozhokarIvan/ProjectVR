@@ -1,7 +1,6 @@
-﻿namespace ProjectVR.WebAPI.Contracts.Requests
+﻿namespace ProjectVR.WebAPI.Contracts.Requests;
+
+public class LoginRequest
 {
-    public class LoginRequest
-    {
-        public string Username { get; init; } = null!;
-    }
+    public string Username { get; init; } = null!;
 }

@@ -4,29 +4,28 @@ using Microsoft.Extensions.Logging;
 using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.WebAPI.Contracts.Mapping.Responses;
 using ProjectVR.WebAPI.Contracts.Requests;
-using ProjectVR.WebAPI.Contracts.Responses;
 
-namespace ProjectVR.WebAPI.Controllers
+namespace ProjectVR.WebAPI.Controllers;
+
+[Route("api/")]
+[ApiController]
+public class AuthController : ControllerBase
 {
-    [Route("api/")]
-    [ApiController]
-    public class AuthController : ControllerBase
-    {
-        private readonly ILogger<UsersController> _logger;
-        private readonly IAuthService _authService;
-        public AuthController(ILogger<UsersController> logger, IAuthService authService)
-        {
-            _logger = logger;
-            _authService = authService;
-        }
+    private readonly IAuthService _authService;
+    private readonly ILogger<UsersController> _logger;
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest credentials)
-        {
-            Domain.Models.UserSummary? foundUser = await _authService.Login(credentials.Username);
-            if (foundUser is null) return NotFound("Unknown user");
-            LoginResponse user = foundUser.MapToLoginResponse();
-            return Ok(user);
-        }
+    public AuthController(ILogger<UsersController> logger, IAuthService authService)
+    {
+        _logger = logger;
+        _authService = authService;
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest credentials)
+    {
+        var foundUser = await _authService.Login(credentials.Username);
+        if (foundUser is null) return NotFound("Unknown user");
+        var user = foundUser.MapToLoginResponse();
+        return Ok(user);
     }
 }
