@@ -13,9 +13,6 @@ public class AuthService : IAuthService
         _usersRepository = usersRepository;
     }
 
-    public async Task<UserSummary?> Login(string username)
-    {
-        var loggedUser = await _usersRepository.GetUserByUsername(username);
-        return loggedUser;
-    }
+    public Task<UserSummary?> Login(string username)
+        => _usersRepository.GetUserByUsername(username);
 }

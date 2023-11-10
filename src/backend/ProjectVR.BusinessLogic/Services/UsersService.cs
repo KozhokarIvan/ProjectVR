@@ -13,23 +13,15 @@ public class UsersService : IUsersService
         _usersRepository = userRepository;
     }
 
-    public async Task<UserSummary[]> FindUsersByGameOrVrSet(string query, int offset, int limit,
+    public Task<UserSummary[]> FindUsersByGameOrVrSet(string query, int offset, int limit,
         Guid? signedUserGuid = null)
-    {
-        var users = await _usersRepository.FindUsersByGameOrVrSet(query, offset, limit, signedUserGuid);
-        return users;
-    }
+        => _usersRepository.FindUsersByGameOrVrSet(query, offset, limit, signedUserGuid);
 
-    public async Task<UserSummary[]> FindUsersByGameAndVrset(string? game, string? vrset, int offset, int limit,
+
+    public Task<UserSummary[]> FindUsersByGameAndVrset(string? game, string? vrset, int offset, int limit,
         Guid? signedUserGuid = null)
-    {
-        var users = await _usersRepository.FindUsersByGameAndVrset(game, vrset, offset, limit, signedUserGuid);
-        return users;
-    }
+        => _usersRepository.FindUsersByGameAndVrset(game, vrset, offset, limit, signedUserGuid);
 
-    public async Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null)
-    {
-        var users = await _usersRepository.GetRandomUsers(numberOfUsers, signedUserGuid);
-        return users;
-    }
+    public Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null)
+        => _usersRepository.GetRandomUsers(numberOfUsers, signedUserGuid);
 }
