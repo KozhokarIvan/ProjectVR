@@ -1,4 +1,4 @@
-import { Tooltip, Avatar } from "@nextui-org/react";
+import { Tooltip, Image } from "@nextui-org/react";
 
 export interface UserSummaryBadgeProps {
   image?: string;
@@ -8,17 +8,16 @@ export interface UserSummaryBadgeProps {
 
 export default function UserSummaryBadge(props: UserSummaryBadgeProps) {
   const { text, image, isFavorite } = props;
-
   return (
-    <Tooltip content={text}>
-      <Avatar
-        color="secondary"
-        squared
-        pointer
+    <Tooltip
+      className={isFavorite ? "bg-yellow-400 text-zinc-900" : ""}
+      content={text}
+    >
+      <Image
+        className={isFavorite ? "border-2 border-yellow-400" : ""}
+        width={46}
         src={image}
-        bordered={isFavorite}
-        text={text}
-        textColor={isFavorite ? "default" : "warning"}
+        alt={text}
       />
     </Tooltip>
   );

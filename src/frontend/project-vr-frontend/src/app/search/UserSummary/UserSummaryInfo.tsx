@@ -1,9 +1,7 @@
-import { Grid, Text } from "@nextui-org/react";
-
 export default function UserSummaryInfo() {
   return (
-    <Grid>
-      <Text>
+    <div className="grow">
+      <p className="text-sm">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nihil qui
         minus laboriosam distinctio accusantium tenetur quos quia quibusdam
         voluptatibus nemo, atque eum culpa illum beatae veniam! In similique,
@@ -15,7 +13,7 @@ export default function UserSummaryInfo() {
         impedit ipsam iusto ipsa placeat alias et nesciunt molestiae amet
         facilis dolorem expedita perspiciatis? Alias deserunt dignissimos facere
         eligendi rem nam debitis sapiente reprehenderit. Quisquam?
-      </Text>
-    </Grid>
+      </p>
+    </div>
   );
 }
