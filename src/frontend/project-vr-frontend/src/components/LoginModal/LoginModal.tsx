@@ -1,7 +1,9 @@
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { login } from "@/http/authApi";
-import { LoggedUser } from "@/types/commonTypes";
-import { LOGGED_USER_COOKIE_KEY } from "@/utils/consts";
-import { setCookieOfType } from "@/utils/cookies";
+import { setUser } from "@/redux/features/user";
+import { selectLoginInfo } from "@/redux/features/user/selector";
+import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
+import { setLocalStorageItem } from "@/utils/local-storage";
 import {
   Button,
   Modal,
@@ -12,17 +14,19 @@ import {
   ModalFooter,
   ModalContent,
 } from "@nextui-org/react";
+import React from "react";
 import { useState } from "react";
 
 interface LoginModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  setLoggedUser: (user: LoggedUser) => void;
 }
 export default function LoginModal(props: LoginModalProps) {
-  const { isOpen, onOpenChange, setLoggedUser } = props;
-
-  const onLogin = async (username: string) => {
+  const { isOpen, onOpenChange } = props;
+  const [isRememberMe, setIsRememberMe] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const selectedUser = useAppSelector(state => selectLoginInfo(state));
+  const handleLogin = async (username: string) => {
     try {
       const { statusCode, message, data: user } = await login(username);
       if (statusCode == 404) {
@@ -30,11 +34,15 @@ export default function LoginModal(props: LoginModalProps) {
         setLoginLabelColor("danger");
         return;
       }
+      dispatch(setUser(user));
+      if (isRememberMe) {
+        setLocalStorageItem(LOGGED_USER_STORAGE_KEY, user);
+      }
       setLoginLabelColor("primary");
       setLoginErrorMessage("");
-      setCookieOfType(LOGGED_USER_COOKIE_KEY, user);
+      setEnteredLogin("");
+      setEnteredPassword("");
       onOpenChange(false);
-      setLoggedUser(user);
     } catch (error) {
       setLoginErrorMessage("Unknown error");
       setLoginLabelColor("danger");
@@ -92,7 +100,10 @@ export default function LoginModal(props: LoginModalProps) {
                     setEnteredPassword("");
                   }}
                 />
-                <Checkbox>
+                <Checkbox
+                  defaultChecked={isRememberMe}
+                  onValueChange={setIsRememberMe}
+                >
                   <p>Remember me</p>
                 </Checkbox>
                 <p>Forgot password ?</p>
@@ -101,7 +112,9 @@ export default function LoginModal(props: LoginModalProps) {
                 <Button variant="flat" color="danger" onPress={onClose}>
                   Close
                 </Button>
-                <Button onPress={() => onLogin(enteredLogin)}>Sign in</Button>
+                <Button onPress={() => handleLogin(enteredLogin)}>
+                  Sign in
+                </Button>
               </ModalFooter>
             </>
           )}

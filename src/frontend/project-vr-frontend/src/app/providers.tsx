@@ -1,9 +1,9 @@
 "use client";
 
-import { UserInfo } from "@/types/commonTypes";
+import { UserInfo } from "@/types";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

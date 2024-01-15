@@ -28,10 +28,10 @@ export interface UserInfo {
   vrSets: VrSet[];
 }
 
-export interface LoggedUser {
-  userGuid: string;
+export interface User {
+  userId: string;
   username: string;
-  avatar: string;
+  userAvatar: string;
 }
 
 export interface LoginResponse {

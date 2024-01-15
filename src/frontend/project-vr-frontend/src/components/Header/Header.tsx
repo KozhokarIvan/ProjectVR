@@ -17,17 +17,18 @@ import LoginModal from "../LoginModal/LoginModal";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { LoggedUser } from "@/types/commonTypes";
+import { useAuth } from "@/hooks/use-auth";
+import { removeUser } from "@/redux/features/user";
+import { useAppDispatch } from "@/hooks/redux";
+import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
+import { clearLocalStorageItem } from "@/utils/local-storage";
 
-export interface HeaderProps {
-  loggedUser: LoggedUser | null;
-  setLoggedUser: (user: LoggedUser | null) => void;
-}
-
-export default function Header({ loggedUser, setLoggedUser }: HeaderProps) {
+export default function Header() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isDark, setIsDark] = useState<boolean>(true);
   const { setTheme } = useTheme();
+  const dispatch = useAppDispatch();
+  const { user: loggedUser } = useAuth();
   const handleChange = () => {
     if (isDark) {
       setTheme("light");
@@ -54,7 +55,7 @@ export default function Header({ loggedUser, setLoggedUser }: HeaderProps) {
               <User
                 name={loggedUser.username}
                 avatarProps={{
-                  src: loggedUser.avatar,
+                  src: loggedUser.userAvatar,
                   showFallback: true,
                   name: undefined,
                   radius: "lg",
@@ -67,7 +68,8 @@ export default function Header({ loggedUser, setLoggedUser }: HeaderProps) {
               variant="solid"
               onAction={(key: { toString: () => string }) => {
                 if (key.toString() == "logout") {
-                  setLoggedUser(null);
+                  dispatch(removeUser());
+                  clearLocalStorageItem(LOGGED_USER_STORAGE_KEY);
                 }
               }}
             >
@@ -82,11 +84,7 @@ export default function Header({ loggedUser, setLoggedUser }: HeaderProps) {
             Sign In
           </Button>
         )}
-        <LoginModal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          setLoggedUser={setLoggedUser}
-        />
+        <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
       </NavbarContent>
     </Navbar>
   );

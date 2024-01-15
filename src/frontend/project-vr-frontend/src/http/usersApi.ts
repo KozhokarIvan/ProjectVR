@@ -1,4 +1,4 @@
-import { UserInfo } from "@/types/commonTypes";
+import { UserInfo } from "@/types";
 import { HOST } from "./urls";
 import { RANDOM_ROUTE, SEARCH_ROUTE } from "./routes";
 

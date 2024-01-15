@@ -1,1 +1,1 @@
-export const LOGGED_USER_COOKIE_KEY = "logged-user";
+export const LOGGED_USER_STORAGE_KEY = "logged-user";

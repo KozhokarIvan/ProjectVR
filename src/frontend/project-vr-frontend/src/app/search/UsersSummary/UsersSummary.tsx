@@ -1,5 +1,5 @@
 import { Spacer } from "@nextui-org/react";
-import { UserInfo } from "@/types/commonTypes";
+import { UserInfo } from "@/types";
 import UserSummary from "../UserSummary/UserSummary";
 
 export interface UsersSummary {

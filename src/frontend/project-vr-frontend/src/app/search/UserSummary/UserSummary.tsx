@@ -3,7 +3,7 @@ import UserSummaryUser from "./UserSummaryUser";
 import UserSummaryBadges from "./UserSummaryBadges";
 import UserSummaryInfo from "./UserSummaryInfo";
 import UserSummaryFooter from "./UserSummaryFooter";
-import { UserSummary } from "@/types/commonTypes";
+import { UserSummary } from "@/types";
 export default function UserSummary(props: UserSummary) {
   const { avatar, username, vrsets, games } = props;
 

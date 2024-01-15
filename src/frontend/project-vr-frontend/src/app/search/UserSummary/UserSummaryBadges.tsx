@@ -1,4 +1,4 @@
-import { Game, VrSet } from "@/types/commonTypes";
+import { Game, VrSet } from "@/types";
 import UserSummaryBadge from "./UserSummaryBadge";
 export interface UserSummaryBadgesProps {
   vrsets: VrSet[];

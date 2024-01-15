@@ -1,31 +1,21 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Spinner } from "@nextui-org/react";
 import UsersSummary from "@/app/search/UsersSummary/UsersSummary";
-import { rollRandomUsers, searchUsers } from "@/http/usersApi";
-import { getCookieOfType } from "@/utils/cookies";
-import { LoggedUser, UserInfo } from "@/types/commonTypes";
+import { rollRandomUsers } from "@/http/usersApi";
 import { UsersContext } from "../providers";
-
-export interface PageProps {
-  loggedUser: LoggedUser;
-  users: UserInfo[];
-  setUsers: (users: UserInfo[]) => void;
-}
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Page() {
-  const userFromCookie = getCookieOfType<LoggedUser>("logged-user");
-  const [loggedUser, setLoggedUser] = useState<LoggedUser | null>(
-    userFromCookie
-  );
+  const { user: loggedUser } = useAuth();
   const { users, setUsers } = useContext(UsersContext);
   useEffect(() => {
-    rollRandomUsers(loggedUser?.userGuid)
+    rollRandomUsers(loggedUser?.userId)
       .then(fetchedUsers => {
         setUsers(fetchedUsers);
       })
       .catch(err => console.error("Error:", err));
-  }, []);
+  }, [loggedUser]);
   return (
     <main className="grid items-center justify-center">
       {users ? (

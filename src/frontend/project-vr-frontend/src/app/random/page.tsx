@@ -2,21 +2,19 @@
 import { useState, useEffect, useContext } from "react";
 import { Spinner } from "@nextui-org/react";
 import UsersSummary from "@/app/search/UsersSummary/UsersSummary";
-import { LoggedUser } from "@/types/commonTypes";
+import { User } from "@/types";
 import { getCookieOfType } from "@/utils/cookies";
 import { rollRandomUsers } from "@/http/usersApi";
 import { UsersContext } from "../providers";
 
 export default function Page() {
-  const userFromCookie = getCookieOfType<LoggedUser>("logged-user");
-  const [loggedUser] = useState<LoggedUser | null>(
-    userFromCookie
-  );
+  const userFromCookie = getCookieOfType<User>("logged-user");
+  const [loggedUser] = useState<User | null>(userFromCookie);
 
   const { users, setUsers } = useContext(UsersContext);
 
   useEffect(() => {
-    rollRandomUsers(loggedUser?.userGuid)
+    rollRandomUsers(loggedUser?.userId)
       .then(users => setUsers(users))
       .catch(err => console.error(err));
   }, []);
