@@ -15,20 +15,20 @@ public interface IUsersRepository
     /// <param name="limit">Нужное количество записей</param>
     /// <param name="ignoredUserGuid">Guid пользователя, которого нужно игнорировать при поиске</param>
     /// <returns>Массив пользователей удовлетворяющих запросу</returns>
-    Task<UserSummary[]> FindUsersByGameOrVrSet(string query, int offset, int limit, Guid? ignoredUserGuid = null);
+    Task<UserSummary[]> FindUsersByQuery(string query, int offset, int limit, Guid? ignoredUserGuid = null);
 
     /// <summary>
     ///     Возвращает массив пользователей, у которых есть хотя бы одна игра совпадающая по названию с
     ///     <paramref name="gameName" />
-    ///     и хотя бы одна VR гарнитура совпадающая по названию совпадающая с <paramref name="vrsetName" />
+    ///     и хотя бы одна VR гарнитура совпадающая по названию совпадающая с <paramref name="vrSet" />
     /// </summary>
     /// <param name="gameName">Название игры. Если null, то игнорируется</param>
-    /// <param name="vrsetName">Название vr гарнитуры. Если null, то игнорируется</param>
+    /// <param name="vrSet">Название vr гарнитуры. Если null, то игнорируется</param>
     /// <param name="offset">Сколько записей пропустить</param>
     /// <param name="limit">Нужное количество записей</param>
     /// <param name="ignoredUserGuid">Guid пользователя, которого нужно игнорировать при поиске</param>
     /// <returns>Массив пользователей удовлетворяющих запросу</returns>
-    Task<UserSummary[]> FindUsersByGameAndVrset(string? gameName, string? vrsetName, int offset, int limit,
+    Task<UserSummary[]> FindUsersByGameAndVrSet(string? gameName, string? vrSet, int offset, int limit,
         Guid? ignoredUserGuid = null);
 
     /// <summary>

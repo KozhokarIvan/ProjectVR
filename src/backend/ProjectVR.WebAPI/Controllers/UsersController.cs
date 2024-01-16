@@ -37,7 +37,7 @@ public class UsersController : ControllerBase
         var users = await _usersService
             .FindUsersByGameAndVrset(request.Game, request.VrSet, request.Offset, request.Limit, loggedUserGuid);
         var result = users
-            .Select(user => user.MapToGetUsersResponse())
+            .Select(user => GetUsersResponseMappingExtension.MapToApi(user))
             .ToArray();
         return Ok(result);
     }
@@ -56,7 +56,7 @@ public class UsersController : ControllerBase
             loggedUserGuid = loggedUserGuidFromParse;
         var users = await _usersService
             .FindUsersByGameOrVrSet(request.SearchQuery, request.Offset, request.Limit, loggedUserGuid);
-        var response = users.Select(user => user.MapToSearchResponse());
+        var response = users.Select(user => SearchUsersResponseMappingExtension.MapToApi(user));
         return Ok(response);
     }
 

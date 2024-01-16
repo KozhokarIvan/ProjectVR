@@ -5,7 +5,7 @@ namespace ProjectVR.WebAPI.Contracts.Mapping.Responses;
 
 internal static class UsersLoginResponseMapping
 {
-    internal static LoginResponse MapToLoginResponse(this UserSummary userInfo)
+    internal static LoginResponse MapToApi(this UserSummary userInfo)
     {
         var response = new LoginResponse
         {

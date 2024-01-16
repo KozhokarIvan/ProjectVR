@@ -4,7 +4,7 @@ namespace ProjectVR.DataAccess.Mapping;
 
 internal static class GameMappingExtension
 {
-    public static Game MapToDomainModel(this Entities.Game game)
+    public static Game MapToDomain(this Entities.Game game)
     {
         var gameEntity = new Game
         {

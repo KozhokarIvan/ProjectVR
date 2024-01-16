@@ -32,7 +32,8 @@ public class Program
                 options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader()
+                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000")
+                            .AllowAnyHeader()
                             .AllowAnyMethod();
                     }));
             builder.Services.AddControllers();
@@ -62,7 +63,7 @@ public class Program
             app.UseAuthorization();
 
             app.MapControllers();
-
+            
             app.Run();
         }
         catch (Exception ex)

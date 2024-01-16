@@ -25,7 +25,7 @@ public class AuthController : ControllerBase
     {
         var foundUser = await _authService.Login(credentials.Username);
         if (foundUser is null) return NotFound("Unknown user");
-        var user = foundUser.MapToLoginResponse();
+        var user = UsersLoginResponseMapping.MapToApi(foundUser);
         return Ok(user);
     }
 }

@@ -4,7 +4,7 @@ namespace ProjectVR.DataAccess.Mapping;
 
 internal static class UserVrSetMappingExtension
 {
-    internal static UserVrSet MapToDomainModel(this Entities.UserVrSet userVrSet)
+    internal static UserVrSet MapToDomain(this Entities.UserVrSet userVrSet)
     {
         var userVrSetEntity = new UserVrSet
         {
