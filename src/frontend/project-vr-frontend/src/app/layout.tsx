@@ -1,5 +1,5 @@
 import "./globals.css";
-import Header from "@/components/Header/Header";
+import Header from "@/components/Header";
 import React, { useState } from "react";
 import { Providers } from "./providers";
 import { Inter } from "next/font/google";

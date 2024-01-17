@@ -30,13 +30,22 @@ public class UsersRepository : IUsersRepository
                     => EF.Functions.ILike(v.VrSet.Name, '%' + vrSet + '%')))
                 && (!ignoredUserGuid.HasValue || u.Guid != ignoredUserGuid)
                 && (!ignoredUserGuid.HasValue ||
-                    !u.Friends.Any(f => f.AcceptedAt != null
-                                        && (f.FromUserGuid == ignoredUserGuid || f.ToUserGuid == ignoredUserGuid)))
+                    !u.OutgoingRequests.Any(f =>
+                        f.AcceptedAt != null && f.ToUserGuid == ignoredUserGuid)
+                    ||
+                    !u.IncomingRequests.Any(f =>
+                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid))
             )
             .Include(user => user.Games)
             .ThenInclude(userGame => userGame.Game)
             .Include(ui => ui.VrSets)
             .ThenInclude(userVrSet => userVrSet.VrSet)
+            .Include(u =>
+                u.OutgoingRequests.Where(f => ignoredUserGuid.HasValue && f.AcceptedAt == null
+                                                                       && f.ToUserGuid == ignoredUserGuid.Value))
+            .Include(u =>
+                u.IncomingRequests.Where(f => ignoredUserGuid.HasValue && f.AcceptedAt == null
+                                                                       && f.FromUserGuid == ignoredUserGuid.Value))
             .Skip(offset)
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
@@ -65,8 +74,11 @@ public class UsersRepository : IUsersRepository
                 && (!ignoredUserGuid.HasValue || u.Guid != ignoredUserGuid)
                 //if ignored user variable isnt empty we exclude ignored user's friends from results
                 && (!ignoredUserGuid.HasValue ||
-                    !u.Friends.Any(f =>
-                        f.AcceptedAt != null && (f.FromUserGuid == ignoredUserGuid || f.ToUserGuid == ignoredUserGuid)))
+                    !u.OutgoingRequests.Any(f =>
+                        f.AcceptedAt != null && f.ToUserGuid == ignoredUserGuid)
+                    ||
+                    !u.IncomingRequests.Any(f =>
+                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid))
             )
             .Include(user => user.Games)
             .ThenInclude(userGame => userGame.Game)
@@ -74,9 +86,11 @@ public class UsersRepository : IUsersRepository
             .ThenInclude(userVrSet => userVrSet.VrSet)
             //if ignored user variable isnt empty and request is unaccepted we include his relation with the ignored user
             .Include(u =>
-                u.Friends.Where(f => !ignoredUserGuid.HasValue || f.AcceptedAt == null
-                    && (f.ToUserGuid == ignoredUserGuid || f.FromUserGuid == ignoredUserGuid))
-            )
+                u.OutgoingRequests.Where(f => ignoredUserGuid.HasValue
+                                              && f.ToUserGuid == ignoredUserGuid.Value))
+            .Include(u =>
+                u.IncomingRequests.Where(f => ignoredUserGuid.HasValue
+                                              && f.FromUserGuid == ignoredUserGuid.Value))
             .Skip(offset)
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
@@ -98,6 +112,12 @@ public class UsersRepository : IUsersRepository
             .ThenInclude(userGame => userGame.Game)
             .Include(ui => ui.VrSets)
             .ThenInclude(userVrSet => userVrSet.VrSet)
+            .Include(u =>
+                u.OutgoingRequests.Where(f => ignoredUserGuid.HasValue
+                                              && f.ToUserGuid == ignoredUserGuid.Value))
+            .Include(u =>
+                u.IncomingRequests.Where(f => ignoredUserGuid.HasValue
+                                              && f.FromUserGuid == ignoredUserGuid.Value))
             .Take(numberOfUsers)
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();

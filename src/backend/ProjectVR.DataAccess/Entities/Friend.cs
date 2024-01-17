@@ -22,12 +22,12 @@ internal class FriendsConfiguration : IEntityTypeConfiguration<Friend>
 
         builder
             .HasOne(friend => friend.From)
-            .WithMany(userInfo => userInfo.Friends)
+            .WithMany(userInfo => userInfo.OutgoingRequests)
             .HasForeignKey(friend => friend.FromUserGuid);
 
         builder
             .HasOne(friend => friend.To)
-            .WithMany()
+            .WithMany(userInfo => userInfo.IncomingRequests)
             .HasForeignKey(friend => friend.ToUserGuid);
 
         builder

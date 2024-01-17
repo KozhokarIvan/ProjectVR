@@ -23,8 +23,12 @@ internal static class UserSummaryMappingExtension
         };
         if (!ignoredUserGuid.HasValue)
             return userinfo;
-        var request = userinfoEntity.Friends.FirstOrDefault(f
-            => f.ToUserGuid == ignoredUserGuid || f.FromUserGuid == ignoredUserGuid);
+        var request =
+            userinfoEntity.OutgoingRequests.FirstOrDefault(f
+                => f.ToUserGuid == ignoredUserGuid)
+            ??
+            userinfoEntity.IncomingRequests.FirstOrDefault(f
+                => f.FromUserGuid == ignoredUserGuid);
         if (request is null)
             userinfo.FriendStatus = FriendStatus.Stranger;
         else if (ignoredUserGuid == userinfo.Guid) userinfo.FriendStatus = FriendStatus.Self;

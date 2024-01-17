@@ -1,5 +1,5 @@
 import { Game, VrSet } from "@/types";
-import UserSummaryBadge from "./UserSummaryBadge";
+import UserSummaryBadge from "./Badge";
 export interface UserSummaryBadgesProps {
   vrsets: VrSet[];
   games: Game[];

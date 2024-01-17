@@ -20,7 +20,7 @@ export default function UserSummaryUser(props: UserSummaryUserProps) {
         />
         <div className="ml-2 flex flex-col justify-evenly">
           <Link
-            href="/random"
+            href={`/users/${username}`}
             color="secondary"
             size="sm"
             className="font-semibold"

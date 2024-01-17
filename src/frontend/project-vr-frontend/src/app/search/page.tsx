@@ -10,11 +10,12 @@ export default function Page() {
   const { user: loggedUser } = useAuth();
   const { users, setUsers } = useContext(UsersContext);
   useEffect(() => {
-    rollRandomUsers(loggedUser?.userId)
+    rollRandomUsers(loggedUser?.userGuid)
       .then(fetchedUsers => {
         setUsers(fetchedUsers);
       })
       .catch(err => console.error("Error:", err));
+    return setUsers([]);
   }, [loggedUser]);
   return (
     <main className="grid items-center justify-center">

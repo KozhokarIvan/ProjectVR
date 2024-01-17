@@ -4,7 +4,6 @@ import { User } from "@/types";
 import { Button, Input, NavbarContent } from "@nextui-org/react";
 import Link from "next/link";
 import { useContext, useState } from "react";
-import { RANDOM_ROUTE } from "@/http/routes";
 
 export interface SearchBarProps {
   loggedUser: User | null;
@@ -15,7 +14,7 @@ export default function SearchBar({ loggedUser }: SearchBarProps) {
   const { users, setUsers } = useContext(UsersContext);
   const onUsersSearch = async (searchText: string) => {
     if (searchText.length < 3) return;
-    searchUsers(searchText, loggedUser?.userId)
+    searchUsers(searchText, loggedUser?.userGuid)
       .then(users => setUsers(users))
       .catch(err => console.log("Error", err));
   };
@@ -44,7 +43,7 @@ export default function SearchBar({ loggedUser }: SearchBarProps) {
           }
         }}
       />
-      <Link href={RANDOM_ROUTE}>
+      <Link href="/random">
         <Button variant="bordered" color="secondary">
           Random
         </Button>

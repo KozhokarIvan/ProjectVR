@@ -1,6 +1,9 @@
+import { FriendStatus } from "./enums/FriendStatus";
+
 export interface UserSummary {
   avatar?: string;
   username: string;
+  friendStatus: FriendStatus;
   vrsets: VrSet[];
   games: Game[];
 }
@@ -24,14 +27,15 @@ export interface UserInfo {
   guid: string;
   username: string;
   avatar?: string;
+  friendStatus: FriendStatus;
   games: Game[];
   vrSets: VrSet[];
 }
 
 export interface User {
-  userId: string;
+  userGuid: string;
   username: string;
-  userAvatar: string;
+  avatar: string;
 }
 
 export interface LoginResponse {

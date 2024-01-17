@@ -15,7 +15,8 @@ public class UserInfo
     public DateTimeOffset LastSeen { get; set; }
     public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
     public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
-    public ICollection<Friend> Friends { get; set; } = new List<Friend>();
+    public ICollection<Friend> OutgoingRequests { get; set; } = new List<Friend>();
+    public ICollection<Friend> IncomingRequests { get; set; } = new List<Friend>();
 }
 
 internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
@@ -54,8 +55,14 @@ internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
             .HasForeignKey(vrset => vrset.OwnerGuid);
 
         builder
-            .HasMany(userinfo => userinfo.Friends)
+            .HasMany(userinfo => userinfo.OutgoingRequests)
             .WithOne(friend => friend.From)
             .HasForeignKey(friend => friend.FromUserGuid);
+
+        builder
+            .HasMany(userinfo => userinfo.IncomingRequests)
+            .WithOne(friend => friend.To)
+            .HasForeignKey(friend => friend.ToUserGuid);
+
     }
 }

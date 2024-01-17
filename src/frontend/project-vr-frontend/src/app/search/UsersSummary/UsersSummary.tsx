@@ -1,6 +1,6 @@
 import { Spacer } from "@nextui-org/react";
 import { UserInfo } from "@/types";
-import UserSummary from "../UserSummary/UserSummary";
+import UserSummary from "../UserSummary";
 
 export interface UsersSummary {
   users: UserInfo[];
@@ -14,12 +14,7 @@ export default function UsersSummary(props: UsersSummary) {
       {users.map(user => {
         return (
           <div key={user.guid} className="grid gap-10 mx-60">
-            <UserSummary
-              avatar={user.avatar}
-              username={user.username}
-              vrsets={user.vrSets}
-              games={user.games}
-            />
+            <UserSummary user={user} />
             <Spacer y={1} />
           </div>
         );

@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useState } from "react";
-import LoginModal from "../LoginModal/LoginModal";
+import LoginModal from "../LoginModal";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -55,7 +55,7 @@ export default function Header() {
               <User
                 name={loggedUser.username}
                 avatarProps={{
-                  src: loggedUser.userAvatar,
+                  src: loggedUser.avatar,
                   showFallback: true,
                   name: undefined,
                   radius: "lg",
@@ -67,13 +67,20 @@ export default function Header() {
               color="secondary"
               variant="solid"
               onAction={(key: { toString: () => string }) => {
-                if (key.toString() == "logout") {
-                  dispatch(removeUser());
-                  clearLocalStorageItem(LOGGED_USER_STORAGE_KEY);
+                const choice = key.toString();
+                switch (choice) {
+                  case "logout":
+                    dispatch(removeUser());
+                    clearLocalStorageItem(LOGGED_USER_STORAGE_KEY);
+                    break;
                 }
               }}
             >
-              <DropdownItem key="profile">Profile</DropdownItem>
+              <DropdownItem key="profile">
+                <Link href={`/users/${loggedUser.username}`}>
+                  <p>Profile</p>
+                </Link>
+              </DropdownItem>
               <DropdownItem key="logout" color="danger">
                 Log Out
               </DropdownItem>
