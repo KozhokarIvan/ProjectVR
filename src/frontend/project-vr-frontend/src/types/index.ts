@@ -8,6 +8,22 @@ export interface UserSummary {
   games: Game[];
 }
 
+export interface UserDetails {
+  userGuid: string;
+  avatar?: string;
+  username: string;
+  friendStatus: FriendStatus;
+  registeredAt: Date;
+  vrsets: VrSet[];
+  games: Game[];
+  friends: FriendInfo[];
+}
+
+export interface FriendInfo {
+  username: string;
+  avatar?: string;
+}
+
 export interface Game {
   gameId: number;
   gameName: string;

@@ -24,6 +24,7 @@ export interface FriendButtonProps {
   size: ButtonSize;
   variant: ButtonVariant;
   radius: ButtonRadius;
+  className?: string;
 }
 
 export default function FriendButton({
@@ -32,6 +33,7 @@ export default function FriendButton({
   size,
   variant,
   radius,
+  className,
 }: FriendButtonProps) {
   const [status, setStatus] = useState(friendStatus);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +57,7 @@ export default function FriendButton({
       size={size}
       isLoading={isLoading}
       onClick={clickHandler}
+      className={className}
     >
       {text}
     </Button>

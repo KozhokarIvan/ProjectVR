@@ -1,5 +1,5 @@
 import { Game, VrSet } from "@/types";
-import UserSummaryBadge from "./Badge";
+import Icon from "../../../components/Icon";
 export interface UserSummaryBadgesProps {
   vrsets: VrSet[];
   games: Game[];
@@ -14,7 +14,7 @@ export default function UserSummaryBadges(props: UserSummaryBadgesProps) {
           .sort(vrset => (vrset.isFavorite ? 0 : 1))
           .slice(0, 3)
           .map(vrset => (
-            <UserSummaryBadge
+            <Icon
               key={vrset.vrSetId}
               text={vrset.vrSetName}
               image={vrset.vrSetIcon ?? ""}
@@ -27,7 +27,7 @@ export default function UserSummaryBadges(props: UserSummaryBadgesProps) {
           .sort(game => (game.isFavorite ? 0 : 1))
           .slice(0, 3)
           .map(game => (
-            <UserSummaryBadge
+            <Icon
               key={game.gameId}
               text={game.gameName}
               image={game.gameIcon ?? ""}
