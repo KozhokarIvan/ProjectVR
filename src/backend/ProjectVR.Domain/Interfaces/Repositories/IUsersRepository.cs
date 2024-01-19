@@ -45,4 +45,12 @@ public interface IUsersRepository
     /// <param name="username">Имя пользователя</param>
     /// <returns>Пользователь. null, если пользователя с таким именем не существует</returns>
     Task<UserSummary?> GetUserByUsername(string username);
+
+    /// <summary>
+    ///     Возвращает полную информацию о пользователе по его уникальному имени
+    /// </summary>
+    /// <param name="username">Имя пользователя</param>
+    /// <param name="ignoredUserGuid">Guid пользователя, с которым нужно проверить статус друга</param>
+    /// <returns>Пользователь. null, если пользователя с таким именем не существует</returns>
+    Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? ignoredUserGuid=null);
 }

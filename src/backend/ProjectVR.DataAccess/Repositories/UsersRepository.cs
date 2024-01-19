@@ -52,7 +52,7 @@ public class UsersRepository : IUsersRepository
             .ToArrayAsync();
 
         var users = usersFromDb
-            .Select(u => u.MapToDomain(ignoredUserGuid))
+            .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
         return users;
     }
@@ -97,7 +97,7 @@ public class UsersRepository : IUsersRepository
             .ToArrayAsync();
 
         var users = usersFromDb
-            .Select(u => u.MapToDomain(ignoredUserGuid))
+            .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
         return users;
     }
@@ -122,7 +122,7 @@ public class UsersRepository : IUsersRepository
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
         var users = usersFromDb
-            .Select(u => u.MapToDomain(ignoredUserGuid))
+            .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
         return users;
     }
@@ -132,7 +132,26 @@ public class UsersRepository : IUsersRepository
         var foundUser = await _context.Usersinfo
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Username == username);
-        var user = foundUser?.MapToDomain();
+        var user = foundUser?.MapToDomainUserSummary();
+        return user;
+    }
+
+    public async Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? ignoredUserGuid = null)
+    {
+        var foundUser = await _context
+            .Usersinfo
+            .AsNoTracking()
+            .Where(u => u.Username == username)
+            .Include(u => u.Games)
+            .ThenInclude(g => g.Game)
+            .Include(u => u.VrSets)
+            .ThenInclude(u => u.VrSet)
+            .Include(u => u.IncomingRequests)
+            .ThenInclude(f=> f.From)
+            .Include(u => u.OutgoingRequests)
+            .ThenInclude(f => f.To)
+            .FirstOrDefaultAsync();
+        var user = foundUser?.MapToDomainUserDetails(ignoredUserGuid);
         return user;
     }
 }

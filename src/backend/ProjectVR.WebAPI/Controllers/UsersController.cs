@@ -42,6 +42,22 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{username}")]
+    public async Task<IActionResult> GetFullUserInfo([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+        string username)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+            return BadRequest("Username is empty");
+        Guid? loggedUserGuid = null;
+        if (!string.IsNullOrWhiteSpace(loggedUserHeader) &&
+            Guid.TryParse(loggedUserHeader, out var loggedUserGuidFromParse))
+            loggedUserGuid = loggedUserGuidFromParse;
+        var domainUser = await _usersService.GetUserDetailsByUsername(username, loggedUserGuid);
+        if (domainUser is null) return NotFound($"No user with username '{username}'");
+        var user = domainUser.MapToApi();
+        return Ok(user);
+    }
+
     [HttpGet("search")]
     public async Task<IActionResult> SearchUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         [FromQuery] SearchUsersRequest request)

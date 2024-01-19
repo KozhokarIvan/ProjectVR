@@ -24,4 +24,7 @@ public class UsersService : IUsersService
 
     public Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null)
         => _usersRepository.GetRandomUsers(numberOfUsers, signedUserGuid);
+
+    public Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? signedUserGuid = null)
+        => _usersRepository.GetUserDetailsByUsername(username, signedUserGuid);
 }

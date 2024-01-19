@@ -44,4 +44,12 @@ public interface IUsersService
     /// <param name="signedUserGuid">Guid авторизованного пользователя</param>
     /// <returns>Массив с случайными пользователями длиной <paramref name="numberOfUsers" /></returns>
     Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null);
+
+    /// <summary>
+    /// Получает полную информацию о пользователе
+    /// </summary>
+    /// <param name="username">Уникальное имя пользователя</param>
+    /// <param name="signedUserGuid">Guid авторизованного пользователя</param>
+    /// <returns>Полная информация о пользователе</returns>
+    Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? signedUserGuid = null);
 }
