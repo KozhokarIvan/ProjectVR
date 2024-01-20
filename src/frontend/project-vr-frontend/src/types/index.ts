@@ -9,12 +9,12 @@ export interface UserSummary {
 }
 
 export interface UserDetails {
-  userGuid: string;
+  guid: string;
   avatar?: string;
   username: string;
   friendStatus: FriendStatus;
-  registeredAt: Date;
-  vrsets: VrSet[];
+  createdAt: Date;
+  vrSets: VrSet[];
   games: Game[];
   friends: FriendInfo[];
 }

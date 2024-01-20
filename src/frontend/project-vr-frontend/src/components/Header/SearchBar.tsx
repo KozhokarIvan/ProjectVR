@@ -23,7 +23,9 @@ export default function SearchBar({ loggedUser }: SearchBarProps) {
       <Input
         variant="bordered"
         placeholder="Find a user..."
-        color="secondary"
+        color="primary"
+        radius="none"
+        size="sm"
         isClearable
         value={queryText}
         onChange={async (event: { target: { value: string } }) => {
@@ -44,7 +46,7 @@ export default function SearchBar({ loggedUser }: SearchBarProps) {
         }}
       />
       <Link href="/random">
-        <Button variant="bordered" color="secondary">
+        <Button variant="ghost" color="primary">
           Random
         </Button>
       </Link>

@@ -1,4 +1,4 @@
-import { UserInfo } from "@/types";
+import { UserDetails, UserInfo } from "@/types";
 import { HOST } from "./urls";
 import { RANDOM_ROUTE, SEARCH_ROUTE, USERS_ROUTE } from "./routes";
 
@@ -45,19 +45,19 @@ export const rollRandomUsers = async (
 };
 
 export const getUser = async (
-  userGuid: string | undefined,
+  username: string | undefined,
   loggedUserGuid: string | undefined
-): Promise<UserInfo> => {
+): Promise<UserDetails> => {
   const headers = new Headers();
   if (loggedUserGuid) headers.set("loggedUserGuid", loggedUserGuid);
   const requestParameters = {
     method: "get",
     headers: headers,
   };
-  const requestUrl = HOST + USERS_ROUTE + `/${userGuid}`;
+  const requestUrl = HOST + USERS_ROUTE + `/${username}`;
   try {
     const response = await fetch(requestUrl, requestParameters);
-    const user: UserInfo = await response.json();
+    const user: UserDetails = await response.json();
     return user;
   } catch (err) {
     console.error(err);

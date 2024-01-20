@@ -42,12 +42,12 @@ export default function Header() {
     <Navbar as="header" position="sticky">
       <NavbarBrand>
         <Link href="/">
-          <h2 className="text-secondary text-3xl font-bold">ProjectVR</h2>
+          <h2 className="text-primary text-3xl font-bold">ProjectVR</h2>
         </Link>
       </NavbarBrand>
       <SearchBar loggedUser={loggedUser} />
       <NavbarContent>
-        <Switch color="secondary" checked={isDark} onChange={handleChange} />
+        <Switch color="primary" checked={isDark} onChange={handleChange} />
 
         {loggedUser != null ? (
           <Dropdown>
@@ -64,7 +64,7 @@ export default function Header() {
               />
             </DropdownTrigger>
             <DropdownMenu
-              color="secondary"
+              color="primary"
               variant="solid"
               onAction={(key: { toString: () => string }) => {
                 const choice = key.toString();
@@ -87,7 +87,7 @@ export default function Header() {
             </DropdownMenu>
           </Dropdown>
         ) : (
-          <Button variant="ghost" color="secondary" onPress={onOpen}>
+          <Button variant="ghost" color="primary" onPress={onOpen}>
             Sign In
           </Button>
         )}

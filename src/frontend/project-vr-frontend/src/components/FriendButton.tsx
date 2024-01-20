@@ -49,7 +49,7 @@ export default function FriendButton({
     setIsLoading,
     setStatus
   );
-  return (
+  return status != FriendStatus.Self ? (
     <Button
       variant={variant}
       color={color}
@@ -61,6 +61,8 @@ export default function FriendButton({
     >
       {text}
     </Button>
+  ) : (
+    ""
   );
 }
 
