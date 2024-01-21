@@ -1,6 +1,4 @@
 import { User } from "@/types";
-import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { getLocalStorageItem } from "@/utils/local-storage";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface LoginInfo {
@@ -8,7 +6,7 @@ export interface LoginInfo {
 }
 
 const initialState: LoginInfo = {
-  user: getLocalStorageItem(LOGGED_USER_STORAGE_KEY),
+  user: null,
 };
 
 const authSlice = createSlice({

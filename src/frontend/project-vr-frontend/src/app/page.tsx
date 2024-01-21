@@ -1,5 +1,5 @@
-import SearchUsers from "@/app/search/page";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <SearchUsers />;
+  redirect("/search");
 }
