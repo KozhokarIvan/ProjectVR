@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User.Validation;
 
 namespace ProjectVR.DataAccess.Entities;
 
@@ -28,12 +28,12 @@ internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 
         builder
             .Property(userinfo => userinfo.Username)
-            .HasMaxLength(UserSummary.MaxUsernameLength)
+            .HasMaxLength(UserValidationConstraints.MaxUsernameLength)
             .IsRequired();
 
         builder
             .Property(userinfo => userinfo.Avatar)
-            .HasMaxLength(UserSummary.MaxAvatarLength)
+            .HasMaxLength(UserValidationConstraints.MaxAvatarLength)
             .IsRequired(false);
 
         builder
@@ -51,8 +51,8 @@ internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 
         builder
             .HasMany(userinfo => userinfo.VrSets)
-            .WithOne(vrset => vrset.Owner)
-            .HasForeignKey(vrset => vrset.OwnerGuid);
+            .WithOne(vrSet => vrSet.Owner)
+            .HasForeignKey(vrSet => vrSet.OwnerGuid);
 
         builder
             .HasMany(userinfo => userinfo.OutgoingRequests)
@@ -63,6 +63,5 @@ internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
             .HasMany(userinfo => userinfo.IncomingRequests)
             .WithOne(friend => friend.To)
             .HasForeignKey(friend => friend.ToUserGuid);
-
     }
 }

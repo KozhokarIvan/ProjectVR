@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
+using ProjectVR.Domain.Models.User.Enums;
 
 namespace ProjectVR.Domain.Interfaces.Services;
 
@@ -52,4 +54,14 @@ public interface IUsersService
     /// <param name="signedUserGuid">Guid авторизованного пользователя</param>
     /// <returns>Полная информация о пользователе</returns>
     Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? signedUserGuid = null);
+
+    /// <summary>
+    /// Создает пользователя если учетные данные корректны
+    /// </summary>
+    /// <param name="username">Имя пользователя</param>
+    /// <param name="email">Почта</param>
+    /// <param name="avatar">Адрес изображения профиля</param>
+    /// <param name="password">Пароль</param>
+    /// <returns>Статус создания и созданный пользователь</returns>
+    Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar, string password);
 }

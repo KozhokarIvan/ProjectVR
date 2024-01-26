@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ProjectVR.DataAccess.Entities;
 using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.DataAccess.Repositories;
 
@@ -154,4 +156,21 @@ public class UsersRepository : IUsersRepository
         var user = foundUser?.MapToDomainUserDetails(ignoredUserGuid);
         return user;
     }
+
+    public async Task<UserDetails> CreateUser(string username, string? avatar)
+    {
+        var user = new UserInfo
+        {
+            Username = username,
+            Avatar = avatar,
+            CreatedAt = DateTimeOffset.Now
+                
+        };
+        _context.Usersinfo.Add(user);
+        await _context.SaveChangesAsync();
+        return user.MapToDomainUserDetails();
+    }
+
+    public Task<bool> DoesUsernameExist(string username)
+        => _context.Usersinfo.AnyAsync(u => EF.Functions.ILike(u.Username, username));
 }

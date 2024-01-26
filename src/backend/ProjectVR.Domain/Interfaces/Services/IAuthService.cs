@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.Domain.Interfaces.Services;
 

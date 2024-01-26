@@ -1,21 +1,20 @@
 ﻿using System.Linq;
 using ProjectVR.Domain.Models.User;
 using ProjectVR.WebAPI.Contracts.Mapping.Enums;
-using ProjectVR.WebAPI.Contracts.Responses;
 
-namespace ProjectVR.WebAPI.Contracts.Mapping.Responses;
+namespace ProjectVR.WebAPI.Contracts.Mapping;
 
-internal static class GetDetailedUserInfoResponseMappingExtension
+public static class UserMappingExtension
 {
-    internal static GetDetailedUserInfoResponse MapToApi(this UserDetails domainUser)
+    internal static User MapToApi(this UserDetails domainUser)
     {
-        var user = new GetDetailedUserInfoResponse
+        var user = new User
         {
             Guid = domainUser.Guid,
             Username = domainUser.Username,
             Avatar = domainUser.Avatar,
             Games = domainUser.Games.Select(game => game.MapToApi()).ToArray(),
-            VrSets = domainUser.VrSets.Select(vrset => vrset.MapToApi()).ToArray(),
+            VrSets = domainUser.VrSets.Select(vrSet => vrSet.MapToApi()).ToArray(),
             Friends = domainUser.Friends.Select(f => new UserPreview
             {
                 Guid = f.Guid,

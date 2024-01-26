@@ -1,6 +1,7 @@
 ﻿using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.BusinessLogic.Services;
 

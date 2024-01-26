@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
 using ProjectVR.WebAPI.Contracts.Mapping.Enums;
 using ProjectVR.WebAPI.Contracts.Responses;
 

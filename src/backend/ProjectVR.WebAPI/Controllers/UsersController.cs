@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectVR.Domain.Interfaces.Services;
+using ProjectVR.Domain.Models.User.Enums;
+using ProjectVR.WebAPI.Contracts.Mapping;
 using ProjectVR.WebAPI.Contracts.Mapping.Responses;
 using ProjectVR.WebAPI.Contracts.Requests;
+using ProjectVR.WebAPI.Contracts.Responses;
 
 namespace ProjectVR.WebAPI.Controllers;
 
@@ -37,13 +41,49 @@ public class UsersController : ControllerBase
         var users = await _usersService
             .FindUsersByGameAndVrset(request.Game, request.VrSet, request.Offset, request.Limit, loggedUserGuid);
         var result = users
-            .Select(user => GetUsersResponseMappingExtension.MapToApi(user))
+            .Select(GetUsersResponseMappingExtension.MapToApi)
             .ToArray();
         return Ok(result);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(CreateUserRequest request)
+    {
+        var creationResult =
+            await _usersService.CreateUser(request.Username, request.Email, request.Avatar, request.Password);
+        if (creationResult.IsSuccess)
+        {
+            var user = creationResult.Value;
+            return Ok(new CreateUserResponse
+            {
+                UserCreationStatus = "Created",
+                User = UserMappingExtension.MapToApi(user)
+            });
+        }
+
+        var error = creationResult.ErrorStatus.ToString();
+        if (string.IsNullOrWhiteSpace(error))
+            throw new NullReferenceException();
+        var response = new CreateUserResponse
+        {
+            UserCreationStatus = error
+        };
+        switch (creationResult.ErrorStatus)
+        {
+            case RegisterUserError.InvalidUsername:
+            case RegisterUserError.InvalidEmail:
+            case RegisterUserError.InvalidAvatar:
+                return BadRequest(response);
+            case RegisterUserError.UsernameIsTaken:
+            case RegisterUserError.EmailIsTaken:
+                return Conflict(response);
+            default:
+                throw new NullReferenceException();
+        }
+    }
+
     [HttpGet("{username}")]
-    public async Task<IActionResult> GetFullUserInfo([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> GetUser([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         string username)
     {
         if (string.IsNullOrWhiteSpace(username))
@@ -54,7 +94,7 @@ public class UsersController : ControllerBase
             loggedUserGuid = loggedUserGuidFromParse;
         var domainUser = await _usersService.GetUserDetailsByUsername(username, loggedUserGuid);
         if (domainUser is null) return NotFound($"No user with username '{username}'");
-        var user = domainUser.MapToApi();
+        var user = GetDetailedUserInfoResponseMappingExtension.MapToApi(domainUser);
         return Ok(user);
     }
 
