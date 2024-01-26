@@ -64,6 +64,27 @@ export interface LoginRequest {
   username: string;
 }
 
+export interface RegisterRequest {
+  email: string;
+  username: string;
+  password: string;
+  avatar: string | undefined;
+}
+
+export enum RegisterUserResult {
+  Created = "Created",
+  InvalidUsername = "InvalidUsername",
+  InvalidEmail = "InvalidEmail",
+  InvalidAvatar = "InvalidAvatar",
+  UsernameIsTaken = "UsernameIsTaken",
+  EmailIsTaken = "EmailIsTaken",
+}
+
+export interface RegisterResponse {
+  result: RegisterUserResult;
+  user: UserDetails;
+}
+
 export interface Response<T> {
   statusCode: number;
   message: string;

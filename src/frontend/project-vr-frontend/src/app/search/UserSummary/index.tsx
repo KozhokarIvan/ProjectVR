@@ -13,7 +13,10 @@ export default function UserSummary({ user }: UserSummaryProps) {
   const { guid, avatar, username, vrSets, games, friendStatus } = user;
 
   return (
-    <Card className="h-64">
+    <Card
+      className="h-64 border-1 bg-transparent border-default-100 p-5"
+      radius="none"
+    >
       <CardBody>
         <div className="flex grow">
           <div className="flex">

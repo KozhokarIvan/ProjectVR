@@ -1,4 +1,10 @@
-import { UserDetails, UserInfo } from "@/types";
+import {
+  RegisterRequest,
+  RegisterResponse,
+  UserDetails,
+  UserInfo,
+  Response,
+} from "@/types";
 import { HOST } from "./urls";
 import { RANDOM_ROUTE, SEARCH_ROUTE, USERS_ROUTE } from "./routes";
 
@@ -45,7 +51,8 @@ export const rollRandomUsers = async (
 };
 
 export const getUser = async (
-  username: string | undefined,
+  username: string,
+  password: string,
   loggedUserGuid: string | undefined
 ): Promise<UserDetails> => {
   const headers = new Headers();
@@ -59,6 +66,38 @@ export const getUser = async (
     const response = await fetch(requestUrl, requestParameters);
     const user: UserDetails = await response.json();
     return user;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const createUser = async (
+  user: RegisterRequest
+): Promise<Response<RegisterResponse>> => {
+  const headers = new Headers({ "Content-Type": "application/json;" });
+  const requestParameters = {
+    method: "post",
+    headers: headers,
+    body: JSON.stringify(
+      {
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+        password: user.password,
+      },
+      null
+    ),
+  };
+  const requestUrl = HOST + USERS_ROUTE;
+  try {
+    const response = await fetch(requestUrl, requestParameters);
+    const data = await response.json();
+    return {
+      statusCode: response.status,
+      message: response.statusText,
+      data: data,
+    };
   } catch (err) {
     console.error(err);
     throw err;

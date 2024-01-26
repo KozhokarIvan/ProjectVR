@@ -1,6 +1,12 @@
 import { HOST } from "./urls";
-import { LOGIN_ROUTE } from "./routes";
-import { LoginResponse, LoginRequest, Response } from "@/types";
+import { LOGIN_ROUTE, USERS_ROUTE } from "./routes";
+import {
+  LoginResponse,
+  LoginRequest,
+  Response,
+  UserDetails,
+  RegisterRequest,
+} from "@/types";
 
 export const login = async (
   username: string

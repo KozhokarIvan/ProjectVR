@@ -7,12 +7,7 @@ import {
   removeFriend,
 } from "@/http/friendsApi";
 import { FriendStatus } from "@/types/enums/FriendStatus";
-import {
-  ButtonColor,
-  ButtonRadius,
-  ButtonSize,
-  ButtonVariant,
-} from "@/types/nextui";
+import { Color, ButtonRadius, ButtonSize, ButtonVariant } from "@/types/nextui";
 import { Button } from "@nextui-org/react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -66,7 +61,7 @@ export default function FriendButton({
   );
 }
 
-const getButtonColor = (status: FriendStatus): ButtonColor => {
+const getButtonColor = (status: FriendStatus): Color => {
   switch (status) {
     case FriendStatus.Stranger:
     case FriendStatus.Incoming:

@@ -1,4 +1,4 @@
-export type ButtonColor =
+export type Color =
   | "default"
   | "primary"
   | "secondary"
