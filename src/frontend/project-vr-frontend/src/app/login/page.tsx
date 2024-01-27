@@ -1,4 +1,5 @@
 "use client";
+import { HttpStatusCode } from "@/api/HttpStatusCode";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useAuth } from "@/hooks/use-auth";
 import { login } from "@/http/authApi";
@@ -25,7 +26,7 @@ export default function LoginPage() {
   const handleLogin = async (username: string) => {
     try {
       const { statusCode, message, data: user } = await login(username);
-      if (statusCode == 404) {
+      if (statusCode == HttpStatusCode.NotFound) {
         setLoginErrorMessage("User doesnt exist");
         setLoginLabelColor("danger");
         return;

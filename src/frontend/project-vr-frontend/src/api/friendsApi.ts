@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "./HttpStatusCode";
 import { FRIENDS_ROUTE, REQUESTS_ROUTE } from "./routes";
 import { HOST } from "./urls";
 import { Response as ApiResponse } from "@/types";
@@ -18,7 +19,7 @@ export const addFriend = async (
     return {
       statusCode: data.status,
       message: data.statusText,
-      data: data.status == 200,
+      data: data.status == HttpStatusCode.Ok,
     };
   } catch (err) {
     console.error(err);
@@ -42,7 +43,7 @@ export const acceptFriend = async (
     return {
       statusCode: data.status,
       message: data.statusText,
-      data: data.status == 200,
+      data: data.status == HttpStatusCode.Ok,
     };
   } catch (err) {
     console.error(err);
@@ -66,7 +67,7 @@ export const declineFriend = async (
     return {
       statusCode: data.status,
       message: data.statusText,
-      data: data.status == 200,
+      data: data.status == HttpStatusCode.Ok,
     };
   } catch (err) {
     console.error(err);
@@ -90,7 +91,7 @@ export const removeFriend = async (
     return {
       statusCode: data.status,
       message: data.statusText,
-      data: data.status == 200,
+      data: data.status == HttpStatusCode.Ok,
     };
   } catch (err) {
     console.error(err);

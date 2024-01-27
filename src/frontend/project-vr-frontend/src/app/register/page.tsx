@@ -9,6 +9,7 @@ import { createUser } from "@/http/usersApi";
 import { useRouter } from "next/navigation";
 import { useLabel } from "@/hooks/use-label";
 import { RegisterUserResult } from "@/types";
+import { HttpStatusCode } from "@/api/HttpStatusCode";
 export default function RegisterPage() {
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
@@ -35,11 +36,11 @@ export default function RegisterPage() {
         password: password,
       });
       let isUnknownerror = false;
-      if (statusCode == 200) {
+      if (statusCode == HttpStatusCode.Ok) {
         if (user.result == RegisterUserResult.Created)
           router.push(`/users/${username}`);
         else isUnknownerror = true;
-      } else if (statusCode == 400) {
+      } else if (statusCode == HttpStatusCode.BadRequest) {
         switch (user.result) {
           case RegisterUserResult.InvalidAvatar:
             setLabel("danger", "Invalid avatar link");
@@ -53,7 +54,7 @@ export default function RegisterPage() {
           default:
             isUnknownerror = true;
         }
-      } else if (statusCode == 409) {
+      } else if (statusCode == HttpStatusCode.Conflict) {
         switch (user.result) {
           case RegisterUserResult.EmailIsTaken:
             setLabel("danger", `Email '${email}' is already used`);
