@@ -3,10 +3,10 @@ import UserSummaryUser from "./User";
 import UserSummaryBadges from "./Badges";
 import UserSummaryInfo from "./Info";
 import UserSummaryFooter from "./Footer";
-import { UserInfo } from "@/types";
+import { UserSummary } from "@/types";
 
 export interface UserSummaryProps {
-  user: UserInfo;
+  user: UserSummary;
 }
 
 export default function UserSummary({ user }: UserSummaryProps) {

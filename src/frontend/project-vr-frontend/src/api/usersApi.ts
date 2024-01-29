@@ -1,17 +1,12 @@
-import {
-  RegisterRequest,
-  RegisterResponse,
-  UserDetails,
-  UserInfo,
-  Response,
-} from "@/types";
+import { UserDetails, UserSummary } from "@/types";
 import { HOST } from "./urls";
 import { RANDOM_ROUTE, SEARCH_ROUTE, USERS_ROUTE } from "./routes";
-
+import { RegisterRequest, RegisterResponse } from "./contracts/user/register";
+import { Response } from "@/api/contracts/response";
 export const searchUsers = async (
   query: string,
   loggedUserGuid: string | undefined
-): Promise<UserInfo[]> => {
+): Promise<UserSummary[]> => {
   const requestParameters = {
     method: "get",
     headers: new Headers({
@@ -22,7 +17,7 @@ export const searchUsers = async (
     HOST + SEARCH_ROUTE + "?limit=100" + `${query && "&searchQuery=" + query}`;
   try {
     const response = await fetch(requestUrl, requestParameters);
-    const users = await response.json();
+    const users: UserSummary[] = await response.json();
     return users;
   } catch (err) {
     console.error(err);
@@ -32,7 +27,7 @@ export const searchUsers = async (
 
 export const rollRandomUsers = async (
   loggedUserGuid: string | undefined
-): Promise<UserInfo[]> => {
+): Promise<UserSummary[]> => {
   const headers = new Headers();
   if (loggedUserGuid) headers.set("loggedUserGuid", loggedUserGuid);
   const requestParameters = {
@@ -42,7 +37,7 @@ export const rollRandomUsers = async (
   const requestUrl = HOST + RANDOM_ROUTE + "/100";
   try {
     const response = await fetch(requestUrl, requestParameters);
-    const users: UserInfo[] = await response.json();
+    const users: UserSummary[] = await response.json();
     return users;
   } catch (err) {
     console.error(err);

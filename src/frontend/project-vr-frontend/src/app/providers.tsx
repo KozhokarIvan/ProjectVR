@@ -1,6 +1,6 @@
 "use client";
 
-import { UserInfo } from "@/types";
+import { UserSummary } from "@/types";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React, { useState } from "react";
@@ -16,8 +16,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 
 export interface IUsersContext {
-  users: UserInfo[] | null;
-  setUsers: (users: UserInfo[] | null) => void;
+  users: UserSummary[] | null;
+  setUsers: (users: UserSummary[] | null) => void;
 }
 export const usersContextDefaultState = {
   users: null,
@@ -28,7 +28,7 @@ export const UsersContext = React.createContext<IUsersContext>(
 );
 
 const UsersProvider = ({ children }: { children: React.ReactNode }) => {
-  const [users, setUsers] = useState<UserInfo[] | null>(null);
+  const [users, setUsers] = useState<UserSummary[] | null>(null);
   return (
     <UsersContext.Provider
       value={{

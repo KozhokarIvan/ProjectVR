@@ -8,7 +8,7 @@ import UsernameInput from "@/components/forms/UsernameInput";
 import { createUser } from "@/api/usersApi";
 import { useRouter } from "next/navigation";
 import { useLabel } from "@/hooks/use-label";
-import { RegisterUserResult } from "@/types";
+import { RegisterUserResult } from "@/api/contracts/user/register";
 import { HttpStatusCode } from "@/api/HttpStatusCode";
 export default function RegisterPage() {
   const [avatar, setAvatar] = useState("");
@@ -37,11 +37,11 @@ export default function RegisterPage() {
       });
       let isUnknownerror = false;
       if (statusCode == HttpStatusCode.Ok) {
-        if (user.result == RegisterUserResult.Created)
+        if (user.userCreationStatus == RegisterUserResult.Created)
           router.push(`/users/${username}`);
         else isUnknownerror = true;
       } else if (statusCode == HttpStatusCode.BadRequest) {
-        switch (user.result) {
+        switch (user.userCreationStatus) {
           case RegisterUserResult.InvalidAvatar:
             setLabel("danger", "Invalid avatar link");
             break;
@@ -53,9 +53,10 @@ export default function RegisterPage() {
             break;
           default:
             isUnknownerror = true;
+            break;
         }
       } else if (statusCode == HttpStatusCode.Conflict) {
-        switch (user.result) {
+        switch (user.userCreationStatus) {
           case RegisterUserResult.EmailIsTaken:
             setLabel("danger", `Email '${email}' is already used`);
             break;
@@ -64,6 +65,7 @@ export default function RegisterPage() {
             break;
           default:
             isUnknownerror = true;
+            break;
         }
       } else isUnknownerror = true;
       if (isUnknownerror) setLabel("danger", "Unexpected server error");

@@ -1,10 +1,11 @@
 import { FriendStatus } from "./enums/FriendStatus";
 
 export interface UserSummary {
-  avatar?: string;
+  guid: string;
   username: string;
+  avatar?: string;
   friendStatus: FriendStatus;
-  vrsets: VrSet[];
+  vrSets: VrSet[];
   games: Game[];
 }
 
@@ -39,54 +40,8 @@ export interface VrSet {
   vrSetIcon?: string;
 }
 
-export interface UserInfo {
-  guid: string;
-  username: string;
-  avatar?: string;
-  friendStatus: FriendStatus;
-  games: Game[];
-  vrSets: VrSet[];
-}
-
 export interface User {
   userGuid: string;
   username: string;
   avatar: string;
-}
-
-export interface LoginResponse {
-  userGuid: string;
-  username: string;
-  avatar: string;
-}
-
-export interface LoginRequest {
-  username: string;
-}
-
-export interface RegisterRequest {
-  email: string;
-  username: string;
-  password: string;
-  avatar: string | undefined;
-}
-
-export enum RegisterUserResult {
-  Created = "Created",
-  InvalidUsername = "InvalidUsername",
-  InvalidEmail = "InvalidEmail",
-  InvalidAvatar = "InvalidAvatar",
-  UsernameIsTaken = "UsernameIsTaken",
-  EmailIsTaken = "EmailIsTaken",
-}
-
-export interface RegisterResponse {
-  result: RegisterUserResult;
-  user: UserDetails;
-}
-
-export interface Response<T> {
-  statusCode: number;
-  message: string;
-  data: T;
 }

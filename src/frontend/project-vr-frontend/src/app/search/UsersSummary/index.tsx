@@ -1,9 +1,9 @@
+import { UserSummary as UserSummaryType } from "@/types";
 import { Spacer } from "@nextui-org/react";
-import { UserInfo } from "@/types";
 import UserSummary from "../UserSummary";
 
 export interface UsersSummary {
-  users: UserInfo[];
+  users: UserSummaryType[];
 }
 
 export default function UsersSummary(props: UsersSummary) {

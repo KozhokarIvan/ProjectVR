@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "./HttpStatusCode";
 import { FRIENDS_ROUTE, REQUESTS_ROUTE } from "./routes";
 import { HOST } from "./urls";
-import { Response as ApiResponse } from "@/types";
+import { Response as ApiResponse } from "@/api/contracts/response";
 
 export const addFriend = async (
   loggedUserGuid: string,
