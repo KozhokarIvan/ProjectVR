@@ -29,7 +29,7 @@ internal static class IServiceCollectionExtensions
         serviceCollection.AddDbContext<ProjectVRDbContext>(options =>
             options.UseNpgsql(connectionString));
         serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
-        serviceCollection.AddScoped<IFriendsRepository, FriendsRepository>();
+        serviceCollection.AddScoped<IRequestsRepository, RequestsRepository>();
         return serviceCollection;
     }
 }

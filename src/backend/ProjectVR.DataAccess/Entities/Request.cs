@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ProjectVR.DataAccess.Entities;
 
-public class Friend
+public class Request
 {
     public int Id { get; set; }
-    public UserInfo From { get; set; } = null!;
+    public Users From { get; set; } = null!;
     public Guid FromUserGuid { get; set; }
-    public UserInfo To { get; set; } = null!;
+    public Users To { get; set; } = null!;
     public Guid ToUserGuid { get; set; }
     public DateTimeOffset? AcceptedAt { get; set; }
 }
 
-internal class FriendsConfiguration : IEntityTypeConfiguration<Friend>
+internal class RequestsConfiguration : IEntityTypeConfiguration<Request>
 {
-    public void Configure(EntityTypeBuilder<Friend> builder)
+    public void Configure(EntityTypeBuilder<Request> builder)
     {
         builder.HasKey(x => x.Id);
 

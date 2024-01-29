@@ -4,14 +4,14 @@ using ProjectVR.Domain.Models;
 
 namespace ProjectVR.Domain.Interfaces.Repositories;
 
-public interface IFriendsRepository
+public interface IRequestsRepository
 {
     /// <summary>
     ///     Создает заявку в друзья в базе данных
     /// </summary>
     /// <param name="userGuid">Guid отправителя заявки в друзья</param>
     /// <param name="friendUserGuid">Guid получателя заявки в друзья</param>
-    Task CreateFriendEntry(Guid userGuid, Guid friendUserGuid);
+    Task CreateRequest(Guid userGuid, Guid friendUserGuid);
 
     /// <summary>
     ///     Возвращает заявку в друзья, при этом <paramref name="userGuid" /> это обязательно Guid отправителя, а
@@ -20,7 +20,7 @@ public interface IFriendsRepository
     /// <param name="userGuid">Guid отправителя</param>
     /// <param name="friendUserGuid">Guid получателя</param>
     /// <returns>Заявка в друзья. null если такой заявки не найдено</returns>
-    Task<Friend?> GetExactFriendEntryByUsersGuids(Guid userGuid, Guid friendUserGuid);
+    Task<Friend?> GetExactRequestByUsersGuids(Guid userGuid, Guid friendUserGuid);
 
     /// <summary>
     ///     Возвращает заявку в друзья. Неважно кто отправитель, а кто получатель
@@ -28,7 +28,7 @@ public interface IFriendsRepository
     /// <param name="firstUserGuid">Guid первого пользователя</param>
     /// <param name="secondUserGuid">Guid второго пользователя</param>
     /// <returns>Заявка в друзья. null если такой заявки не найдено</returns>
-    Task<Friend?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid);
+    Task<Friend?> GetRequestByUserGuids(Guid firstUserGuid, Guid secondUserGuid);
 
     /// <summary>
     ///     Очищает дату принятия записи с id <paramref name="friendEntryId" />
@@ -50,5 +50,5 @@ public interface IFriendsRepository
     /// </summary>
     /// <param name="friendEntryId">id заявки</param>
     /// <returns>Выполнилась ли операция успешно</returns>
-    Task<bool> DeleteFriendEntry(int friendEntryId);
+    Task<bool> DeleteRequest(int friendEntryId);
 }

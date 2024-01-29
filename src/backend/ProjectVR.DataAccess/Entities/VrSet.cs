@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ProjectVR.Domain.Models.VrSet.Validation;
 
 namespace ProjectVR.DataAccess.Entities;
 
@@ -19,12 +20,12 @@ internal class VrSetConfiguration : IEntityTypeConfiguration<VrSet>
 
         builder
             .Property(vrset => vrset.Name)
-            .HasMaxLength(Domain.Models.VrSet.MaxVrSetNameLength)
+            .HasMaxLength(VrSetConstraints.MaxVrSetNameLength)
             .IsRequired();
 
         builder
             .Property(vrset => vrset.Icon)
-            .HasMaxLength(Domain.Models.VrSet.MaxVrSetIconLength)
+            .HasMaxLength(VrSetConstraints.MaxVrSetIconLength)
             .IsRequired(false);
     }
 }

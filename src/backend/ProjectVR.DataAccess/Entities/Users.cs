@@ -6,7 +6,7 @@ using ProjectVR.Domain.Models.User.Validation;
 
 namespace ProjectVR.DataAccess.Entities;
 
-public class UserInfo
+public class Users
 {
     public Guid Guid { get; set; }
     public string Username { get; set; } = null!;
@@ -15,25 +15,25 @@ public class UserInfo
     public DateTimeOffset LastSeen { get; set; }
     public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
     public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
-    public ICollection<Friend> OutgoingRequests { get; set; } = new List<Friend>();
-    public ICollection<Friend> IncomingRequests { get; set; } = new List<Friend>();
+    public ICollection<Request> OutgoingRequests { get; set; } = new List<Request>();
+    public ICollection<Request> IncomingRequests { get; set; } = new List<Request>();
 }
 
-internal class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
+internal class UsersConfiguration : IEntityTypeConfiguration<Users>
 {
-    public void Configure(EntityTypeBuilder<UserInfo> builder)
+    public void Configure(EntityTypeBuilder<Users> builder)
     {
         builder
             .HasKey(userinfo => userinfo.Guid);
 
         builder
             .Property(userinfo => userinfo.Username)
-            .HasMaxLength(UserValidationConstraints.MaxUsernameLength)
+            .HasMaxLength(UserConstraints.MaxUsernameLength)
             .IsRequired();
 
         builder
             .Property(userinfo => userinfo.Avatar)
-            .HasMaxLength(UserValidationConstraints.MaxAvatarLength)
+            .HasMaxLength(UserConstraints.MaxAvatarLength)
             .IsRequired(false);
 
         builder

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ProjectVR.Domain.Models.Game.Validation;
 
 namespace ProjectVR.DataAccess.Entities;
 
@@ -19,12 +20,12 @@ internal class GameConfiguration : IEntityTypeConfiguration<Game>
 
         builder
             .Property(game => game.Name)
-            .HasMaxLength(Domain.Models.Game.MaxGameNameLength)
+            .HasMaxLength(GameConstraints.MaxGameNameLength)
             .IsRequired();
 
         builder
             .Property(game => game.Icon)
-            .HasMaxLength(Domain.Models.Game.MaxGameIconLength)
+            .HasMaxLength(GameConstraints.MaxGameIconLength)
             .IsRequired(false);
     }
 }

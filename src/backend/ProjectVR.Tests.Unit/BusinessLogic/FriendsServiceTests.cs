@@ -19,18 +19,18 @@ public class FriendsServiceTests
         var friendGuid = Guid.NewGuid();
         Friend? friendEntry = null;
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(userGuid, friendGuid).Returns(Task.FromResult(friendEntry));
-        friendsRepository.GetFriendEntryByUserGuids(friendGuid, userGuid).Returns(Task.FromResult(friendEntry));
-        friendsRepository.CreateFriendEntry(userGuid, friendGuid).Returns(Task.CompletedTask);
+        friendsRepository.GetRequestByUserGuids(userGuid, friendGuid).Returns(Task.FromResult(friendEntry));
+        friendsRepository.GetRequestByUserGuids(friendGuid, userGuid).Returns(Task.FromResult(friendEntry));
+        friendsRepository.CreateRequest(userGuid, friendGuid).Returns(Task.CompletedTask);
 
         //act
         var result = friendsService.SendFriendRequest(userGuid, friendGuid).Result;
 
         //assert
-        friendsRepository.Received(1).GetFriendEntryByUserGuids(userGuid, friendGuid);
-        friendsRepository.Received(1).CreateFriendEntry(userGuid, friendGuid);
+        friendsRepository.Received(1).GetRequestByUserGuids(userGuid, friendGuid);
+        friendsRepository.Received(1).CreateRequest(userGuid, friendGuid);
 
         result.Should().BeTrue();
     }
@@ -43,18 +43,18 @@ public class FriendsServiceTests
         var friendGuid = Guid.NewGuid();
         var friendEntry = new Friend();
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(userGuid, friendGuid)!.Returns(Task.FromResult(friendEntry));
-        friendsRepository.GetFriendEntryByUserGuids(friendGuid, userGuid)!.Returns(Task.FromResult(friendEntry));
-        friendsRepository.CreateFriendEntry(userGuid, friendGuid).Returns(Task.CompletedTask);
+        friendsRepository.GetRequestByUserGuids(userGuid, friendGuid)!.Returns(Task.FromResult(friendEntry));
+        friendsRepository.GetRequestByUserGuids(friendGuid, userGuid)!.Returns(Task.FromResult(friendEntry));
+        friendsRepository.CreateRequest(userGuid, friendGuid).Returns(Task.CompletedTask);
 
         //act
         var result = friendsService.SendFriendRequest(userGuid, friendGuid).Result;
 
         //assert
-        friendsRepository.Received(1).GetFriendEntryByUserGuids(userGuid, friendGuid);
-        friendsRepository.DidNotReceiveWithAnyArgs().CreateFriendEntry(userGuid, friendGuid);
+        friendsRepository.Received(1).GetRequestByUserGuids(userGuid, friendGuid);
+        friendsRepository.DidNotReceiveWithAnyArgs().CreateRequest(userGuid, friendGuid);
 
         result.Should().BeFalse();
     }
@@ -66,17 +66,17 @@ public class FriendsServiceTests
         var selfGuid = Guid.NewGuid();
         Friend? friendEntry = null;
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(selfGuid, selfGuid).Returns(Task.FromResult(friendEntry));
-        friendsRepository.CreateFriendEntry(selfGuid, selfGuid).Returns(Task.CompletedTask);
+        friendsRepository.GetRequestByUserGuids(selfGuid, selfGuid).Returns(Task.FromResult(friendEntry));
+        friendsRepository.CreateRequest(selfGuid, selfGuid).Returns(Task.CompletedTask);
 
         //act
         var result = friendsService.SendFriendRequest(selfGuid, selfGuid).Result;
 
         //assert
-        friendsRepository.DidNotReceive().GetFriendEntryByUserGuids(selfGuid, selfGuid);
-        friendsRepository.DidNotReceiveWithAnyArgs().CreateFriendEntry(selfGuid, selfGuid);
+        friendsRepository.DidNotReceive().GetRequestByUserGuids(selfGuid, selfGuid);
+        friendsRepository.DidNotReceiveWithAnyArgs().CreateRequest(selfGuid, selfGuid);
 
         result.Should().BeFalse();
     }
@@ -94,9 +94,9 @@ public class FriendsServiceTests
             AccepterUserGuid = accepterUserGuid
         };
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
+        friendsRepository.GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>()).Returns(Task.FromResult(true));
 
@@ -106,7 +106,7 @@ public class FriendsServiceTests
             .Result;
 
         //assert
-        friendsRepository.Received(1).GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid);
+        friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.Received(1).AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>());
 
         result.Should().BeTrue();
@@ -125,9 +125,9 @@ public class FriendsServiceTests
             AccepterUserGuid = senderUserGuid
         };
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
+        friendsRepository.GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>()).Returns(Task.FromResult(true));
 
@@ -137,7 +137,7 @@ public class FriendsServiceTests
             .Result;
 
         //assert
-        friendsRepository.Received(1).GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid);
+        friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>());
 
         result.Should().BeFalse();
@@ -151,9 +151,9 @@ public class FriendsServiceTests
         var accepterUserGuid = Guid.NewGuid();
         Friend? friend = null;
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
+        friendsRepository.GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid)!.Returns(
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(default, default).Returns(Task.FromResult(false));
 
@@ -163,7 +163,7 @@ public class FriendsServiceTests
             .Result;
 
         //assert
-        friendsRepository.Received(1).GetExactFriendEntryByUsersGuids(senderUserGuid, accepterUserGuid);
+        friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().AddAcceptedAtDate(Arg.Any<int>(), Arg.Any<DateTimeOffset>());
 
         result.Should().BeFalse();
@@ -182,13 +182,13 @@ public class FriendsServiceTests
             AccepterUserGuid = userGuid
         };
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(userGuid, friendGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.GetFriendEntryByUserGuids(friendGuid, userGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(friendGuid, userGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.DeleteFriendEntry(friend.Id).Returns(Task.FromResult(true));
+        friendsRepository.DeleteRequest(friend.Id).Returns(Task.FromResult(true));
 
         //act
         var result = friendsService
@@ -197,10 +197,10 @@ public class FriendsServiceTests
 
         //assert
         friendsRepository.Received(1)
-            .GetFriendEntryByUserGuids(
+            .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid));
-        friendsRepository.Received(1).DeleteFriendEntry(friend.Id);
+        friendsRepository.Received(1).DeleteRequest(friend.Id);
 
         result.Should().BeTrue();
     }
@@ -218,13 +218,13 @@ public class FriendsServiceTests
             AccepterUserGuid = friendGuid
         };
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(userGuid, friendGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.GetFriendEntryByUserGuids(friendGuid, userGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(friendGuid, userGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.DeleteFriendEntry(friend.Id).Returns(Task.FromResult(true));
+        friendsRepository.DeleteRequest(friend.Id).Returns(Task.FromResult(true));
 
         //act
         var result = friendsService
@@ -233,10 +233,10 @@ public class FriendsServiceTests
 
         //assert
         friendsRepository.Received(1)
-            .GetFriendEntryByUserGuids(
+            .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid));
-        friendsRepository.Received(1).DeleteFriendEntry(friend.Id);
+        friendsRepository.Received(1).DeleteRequest(friend.Id);
 
         result.Should().BeTrue();
     }
@@ -249,11 +249,11 @@ public class FriendsServiceTests
         var friendGuid = Guid.NewGuid();
         Friend? friend = null;
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendGuid)!.Returns(
+        friendsRepository.GetExactRequestByUsersGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.DeleteFriendEntry(default).Returns(false);
+        friendsRepository.DeleteRequest(default).Returns(false);
 
         //act
         var result = friendsService
@@ -262,10 +262,10 @@ public class FriendsServiceTests
 
         //assert
         friendsRepository.Received(1)
-            .GetFriendEntryByUserGuids(
+            .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid));
-        friendsRepository.DidNotReceiveWithAnyArgs().DeleteFriendEntry(Arg.Any<int>());
+        friendsRepository.DidNotReceiveWithAnyArgs().DeleteRequest(Arg.Any<int>());
 
         result.Should().BeFalse();
     }
@@ -283,11 +283,11 @@ public class FriendsServiceTests
             AccepterUserGuid = friendGuid
         };
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetFriendEntryByUserGuids(userGuid, friendGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
-        friendsRepository.GetFriendEntryByUserGuids(friendGuid, userGuid)!.Returns(
+        friendsRepository.GetRequestByUserGuids(friendGuid, userGuid)!.Returns(
             Task.FromResult(friend));
         friendsRepository.ClearAcceptedAtDate(friend.Id).Returns(Task.FromResult(true));
 
@@ -298,7 +298,7 @@ public class FriendsServiceTests
 
         //assert
         friendsRepository.Received(1)
-            .GetFriendEntryByUserGuids(
+            .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid));
         friendsRepository.Received(1).ClearAcceptedAtDate(friend.Id);
@@ -314,9 +314,9 @@ public class FriendsServiceTests
         var friendGuid = Guid.NewGuid();
         Friend? friend = null;
 
-        var friendsRepository = Substitute.For<IFriendsRepository>();
+        var friendsRepository = Substitute.For<IRequestsRepository>();
         var friendsService = new FriendsService(friendsRepository);
-        friendsRepository.GetExactFriendEntryByUsersGuids(userGuid, friendGuid)!.Returns(
+        friendsRepository.GetExactRequestByUsersGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
 
         //act
@@ -326,7 +326,7 @@ public class FriendsServiceTests
 
         //assert
         friendsRepository.Received(1)
-            .GetFriendEntryByUserGuids(
+            .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid));
         friendsRepository.DidNotReceiveWithAnyArgs().ClearAcceptedAtDate(Arg.Any<int>());

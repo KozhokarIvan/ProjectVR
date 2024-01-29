@@ -8,7 +8,7 @@ namespace ProjectVR.DataAccess.Mapping;
 
 internal static class UserMappingExtensions
 {
-    internal static UserPreview MapToDomainUserBase(this UserInfo userinfoEntity, Guid? ignoredUserGuid = null)
+    internal static UserPreview MapToDomainUserBase(this Users userinfoEntity, Guid? ignoredUserGuid = null)
     {
         var userinfo = UserPreview.Create(
             userinfoEntity.Guid,
@@ -19,7 +19,7 @@ internal static class UserMappingExtensions
         return userinfo;
     }
 
-    internal static UserSummary MapToDomainUserSummary(this UserInfo userinfoEntity, Guid? ignoredUserGuid = null)
+    internal static UserSummary MapToDomainUserSummary(this Users userinfoEntity, Guid? ignoredUserGuid = null)
     {
         var userinfo = UserSummary.Create(
             userinfoEntity.Guid,
@@ -32,7 +32,7 @@ internal static class UserMappingExtensions
         return userinfo;
     }
 
-    internal static UserDetails MapToDomainUserDetails(this UserInfo userinfoEntity, Guid? ignoredUserGuid = null)
+    internal static UserDetails MapToDomainUserDetails(this Users userinfoEntity, Guid? ignoredUserGuid = null)
     {
         var userDetails = UserDetails.Create(
             userinfoEntity.Guid,
@@ -48,7 +48,7 @@ internal static class UserMappingExtensions
         return userDetails;
     }
 
-    private static FriendStatus GetFriendStatus(this UserInfo userinfoEntity, Guid? ignoredUserGuid)
+    private static FriendStatus GetFriendStatus(this Users userinfoEntity, Guid? ignoredUserGuid)
     {
         if (userinfoEntity.Guid == ignoredUserGuid) return FriendStatus.Self;
         var request =
@@ -65,7 +65,7 @@ internal static class UserMappingExtensions
         return FriendStatus.Undefined;
     }
 
-    private static UserPreview[] IncludeOnlyFriends(this UserInfo userinfoEntity)
+    private static UserPreview[] IncludeOnlyFriends(this Users userinfoEntity)
     {
         return userinfoEntity.IncomingRequests
             .Select(r => UserPreview.Create(

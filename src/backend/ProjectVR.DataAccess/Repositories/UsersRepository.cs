@@ -52,7 +52,7 @@ public class UsersRepository : IUsersRepository
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
-
+        
         var users = usersFromDb
             .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
@@ -97,7 +97,7 @@ public class UsersRepository : IUsersRepository
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
-
+        
         var users = usersFromDb
             .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
@@ -158,7 +158,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<UserDetails> CreateUser(string username, string? avatar)
     {
-        var user = new UserInfo
+        var user = new Users
         {
             Username = username,
             Avatar = avatar,

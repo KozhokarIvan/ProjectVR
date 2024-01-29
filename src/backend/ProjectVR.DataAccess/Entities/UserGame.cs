@@ -7,7 +7,7 @@ namespace ProjectVR.DataAccess.Entities;
 public class UserGame
 {
     public int Id { get; set; }
-    public UserInfo Owner { get; set; } = null!;
+    public Users Owner { get; set; } = null!;
     public Guid OwnerGuid { get; set; }
     public Game Game { get; set; } = null!;
     public int GameId { get; set; }

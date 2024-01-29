@@ -12,10 +12,10 @@ public class ProjectVRDbContext : DbContext
 
     public DbSet<Game> Games { get; set; }
     public DbSet<VrSet> VrSets { get; set; }
-    public DbSet<UserInfo> Usersinfo { get; set; }
+    public DbSet<Users> Usersinfo { get; set; }
     public DbSet<UserGame> UserGames { get; set; }
     public DbSet<UserVrSet> UserVrSets { get; set; }
-    public DbSet<Friend> Friends { get; set; }
+    public DbSet<Request> Requests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,13 +24,13 @@ public class ProjectVRDbContext : DbContext
 
 
         modelBuilder.Entity<Game>().HasData(data.Games);
-
+        
         modelBuilder.Entity<VrSet>().HasData(data.VrSets);
-
-        modelBuilder.Entity<UserInfo>().HasData(data.Users);
-
+        
+        modelBuilder.Entity<Users>().HasData(data.Users);
+        
         modelBuilder.Entity<UserGame>().HasData(data.UserGames);
-
+        
         modelBuilder.Entity<UserVrSet>().HasData(data.UserVrSets);
 
 

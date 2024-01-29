@@ -8,27 +8,27 @@ using ProjectVR.Domain.Models;
 
 namespace ProjectVR.DataAccess.Repositories;
 
-public class FriendsRepository : IFriendsRepository
+public class RequestsRepository : IRequestsRepository
 {
     private readonly ProjectVRDbContext _context;
 
-    public FriendsRepository(ProjectVRDbContext context)
+    public RequestsRepository(ProjectVRDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Friend?> GetExactFriendEntryByUsersGuids(Guid fromUserGuid, Guid toUserGuid)
+    public async Task<Friend?> GetExactRequestByUsersGuids(Guid fromUserGuid, Guid toUserGuid)
     {
-        var friend = await _context.Friends
+        var friend = await _context.Requests
             .AsNoTracking()
             .Where(f => f.FromUserGuid == fromUserGuid && f.ToUserGuid == toUserGuid)
             .FirstOrDefaultAsync();
         return friend?.MapToDomain();
     }
 
-    public async Task<Friend?> GetFriendEntryByUserGuids(Guid firstUserGuid, Guid secondUserGuid)
+    public async Task<Friend?> GetRequestByUserGuids(Guid firstUserGuid, Guid secondUserGuid)
     {
-        var friend = await _context.Friends
+        var friend = await _context.Requests
             .AsNoTracking()
             .Where(f =>
                 (f.FromUserGuid == firstUserGuid && f.ToUserGuid == secondUserGuid)
@@ -40,7 +40,7 @@ public class FriendsRepository : IFriendsRepository
 
     public async Task<bool> AddAcceptedAtDate(int friendEntryId, DateTimeOffset date)
     {
-        var friendEntry = await _context.Friends.FirstOrDefaultAsync(f => f.Id == friendEntryId);
+        var friendEntry = await _context.Requests.FirstOrDefaultAsync(f => f.Id == friendEntryId);
         if (friendEntry is null)
             return false;
         friendEntry.AcceptedAt = date;
@@ -50,7 +50,7 @@ public class FriendsRepository : IFriendsRepository
 
     public async Task<bool> ClearAcceptedAtDate(int friendEntryId)
     {
-        var friendEntry = await _context.Friends.FirstOrDefaultAsync(f => f.Id == friendEntryId);
+        var friendEntry = await _context.Requests.FirstOrDefaultAsync(f => f.Id == friendEntryId);
         if (friendEntry is null)
             return false;
         friendEntry.AcceptedAt = null;
@@ -58,23 +58,23 @@ public class FriendsRepository : IFriendsRepository
         return true;
     }
 
-    public async Task CreateFriendEntry(Guid fromUserGuid, Guid toUserGuid)
+    public async Task CreateRequest(Guid fromUserGuid, Guid toUserGuid)
     {
-        var friendEntry = new Entities.Friend
+        var friendEntry = new Entities.Request
         {
             FromUserGuid = fromUserGuid,
             ToUserGuid = toUserGuid
         };
-        await _context.Friends.AddAsync(friendEntry);
+        await _context.Requests.AddAsync(friendEntry);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> DeleteFriendEntry(int friendEntryId)
+    public async Task<bool> DeleteRequest(int friendEntryId)
     {
-        var friendEntry = await _context.Friends.FirstOrDefaultAsync(f => f.Id == friendEntryId);
+        var friendEntry = await _context.Requests.FirstOrDefaultAsync(f => f.Id == friendEntryId);
         if (friendEntry is null)
             return false;
-        _context.Friends.Remove(friendEntry);
+        _context.Requests.Remove(friendEntry);
         await _context.SaveChangesAsync();
         return true;
     }

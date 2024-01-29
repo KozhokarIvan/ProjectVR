@@ -11,7 +11,7 @@ internal class SeedingData
     internal readonly List<Game> Games;
     internal readonly List<UserGame> UserGames;
 
-    internal readonly List<UserInfo> Users;
+    internal readonly List<Users> Users;
     internal readonly List<UserVrSet> UserVrSets;
     internal readonly List<VrSet> VrSets;
 
@@ -97,7 +97,7 @@ internal class SeedingData
             }
         };
 
-        Users = new List<UserInfo>
+        Users = new List<Users>
         {
             new()
             {
