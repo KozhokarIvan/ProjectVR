@@ -52,7 +52,6 @@ export const rollRandomUsers = async (
 
 export const getUser = async (
   username: string,
-  password: string,
   loggedUserGuid: string | undefined
 ): Promise<UserDetails> => {
   const headers = new Headers();
