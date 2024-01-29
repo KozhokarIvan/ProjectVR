@@ -121,7 +121,6 @@ public class UsersRepository : IUsersRepository
                 u.IncomingRequests.Where(f => ignoredUserGuid.HasValue
                                               && f.FromUserGuid == ignoredUserGuid.Value))
             .Take(numberOfUsers)
-            .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
         var users = usersFromDb
             .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
