@@ -2,7 +2,7 @@
 import { HttpStatusCode } from "@/api/HttpStatusCode";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useAuth } from "@/hooks/use-auth";
-import { login } from "@/http/authApi";
+import { login } from "@/api/authApi";
 import { setUser } from "@/redux/features/user";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
 import { setLocalStorageItem } from "@/utils/local-storage";

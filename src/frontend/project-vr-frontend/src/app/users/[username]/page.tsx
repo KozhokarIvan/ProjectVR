@@ -5,7 +5,7 @@ import TitledIconsCard from "@/components/TitledIconsCard";
 import ProfileFeed from "./ProfileFeed";
 import { UserDetails } from "@/types";
 import { useEffect, useState } from "react";
-import { getUser } from "@/http/usersApi";
+import { getUser } from "@/api/usersApi";
 import { useAuth } from "@/hooks/use-auth";
 import { Spinner } from "@nextui-org/react";
 

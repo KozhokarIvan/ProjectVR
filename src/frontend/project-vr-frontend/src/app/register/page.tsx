@@ -5,7 +5,7 @@ import AvatarUpload from "./AvatarUpload";
 import EmailInput from "@/components/forms/EmailInput";
 import PasswordWithConfirmationInput from "@/components/forms/PasswordWithConfirmationInput";
 import UsernameInput from "@/components/forms/UsernameInput";
-import { createUser } from "@/http/usersApi";
+import { createUser } from "@/api/usersApi";
 import { useRouter } from "next/navigation";
 import { useLabel } from "@/hooks/use-label";
 import { RegisterUserResult } from "@/types";

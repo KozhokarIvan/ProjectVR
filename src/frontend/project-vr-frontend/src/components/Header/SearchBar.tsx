@@ -1,5 +1,5 @@
 import { UsersContext } from "@/app/providers";
-import { searchUsers } from "@/http/usersApi";
+import { searchUsers } from "@/api/usersApi";
 import { User } from "@/types";
 import { Button, Input, NavbarContent } from "@nextui-org/react";
 import Link from "next/link";

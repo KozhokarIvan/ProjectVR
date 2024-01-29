@@ -5,7 +5,7 @@ import {
   addFriend,
   declineFriend,
   removeFriend,
-} from "@/http/friendsApi";
+} from "@/api/friendsApi";
 import { FriendStatus } from "@/types/enums/FriendStatus";
 import { Color, ButtonRadius, ButtonSize, ButtonVariant } from "@/types/nextui";
 import { Button } from "@nextui-org/react";

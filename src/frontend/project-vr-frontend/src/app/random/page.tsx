@@ -2,7 +2,7 @@
 import { useEffect, useContext } from "react";
 import { Spinner } from "@nextui-org/react";
 import UsersSummary from "@/app/search/UsersSummary/UsersSummary";
-import { rollRandomUsers } from "@/http/usersApi";
+import { rollRandomUsers } from "@/api/usersApi";
 import { UsersContext } from "../providers";
 import { useAuth } from "@/hooks/use-auth";
 
