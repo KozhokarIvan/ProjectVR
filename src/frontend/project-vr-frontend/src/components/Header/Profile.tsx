@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { useAuth } from "@/hooks/use-auth";
 import { removeUser } from "@/redux/features/user";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { clearLocalStorageItem } from "@/utils/local-storage";
+import { clearLocalStorageItem } from "@/utils/storage/local";
 import {
   Button,
   Dropdown,

@@ -3,7 +3,7 @@ import { useAppSelector } from "./redux";
 import { selectLoginInfo } from "@/redux/features/user/selector";
 import { LoginInfo, setUser } from "@/redux/features/user";
 import { useEffect } from "react";
-import { getLocalStorageItem } from "@/utils/local-storage";
+import { getLocalStorageItem } from "@/utils/storage/local";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
 import { useDispatch } from "react-redux";
 

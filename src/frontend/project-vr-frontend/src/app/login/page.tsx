@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { login } from "@/api/authApi";
 import { setUser } from "@/redux/features/user";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { setLocalStorageItem } from "@/utils/local-storage";
+import { setLocalStorageItem } from "@/utils/storage/local";
 import {
   Button,
   Card,
