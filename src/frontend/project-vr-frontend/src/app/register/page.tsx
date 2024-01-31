@@ -1,25 +1,22 @@
 "use client";
-import { Button, Card, CardBody, CardFooter, Tooltip } from "@nextui-org/react";
-import React, { useState } from "react";
-import AvatarUpload from "./AvatarUpload";
+import { HttpStatusCode } from "@/api/HttpStatusCode";
+import { RegisterUserResult } from "@/api/contracts/user/register";
+import { createUser } from "@/api/usersApi";
 import EmailInput from "@/components/forms/EmailInput";
 import PasswordWithConfirmationInput from "@/components/forms/PasswordWithConfirmationInput";
 import UsernameInput from "@/components/forms/UsernameInput";
-import { createUser } from "@/api/usersApi";
-import { redirect, useRouter } from "next/navigation";
 import { useLabel } from "@/hooks/use-label";
-import { RegisterUserResult } from "@/api/contracts/user/register";
-import { HttpStatusCode } from "@/api/HttpStatusCode";
-import { setLocalStorageItem } from "@/utils/storage/local";
-import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
+import { useLogin } from "@/hooks/use-login";
 import { AuthUser } from "@/types";
-import { useAppDispatch } from "@/hooks/redux";
-import { setUser } from "@/redux/features/user";
+import { Button, Card, CardBody, CardFooter, Tooltip } from "@nextui-org/react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
+import AvatarUpload from "./AvatarUpload";
 export default function RegisterPage() {
-  const { user } = useAuth();
+  const { user } = useLoggedUser();
   if (user) redirect("/");
-  const dispatch = useAppDispatch();
+  const { loginAndRemember } = useLogin();
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -30,7 +27,6 @@ export default function RegisterPage() {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isConfirmedPasswordValid, setIsConfirmedPasswordValid] =
     useState(false);
-  const router = useRouter();
   const handleRegister = async () => {
     setLabel("primary", "");
     try {
@@ -52,8 +48,7 @@ export default function RegisterPage() {
             username: response.user.username,
             avatar: response.user.avatar,
           };
-          dispatch(setUser(user));
-          setLocalStorageItem<AuthUser>(LOGGED_USER_STORAGE_KEY, user);
+          loginAndRemember(user);
         } else isUnknownerror = true;
       } else if (statusCode == HttpStatusCode.BadRequest) {
         switch (response.userCreationStatus) {

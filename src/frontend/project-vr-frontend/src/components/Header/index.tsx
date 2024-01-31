@@ -4,13 +4,13 @@ import { useState } from "react";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
 import Profile from "./Profile";
 
 export default function Header() {
   const [isDark, setIsDark] = useState<boolean>(true);
   const { setTheme } = useTheme();
-  const { user: loggedUser } = useAuth();
+  const { user: loggedUser } = useLoggedUser();
   const handleChange = () => {
     if (isDark) {
       setTheme("light");

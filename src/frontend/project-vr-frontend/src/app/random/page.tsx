@@ -4,10 +4,10 @@ import { Spinner } from "@nextui-org/react";
 import UsersSummary from "@/app/search/UsersSummary";
 import { rollRandomUsers } from "@/api/usersApi";
 import { UsersContext } from "../providers";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
 
 export default function Page() {
-  const { user: loggedUser } = useAuth();
+  const { user: loggedUser } = useLoggedUser();
   const { users, setUsers } = useContext(UsersContext);
   useEffect(() => {
     rollRandomUsers(loggedUser?.userGuid)

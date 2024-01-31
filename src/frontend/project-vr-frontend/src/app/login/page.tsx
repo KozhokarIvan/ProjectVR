@@ -1,42 +1,44 @@
 "use client";
 import { HttpStatusCode } from "@/api/HttpStatusCode";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useAuth } from "@/hooks/use-auth";
-import { login } from "@/api/authApi";
-import { setUser } from "@/redux/features/user";
-import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { setLocalStorageItem } from "@/utils/storage/local";
+import { login as apiLogin } from "@/api/authApi";
+import { useLoggedUser } from "@/hooks/use-logged-user";
+import { useLogin } from "@/hooks/use-login";
 import {
   Button,
   Card,
   CardBody,
   CardFooter,
   Checkbox,
-  Divider,
   Input,
   Link,
 } from "@nextui-org/react";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
-import { setSessionStorageItem } from "@/utils/storage/session";
 
 export default function LoginPage() {
-  const { user } = useAuth();
-  const [isRememberMe, setIsRememberMe] = React.useState(false);
-  const dispatch = useAppDispatch();
+  const { user } = useLoggedUser();
+  if (user) redirect("/");
+  const { login, loginAndRemember } = useLogin();
+  const [isRememberMe, setIsRememberMe] = useState(false);
+
+  const [enteredLogin, setEnteredLogin] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
+  const [loginLabelColor, setLoginLabelColor] = useState<"primary" | "danger">(
+    "primary"
+  );
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const handleLogin = async (username: string) => {
     try {
-      const { statusCode, message, data: user } = await login(username);
+      const { statusCode, data: user } = await apiLogin(username);
       if (statusCode == HttpStatusCode.NotFound) {
         setLoginErrorMessage("User doesnt exist");
         setLoginLabelColor("danger");
         return;
       }
-      dispatch(setUser(user));
       if (isRememberMe) {
-        setLocalStorageItem(LOGGED_USER_STORAGE_KEY, user);
+        loginAndRemember(user);
       } else {
-        setSessionStorageItem(LOGGED_USER_STORAGE_KEY, user);
+        login(user);
       }
       setLoginLabelColor("primary");
       setLoginErrorMessage("");
@@ -47,13 +49,6 @@ export default function LoginPage() {
       setLoginLabelColor("danger");
     }
   };
-  const [enteredLogin, setEnteredLogin] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [loginLabelColor, setLoginLabelColor] = useState<"primary" | "danger">(
-    "primary"
-  );
-  const [loginErrorMessage, setLoginErrorMessage] = useState("");
-  if (user) redirect("/");
   return (
     <main className="flex items-center justify-center">
       <Card

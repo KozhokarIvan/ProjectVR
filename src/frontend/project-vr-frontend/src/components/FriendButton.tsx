@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
 import {
   acceptFriend,
   addFriend,
@@ -32,7 +32,7 @@ export default function FriendButton({
 }: FriendButtonProps) {
   const [status, setStatus] = useState(friendStatus);
   const [isLoading, setIsLoading] = useState(false);
-  const { user: loggedUser } = useAuth();
+  const { user: loggedUser } = useLoggedUser();
   const color = getButtonColor(status);
   const text = getButtonText(status);
   const router = useRouter();

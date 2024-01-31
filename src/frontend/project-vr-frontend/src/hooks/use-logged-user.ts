@@ -1,22 +1,21 @@
-import { AuthUser } from "@/types";
-import { useAppSelector } from "./redux";
-import { selectLoginInfo } from "@/redux/features/user/selector";
 import { LoginInfo, setUser } from "@/redux/features/user";
-import { useEffect } from "react";
-import { getLocalStorageItem } from "@/utils/storage/local";
+import { selectLoginInfo } from "@/redux/features/user/selector";
+import { AuthUser } from "@/types";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { useDispatch } from "react-redux";
+import { getLocalStorageItem } from "@/utils/storage/local";
 import { getSessionStorageItem } from "@/utils/storage/session";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "./redux";
 
-export interface UseAuthData {
+export interface UseLoggedUserData {
   user: AuthUser | null;
   logout: () => void;
   login: (user: AuthUser) => void;
 }
 
-export function useAuth(): LoginInfo {
+export function useLoggedUser(): LoginInfo {
   const loginInfo = useAppSelector(state => selectLoginInfo(state));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (!loginInfo.user) {
       const user =

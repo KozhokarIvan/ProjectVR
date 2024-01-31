@@ -1,6 +1,7 @@
 "use client";
 import { useAppDispatch } from "@/hooks/redux";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
+import { useLogout } from "@/hooks/use-logout";
 import { removeUser } from "@/redux/features/user";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
 import { clearLocalStorageItem } from "@/utils/storage/local";
@@ -16,8 +17,8 @@ import {
 } from "@nextui-org/react";
 
 export default function Profile() {
-  const dispatch = useAppDispatch();
-  const { user: loggedUser } = useAuth();
+  const logout = useLogout();
+  const { user: loggedUser } = useLoggedUser();
   if (!loggedUser)
     return (
       <Link href="/login">
@@ -47,9 +48,7 @@ export default function Profile() {
           const choice = key.toString();
           switch (choice) {
             case "logout":
-              dispatch(removeUser());
-              clearLocalStorageItem(LOGGED_USER_STORAGE_KEY);
-              clearSessionStorageItem(LOGGED_USER_STORAGE_KEY);
+              logout();
               break;
           }
         }}

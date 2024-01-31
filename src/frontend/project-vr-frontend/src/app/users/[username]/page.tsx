@@ -6,12 +6,12 @@ import ProfileFeed from "./ProfileFeed";
 import { UserDetails } from "@/types";
 import { useEffect, useState } from "react";
 import { getUser } from "@/api/usersApi";
-import { useAuth } from "@/hooks/use-auth";
+import { useLoggedUser } from "@/hooks/use-logged-user";
 import { Spinner } from "@nextui-org/react";
 
 export default function Page({ params }: { params: { username: string } }) {
   const [user, setUser] = useState<UserDetails | null>(null);
-  const { user: loggedUser } = useAuth();
+  const { user: loggedUser } = useLoggedUser();
   useEffect(() => {
     getUser(params.username, loggedUser?.userGuid).then(user => {
       setUser(user);
