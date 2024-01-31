@@ -17,7 +17,8 @@ import {
   Link,
 } from "@nextui-org/react";
 import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { setSessionStorageItem } from "@/utils/storage/session";
 
 export default function LoginPage() {
   const { user } = useAuth();
@@ -34,6 +35,8 @@ export default function LoginPage() {
       dispatch(setUser(user));
       if (isRememberMe) {
         setLocalStorageItem(LOGGED_USER_STORAGE_KEY, user);
+      } else {
+        setSessionStorageItem(LOGGED_USER_STORAGE_KEY, user);
       }
       setLoginLabelColor("primary");
       setLoginErrorMessage("");

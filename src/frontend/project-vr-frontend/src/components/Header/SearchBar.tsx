@@ -1,12 +1,12 @@
 import { UsersContext } from "@/app/providers";
 import { searchUsers } from "@/api/usersApi";
-import { User } from "@/types";
+import { AuthUser } from "@/types";
 import { Button, Input, NavbarContent } from "@nextui-org/react";
 import Link from "next/link";
 import { useContext, useState } from "react";
 
 export interface SearchBarProps {
-  loggedUser: User | null;
+  loggedUser: AuthUser | null;
 }
 
 export default function SearchBar({ loggedUser }: SearchBarProps) {

@@ -1,8 +1,8 @@
-import { User } from "@/types";
+import { AuthUser } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface LoginInfo {
-  user: User | null;
+  user: AuthUser | null;
 }
 
 const initialState: LoginInfo = {

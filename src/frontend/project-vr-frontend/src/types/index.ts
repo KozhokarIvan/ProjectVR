@@ -40,8 +40,8 @@ export interface VrSet {
   vrSetIcon?: string;
 }
 
-export interface User {
+export interface AuthUser {
   userGuid: string;
   username: string;
-  avatar: string;
+  avatar?: string;
 }

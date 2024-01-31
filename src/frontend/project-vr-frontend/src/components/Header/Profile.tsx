@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { removeUser } from "@/redux/features/user";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
 import { clearLocalStorageItem } from "@/utils/storage/local";
+import { clearSessionStorageItem } from "@/utils/storage/session";
 import {
   Button,
   Dropdown,
@@ -48,6 +49,7 @@ export default function Profile() {
             case "logout":
               dispatch(removeUser());
               clearLocalStorageItem(LOGGED_USER_STORAGE_KEY);
+              clearSessionStorageItem(LOGGED_USER_STORAGE_KEY);
               break;
           }
         }}

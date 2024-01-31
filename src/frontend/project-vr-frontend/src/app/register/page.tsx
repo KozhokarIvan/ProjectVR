@@ -1,16 +1,25 @@
 "use client";
 import { Button, Card, CardBody, CardFooter, Tooltip } from "@nextui-org/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import AvatarUpload from "./AvatarUpload";
 import EmailInput from "@/components/forms/EmailInput";
 import PasswordWithConfirmationInput from "@/components/forms/PasswordWithConfirmationInput";
 import UsernameInput from "@/components/forms/UsernameInput";
 import { createUser } from "@/api/usersApi";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useLabel } from "@/hooks/use-label";
 import { RegisterUserResult } from "@/api/contracts/user/register";
 import { HttpStatusCode } from "@/api/HttpStatusCode";
+import { setLocalStorageItem } from "@/utils/storage/local";
+import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
+import { useAuth } from "@/hooks/use-auth";
+import { AuthUser } from "@/types";
+import { useAppDispatch } from "@/hooks/redux";
+import { setUser } from "@/redux/features/user";
 export default function RegisterPage() {
+  const { user } = useAuth();
+  if (user) redirect("/");
+  const dispatch = useAppDispatch();
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +37,7 @@ export default function RegisterPage() {
       const {
         statusCode,
         message,
-        data: user,
+        data: response,
       } = await createUser({
         username: username,
         email: email,
@@ -37,11 +46,17 @@ export default function RegisterPage() {
       });
       let isUnknownerror = false;
       if (statusCode == HttpStatusCode.Ok) {
-        if (user.userCreationStatus == RegisterUserResult.Created)
-          router.push(`/users/${username}`);
-        else isUnknownerror = true;
+        if (response.userCreationStatus == RegisterUserResult.Created) {
+          const user: AuthUser = {
+            userGuid: response.user.guid,
+            username: response.user.username,
+            avatar: response.user.avatar,
+          };
+          dispatch(setUser(user));
+          setLocalStorageItem<AuthUser>(LOGGED_USER_STORAGE_KEY, user);
+        } else isUnknownerror = true;
       } else if (statusCode == HttpStatusCode.BadRequest) {
-        switch (user.userCreationStatus) {
+        switch (response.userCreationStatus) {
           case RegisterUserResult.InvalidAvatar:
             setLabel("danger", "Invalid avatar link");
             break;
@@ -56,7 +71,7 @@ export default function RegisterPage() {
             break;
         }
       } else if (statusCode == HttpStatusCode.Conflict) {
-        switch (user.userCreationStatus) {
+        switch (response.userCreationStatus) {
           case RegisterUserResult.EmailIsTaken:
             setLabel("danger", `Email '${email}' is already used`);
             break;
