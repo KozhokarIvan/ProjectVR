@@ -1,4 +1,4 @@
-import { LoginInfo, setUser } from "@/redux/features/user";
+import { setUser } from "@/redux/features/user";
 import { selectLoginInfo } from "@/redux/features/user/selector";
 import { AuthUser } from "@/types";
 import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
@@ -9,11 +9,9 @@ import { useAppDispatch, useAppSelector } from "./redux";
 
 export interface UseLoggedUserData {
   user: AuthUser | null;
-  logout: () => void;
-  login: (user: AuthUser) => void;
 }
 
-export function useLoggedUser(): LoginInfo {
+export function useLoggedUser(): UseLoggedUserData {
   const loginInfo = useAppSelector(state => selectLoginInfo(state));
   const dispatch = useAppDispatch();
   useEffect(() => {

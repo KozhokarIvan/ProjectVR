@@ -11,7 +11,7 @@ import { Color, ButtonRadius, ButtonSize, ButtonVariant } from "@/types/nextui";
 import { Button } from "@nextui-org/react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface FriendButtonProps {
   userGuid: string;
@@ -44,6 +44,9 @@ export default function FriendButton({
     setIsLoading,
     setStatus
   );
+  useEffect(() => {
+    setStatus(friendStatus);
+  }, [friendStatus]);
   return status != FriendStatus.Self ? (
     <Button
       variant={variant}

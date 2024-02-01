@@ -16,7 +16,7 @@ export default function Page({ params }: { params: { username: string } }) {
     getUser(params.username, loggedUser?.userGuid).then(user => {
       setUser(user);
     });
-  }, []);
+  }, [loggedUser]);
   return (
     <main className="grid gap-10 mx-14">
       {user ? (

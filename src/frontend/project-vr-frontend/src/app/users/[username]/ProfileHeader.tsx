@@ -1,8 +1,7 @@
-"use client";
 import FriendButton from "@/components/FriendButton";
 import { FriendStatus } from "@/types/enums/FriendStatus";
 import { Card, CardBody } from "@nextui-org/card";
-import { Avatar, Image } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
 export interface ProfileHeaderProps {
   userGuid: string;
   username: string;
