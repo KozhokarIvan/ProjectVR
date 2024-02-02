@@ -1,7 +1,7 @@
 import CloseIcon from "@/components/icons/CloseIcon";
 import LabeledInput from "@/components/forms/LabeledInput";
 import { useLabel } from "@/hooks/use-label";
-import { Badge, Image, Input } from "@nextui-org/react";
+import { Badge, Image, Input, InputProps } from "@nextui-org/react";
 import { useState } from "react";
 
 export interface AvatarUploadProps {
@@ -9,6 +9,7 @@ export interface AvatarUploadProps {
   setAvatar: (avatar: string) => void;
   labelClassName?: string;
   imgClassName?: string;
+  inputProps?: InputProps;
 }
 
 export default function AvatarUpload({
@@ -16,6 +17,7 @@ export default function AvatarUpload({
   setAvatar,
   labelClassName,
   imgClassName,
+  inputProps,
 }: AvatarUploadProps) {
   const defaultClickText = "Paste avatar link here";
   const [label, setLabel] = useLabel("primary", defaultClickText);
@@ -51,6 +53,7 @@ export default function AvatarUpload({
         setValue={setAvatar}
         className={labelClassName}
         inputProps={{
+          ...inputProps,
           isClearable: true,
           placeholder: label.message,
           value: avatar,

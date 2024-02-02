@@ -1,12 +1,14 @@
 import { MutableRefObject, useState } from "react";
 import LabeledInput from "./LabeledInput";
 import { useLabel } from "@/hooks/use-label";
+import { InputProps } from "@nextui-org/react";
 
 export interface EmailInputProps {
   email: string;
   setEmail: (email: string) => void;
   setIsEmailValid: (value: boolean) => void;
   className?: string;
+  inputProps?: InputProps;
 }
 
 export default function EmailInput({
@@ -14,6 +16,7 @@ export default function EmailInput({
   setEmail,
   setIsEmailValid,
   className,
+  inputProps,
 }: EmailInputProps) {
   const [emailLabel, setEmailLabel] = useLabel("primary", "");
   const successMessage = "We promise to not spam !";
@@ -31,6 +34,7 @@ export default function EmailInput({
       setValue={setEmail}
       className={className}
       inputProps={{
+        ...inputProps,
         isClearable: true,
         placeholder: "Email *",
         value: email,

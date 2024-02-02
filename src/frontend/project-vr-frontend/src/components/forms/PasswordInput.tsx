@@ -2,6 +2,7 @@ import { useLabel } from "@/hooks/use-label";
 import { MutableRefObject, useState } from "react";
 import LabeledInput from "./LabeledInput";
 import { Color } from "@/types/nextui";
+import { InputProps } from "@nextui-org/react";
 
 export interface PasswordInputProps {
   setIsPasswordValid: (value: boolean) => void;
@@ -10,6 +11,7 @@ export interface PasswordInputProps {
   handlePasswordsEquality?: () => boolean | null;
   setConfirmedPasswordLabel: (color: Color, message: string) => void;
   className?: string;
+  inputProps?: InputProps;
 }
 
 export default function PasswordInput({
@@ -19,6 +21,7 @@ export default function PasswordInput({
   handlePasswordsEquality,
   setConfirmedPasswordLabel,
   className,
+  inputProps,
 }: PasswordInputProps) {
   const [passwordLabel, setPasswordLabel] = useLabel("primary", "");
   const successMessage = "Password meets the requirements";
@@ -40,6 +43,7 @@ export default function PasswordInput({
       setValue={setPassword}
       className={className}
       inputProps={{
+        ...inputProps,
         isClearable: true,
         placeholder: "Password *",
         type: "password",

@@ -2,6 +2,7 @@ import { LabelProps } from "@/hooks/use-label";
 import { MutableRefObject } from "react";
 import LabeledInput from "./LabeledInput";
 import { Color } from "@/types/nextui";
+import { InputProps } from "@nextui-org/react";
 
 export interface ConfirmedPasswordInputProps {
   setIsConfirmedPasswordValid: (value: boolean) => void;
@@ -11,6 +12,7 @@ export interface ConfirmedPasswordInputProps {
   confirmedPasswordLabel: LabelProps;
   setConfirmedPasswordLabel: (color: Color, message: string) => void;
   className?: string;
+  inputProps?: InputProps;
 }
 
 export default function ConfirmedPasswordInput({
@@ -21,6 +23,7 @@ export default function ConfirmedPasswordInput({
   confirmedPasswordLabel,
   setConfirmedPasswordLabel,
   className,
+  inputProps,
 }: ConfirmedPasswordInputProps) {
   const successMessage = "Passwords match";
   const errorMessage = "*Passwords don't match";
@@ -38,9 +41,9 @@ export default function ConfirmedPasswordInput({
       setValue={setConfirmedPassword}
       className={className}
       inputProps={{
+        ...inputProps,
         isClearable: true,
         variant: "bordered",
-        size: "md",
         placeholder: "Confirm password *",
         type: "password",
         value: confirmedPassword,

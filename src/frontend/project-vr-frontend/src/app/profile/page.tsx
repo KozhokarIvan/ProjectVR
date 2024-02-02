@@ -1,19 +1,23 @@
 "use client";
 import ProfileHeader from "@/components/ProfileHeader";
-import FriendsBar from "../../../components/FriendsBar";
 import TitledIconsCard from "@/components/TitledIconsCard";
-import ProfileFeed from "../../../components/ProfileFeed";
 import { UserDetails } from "@/types";
 import { useEffect, useState } from "react";
 import { getUser } from "@/api/usersApi";
 import { useLoggedUser } from "@/hooks/use-logged-user";
 import { Spinner } from "@nextui-org/react";
+import FriendsBar from "@/components/FriendsBar";
+import ProfileFeed from "@/components/ProfileFeed";
+import { redirect } from "next/navigation";
 
-export default function Page({ params }: { params: { username: string } }) {
+export default function Page() {
   const [user, setUser] = useState<UserDetails | null>(null);
-  const { user: loggedUser } = useLoggedUser();
+  const { user: loggedUser, isDone: isDoneGrappingLoggedUser } =
+    useLoggedUser();
   useEffect(() => {
-    getUser(params.username, loggedUser?.userGuid).then(user => {
+    if (!isDoneGrappingLoggedUser) return;
+    if (!loggedUser) redirect("/login");
+    getUser(loggedUser.username, loggedUser.userGuid).then(user => {
       setUser(user);
     });
   }, [loggedUser]);
@@ -27,6 +31,7 @@ export default function Page({ params }: { params: { username: string } }) {
             avatar={user.avatar}
             registeredAt={new Date(user.createdAt)}
             friendStatus={user.friendStatus}
+            isEditableProfile
           />
           <div className="grid gap-10 grid-cols-[1fr_3fr]">
             <FriendsBar friends={user.friends} />

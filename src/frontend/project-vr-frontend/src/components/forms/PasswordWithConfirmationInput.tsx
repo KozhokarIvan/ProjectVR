@@ -2,6 +2,7 @@ import { MutableRefObject, useState } from "react";
 import ConfirmedPasswordInput from "./ConfirmPasswordInput";
 import PasswordInput from "./PasswordInput";
 import { useLabel } from "@/hooks/use-label";
+import { InputProps } from "@nextui-org/react";
 
 export interface PasswordWithConfirmationProps {
   password: string;
@@ -10,6 +11,7 @@ export interface PasswordWithConfirmationProps {
   setIsConfirmedPasswordValid: (value: boolean) => void;
   passwordClassName?: string;
   confirmPasswordClassName?: string;
+  inputProps?: InputProps;
 }
 
 export default function PasswordWithConfirmationInput({
@@ -19,6 +21,7 @@ export default function PasswordWithConfirmationInput({
   setIsConfirmedPasswordValid,
   passwordClassName,
   confirmPasswordClassName,
+  inputProps,
 }: PasswordWithConfirmationProps) {
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [confirmedPasswordLabel, setConfirmedPasswordLabel] = useLabel(
@@ -41,6 +44,7 @@ export default function PasswordWithConfirmationInput({
         handlePasswordsEquality={handlePasswordsEquality}
         setConfirmedPasswordLabel={setConfirmedPasswordLabel}
         className={passwordClassName}
+        inputProps={inputProps}
       />
       <ConfirmedPasswordInput
         confirmedPassword={confirmedPassword}
@@ -50,6 +54,7 @@ export default function PasswordWithConfirmationInput({
         confirmedPasswordLabel={confirmedPasswordLabel}
         setConfirmedPasswordLabel={setConfirmedPasswordLabel}
         className={confirmPasswordClassName}
+        inputProps={inputProps}
       />
     </>
   );

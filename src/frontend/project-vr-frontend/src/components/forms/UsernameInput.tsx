@@ -1,12 +1,14 @@
 import { MutableRefObject, useState } from "react";
 import LabeledInput from "./LabeledInput";
 import { useLabel } from "@/hooks/use-label";
+import { InputProps } from "@nextui-org/react";
 
 export interface UsernameInputProps {
   username: string;
   setUsername: (username: string) => void;
   setIsUsernameValid: (value: boolean) => void;
   className?: string;
+  inputProps?: InputProps;
 }
 
 export default function UsernameInput({
@@ -14,6 +16,7 @@ export default function UsernameInput({
   setUsername,
   setIsUsernameValid,
   className,
+  inputProps,
 }: UsernameInputProps) {
   const successMessage = "Cool username !";
   const errorMessage =
@@ -32,6 +35,7 @@ export default function UsernameInput({
       setValue={setUsername}
       className={className}
       inputProps={{
+        ...inputProps,
         isClearable: true,
         placeholder: "Username *",
         value: username,

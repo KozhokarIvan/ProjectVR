@@ -1,13 +1,15 @@
 import FriendButton from "@/components/FriendButton";
 import { FriendStatus } from "@/types/enums/FriendStatus";
 import { Card, CardBody } from "@nextui-org/card";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 export interface ProfileHeaderProps {
   userGuid: string;
   username: string;
   avatar?: string;
   registeredAt: Date;
   friendStatus: FriendStatus;
+  isEditableProfile?: boolean;
 }
 
 export default function ProfileHeader({
@@ -16,7 +18,9 @@ export default function ProfileHeader({
   avatar,
   registeredAt,
   friendStatus,
+  isEditableProfile,
 }: ProfileHeaderProps) {
+  const router = useRouter();
   return (
     <Card radius="none">
       <CardBody className="h-60 flex items-start justify-center">
@@ -38,13 +42,27 @@ export default function ProfileHeader({
           </div>
         </div>
         <div className="self-end">
-          <FriendButton
-            userGuid={userGuid}
-            friendStatus={friendStatus}
-            size="lg"
-            radius="none"
-            variant="ghost"
-          />
+          {isEditableProfile ? (
+            <Button
+              variant="ghost"
+              color="default"
+              radius="none"
+              size="lg"
+              onClick={() => {
+                router.push("/profile/edit");
+              }}
+            >
+              Edit profile
+            </Button>
+          ) : (
+            <FriendButton
+              userGuid={userGuid}
+              friendStatus={friendStatus}
+              size="lg"
+              radius="none"
+              variant="ghost"
+            />
+          )}
         </div>
       </CardBody>
     </Card>

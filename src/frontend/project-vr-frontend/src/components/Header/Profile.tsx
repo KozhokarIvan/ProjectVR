@@ -1,11 +1,6 @@
 "use client";
-import { useAppDispatch } from "@/hooks/redux";
 import { useLoggedUser } from "@/hooks/use-logged-user";
 import { useLogout } from "@/hooks/use-logout";
-import { removeUser } from "@/redux/features/user";
-import { LOGGED_USER_STORAGE_KEY } from "@/utils/consts";
-import { clearLocalStorageItem } from "@/utils/storage/local";
-import { clearSessionStorageItem } from "@/utils/storage/session";
 import {
   Button,
   Dropdown,
@@ -53,7 +48,7 @@ export default function Profile() {
           }
         }}
       >
-        <DropdownItem key="profile" href={`/users/${loggedUser.username}`}>
+        <DropdownItem key="profile" href={`/profile`}>
           <p>Profile</p>
         </DropdownItem>
         <DropdownItem key="logout" color="danger">
