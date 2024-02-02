@@ -12,7 +12,7 @@ import { AuthUser } from "@/types";
 import { Button, Card, CardBody, CardFooter, Tooltip } from "@nextui-org/react";
 import { redirect } from "next/navigation";
 import { useState } from "react";
-import AvatarUpload from "./AvatarUpload";
+import AvatarUpload from "../../components/AvatarUpload";
 export default function RegisterPage() {
   const { user } = useLoggedUser();
   if (user) redirect("/");
@@ -27,14 +27,19 @@ export default function RegisterPage() {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isConfirmedPasswordValid, setIsConfirmedPasswordValid] =
     useState(false);
+  const wrongFields = [
+    !isEmailValid ? "email" : null,
+    !isUsernameValid ? "username" : null,
+    !isPasswordValid ? "password" : null,
+    !isConfirmedPasswordValid ? "confirmed password" : null,
+  ]
+    .filter(e => e != null)
+    .join(", ");
+  console.log("fields", wrongFields);
   const handleRegister = async () => {
     setLabel("primary", "");
     try {
-      const {
-        statusCode,
-        message,
-        data: response,
-      } = await createUser({
+      const { statusCode, data: response } = await createUser({
         username: username,
         email: email,
         avatar: avatar,
@@ -122,11 +127,7 @@ export default function RegisterPage() {
         </CardBody>
         <CardFooter className="flex justify-end">
           <Tooltip
-            content={`Check fields: ${!isUsernameValid ? "'username'" : ""} ${
-              !isEmailValid ? "'email'" : ""
-            } ${!isPasswordValid ? "'password'" : ""} ${
-              !isConfirmedPasswordValid ? "'confirmed password'" : ""
-            }`}
+            content={`Check fields: ${wrongFields}`}
             isDisabled={
               isEmailValid &&
               isUsernameValid &&
