@@ -38,7 +38,7 @@ export default function Page() {
             <div className="grid gap-4">
               <div className="grid gap-4 grid-cols-2">
                 <TitledIconsCard
-                  title={`Devices (${user.vrSets.length})`}
+                  title="Devices"
                   items={user.vrSets.map(vrset => ({
                     text: vrset.vrSetName,
                     image: vrset.vrSetIcon,
@@ -46,7 +46,7 @@ export default function Page() {
                   }))}
                 />
                 <TitledIconsCard
-                  title={`Games (${user.games.length})`}
+                  title="Games"
                   items={user.games.map(game => ({
                     text: game.gameName,
                     image: game.gameIcon,

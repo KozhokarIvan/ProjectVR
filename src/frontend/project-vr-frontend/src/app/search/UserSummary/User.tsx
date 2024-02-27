@@ -11,13 +11,20 @@ export default function UserSummaryUser(props: UserSummaryUserProps) {
   return (
     <div className="flex items-stretch flex-col w-52">
       <div className="flex">
-        <Avatar
-          radius="sm"
-          size="lg"
-          showFallback
-          src={avatar}
-          alt={username}
-        />
+        <Link
+          href={`/users/${username}`}
+          color="primary"
+          size="sm"
+          className="font-semibold"
+        >
+          <Avatar
+            radius="sm"
+            size="lg"
+            showFallback
+            src={avatar}
+            alt={username}
+          />
+        </Link>
         <div className="ml-2 flex flex-col justify-evenly">
           <Link
             href={`/users/${username}`}

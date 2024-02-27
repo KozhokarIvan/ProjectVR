@@ -18,7 +18,7 @@ export default function Page() {
     return setUsers([]);
   }, [loggedUser]);
   return (
-    <main className="grid items-center justify-center">
+    <main className="grid items-center justify-center mt-16">
       {users ? (
         users.length > 0 ? (
           <UsersSummary users={users} />

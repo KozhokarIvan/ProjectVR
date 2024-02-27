@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { getUser } from "@/api/usersApi";
 import { useLoggedUser } from "@/hooks/use-logged-user";
 import { Spinner } from "@nextui-org/react";
+import DevicesBar from "@/components/DevicesBar";
+import GamesBar from "@/components/GamesBar";
 
 export default function Page({ params }: { params: { username: string } }) {
   const [user, setUser] = useState<UserDetails | null>(null);
@@ -27,27 +29,14 @@ export default function Page({ params }: { params: { username: string } }) {
             avatar={user.avatar}
             registeredAt={new Date(user.createdAt)}
             friendStatus={user.friendStatus}
+            isEditableProfile
           />
           <div className="grid gap-10 grid-cols-[1fr_3fr]">
             <FriendsBar friends={user.friends} />
             <div className="grid gap-4">
               <div className="grid gap-4 grid-cols-2">
-                <TitledIconsCard
-                  title={`Devices (${user.vrSets.length})`}
-                  items={user.vrSets.map(vrset => ({
-                    text: vrset.vrSetName,
-                    image: vrset.vrSetIcon,
-                    isFavorite: vrset.isFavorite,
-                  }))}
-                />
-                <TitledIconsCard
-                  title={`Games (${user.games.length})`}
-                  items={user.games.map(game => ({
-                    text: game.gameName,
-                    image: game.gameIcon,
-                    isFavorite: game.isFavorite,
-                  }))}
-                />
+                <DevicesBar devices={user.vrSets} />
+                <GamesBar games={user.games} />
               </div>
               <ProfileFeed />
             </div>

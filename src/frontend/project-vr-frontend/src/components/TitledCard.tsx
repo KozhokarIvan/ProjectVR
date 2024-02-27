@@ -1,8 +1,9 @@
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
-import React, { FC, PropsWithChildren, ReactNode } from "react";
+import React, { FC, PropsWithChildren, ReactElement, ReactNode } from "react";
 
 export interface TitledCardProps {
   title: string;
+  itemsNumber: number;
   className?: string;
   collectionWrapperClassName?: string;
   editUrl?: string;
@@ -11,15 +12,24 @@ export interface TitledCardProps {
 export default function TitledCard({
   children,
   title,
+  itemsNumber,
   className,
   collectionWrapperClassName: collectionClassNames,
   editUrl,
 }: PropsWithChildren<TitledCardProps>) {
+  console.log(title, itemsNumber);
   return (
-    <Card radius="none">
+    <Card radius="none" className="bg-transparent border-1.5 border-default">
       <CardBody className={"min-h-60" + className}>
         <div className="mb-3 flex justify-between">
-          <h6 className="text-xl block">{title}</h6>
+          <h6 className="text-xl block">
+            {title}
+            {!itemsNumber ? (
+              ""
+            ) : (
+              <span className="text-2xl text-default"> {itemsNumber}</span>
+            )}
+          </h6>
           {editUrl ? <Button variant="light" radius="none"></Button> : ""}
         </div>
         <Divider className="mb-4 mt-2" />

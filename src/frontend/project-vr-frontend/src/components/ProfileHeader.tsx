@@ -22,7 +22,10 @@ export default function ProfileHeader({
 }: ProfileHeaderProps) {
   const router = useRouter();
   return (
-    <Card radius="none">
+    <Card
+      radius="none"
+      className="bg-transparent mt-8 border-1.5 border-default"
+    >
       <CardBody className="h-60 flex items-start justify-center">
         <div className="flex justify-center items-stretch h-full">
           <Avatar

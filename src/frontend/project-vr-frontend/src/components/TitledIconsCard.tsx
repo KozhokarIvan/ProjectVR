@@ -11,6 +11,7 @@ export default function TitledIconsCard({ title, items }: TitledIconsCard) {
     <TitledCard
       title={title}
       collectionWrapperClassName="grid grid-cols-3 gap-4"
+      itemsNumber={items.length}
     >
       {items.map((item, index) => (
         <Icon

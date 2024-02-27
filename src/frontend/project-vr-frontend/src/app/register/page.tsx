@@ -35,7 +35,6 @@ export default function RegisterPage() {
   ]
     .filter(e => e != null)
     .join(", ");
-  console.log("fields", wrongFields);
   const handleRegister = async () => {
     setLabel("primary", "");
     try {
