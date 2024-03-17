@@ -1,11 +1,12 @@
 "use client";
 import { useLoggedUser } from "@/hooks/use-logged-user";
-import { Button, ButtonProps, Card, CardBody } from "@nextui-org/react";
+import { Button, ButtonProps } from "@nextui-org/react";
 import { redirect } from "next/navigation";
 import EditUserSection from "./EditUserSection";
 import { useState } from "react";
 import EditPasswordSection from "./EditPasswordSection";
 import EditEmailSection from "./EditEmailSection";
+import EditVrSetsSection from "./EditVrSetsSection";
 
 enum TabState {
   Profile,
@@ -15,7 +16,7 @@ enum TabState {
   Games,
 }
 
-export default function RegisterPage() {
+export default function EditPage() {
   const { user } = useLoggedUser();
   if (!user) redirect("/");
   const buttonProps: ButtonProps = {
@@ -24,28 +25,26 @@ export default function RegisterPage() {
     fullWidth: true,
     variant: "light",
   };
-  const [tab, setTab] = useState(TabState.Profile);
+  const [tab, setTab] = useState<TabState>(TabState.Profile);
   const getButtonColor = (thisTab: TabState) =>
     tab == thisTab ? "primary" : buttonProps.color;
   return (
-    <main className="px-[500px] pt-40">
+    <main className="px-[400px] pt-40">
       <div className="grid grid-cols-[300px_1fr]">
         <div>
           <Button
             {...buttonProps}
             color={getButtonColor(TabState.Profile)}
-            onClick={() => {
-              setTab(TabState.Profile);
-            }}
+            onClick={() => setTab(TabState.Profile)}
           >
-            Profile info
+            Profile Info
           </Button>
           <Button
             {...buttonProps}
             color={getButtonColor(TabState.VrSets)}
-            isDisabled
+            onClick={() => setTab(TabState.VrSets)}
           >
-            My VR sets
+            My VrSets
           </Button>
           <Button
             {...buttonProps}
@@ -57,18 +56,14 @@ export default function RegisterPage() {
           <Button
             {...buttonProps}
             color={getButtonColor(TabState.Password)}
-            onClick={() => {
-              setTab(TabState.Password);
-            }}
+            onClick={() => setTab(TabState.Password)}
           >
             Password
           </Button>
           <Button
             {...buttonProps}
             color={getButtonColor(TabState.Email)}
-            onClick={() => {
-              setTab(TabState.Email);
-            }}
+            onClick={() => setTab(TabState.Email)}
           >
             Email
           </Button>
@@ -76,6 +71,9 @@ export default function RegisterPage() {
         <div className="flex items-center justify-center ml-4">
           <EditUserSection
             className={tab == TabState.Profile ? "" : "hidden"}
+          />
+          <EditVrSetsSection
+            className={tab == TabState.VrSets ? "" : "hidden"}
           />
           <EditPasswordSection
             className={tab == TabState.Password ? "" : "hidden"}

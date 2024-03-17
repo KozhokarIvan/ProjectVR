@@ -1,7 +1,11 @@
-export default function CloseIcon() {
+export interface CloseIconProps {
+  className?: string;
+}
+
+export default function CloseIcon({ className }: CloseIconProps) {
   return (
     <svg
-      fill="#000000"
+      className={className}
       width="16"
       height="16"
       viewBox="0 0 16 16"

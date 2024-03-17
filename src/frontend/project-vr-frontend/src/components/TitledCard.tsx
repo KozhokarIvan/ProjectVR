@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
-import React, { FC, PropsWithChildren, ReactElement, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
 export interface TitledCardProps {
   title: string;
@@ -17,7 +17,6 @@ export default function TitledCard({
   collectionWrapperClassName: collectionClassNames,
   editUrl,
 }: PropsWithChildren<TitledCardProps>) {
-  console.log(title, itemsNumber);
   return (
     <Card radius="none" className="bg-transparent border-1.5 border-default">
       <CardBody className={"min-h-60" + className}>
