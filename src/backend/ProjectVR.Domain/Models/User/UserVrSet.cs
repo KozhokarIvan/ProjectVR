@@ -1,4 +1,4 @@
-﻿namespace ProjectVR.Domain.Models;
+﻿namespace ProjectVR.Domain.Models.User;
 
 public class UserVrSet
 {

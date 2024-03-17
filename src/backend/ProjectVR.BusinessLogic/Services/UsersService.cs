@@ -64,4 +64,8 @@ public class UsersService : IUsersService
         }
         return new Result<UserDetails, RegisterUserError>(error);
     }
+
+    public Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset)
+        => _usersRepository.GetUserVrSets(userGuid, limit, offset);
+
 }

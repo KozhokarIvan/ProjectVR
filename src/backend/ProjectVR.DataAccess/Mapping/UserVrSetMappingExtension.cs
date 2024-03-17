@@ -1,4 +1,5 @@
 ﻿using ProjectVR.Domain.Models;
+using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.DataAccess.Mapping;
 

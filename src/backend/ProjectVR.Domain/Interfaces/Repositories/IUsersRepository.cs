@@ -68,4 +68,5 @@ public interface IUsersRepository
     /// <param name="username">Имя пользователя</param>
     /// <returns>Существует ли пользователь с таким именем</returns>
     Task<bool> DoesUsernameExist(string username);
+    Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
 }

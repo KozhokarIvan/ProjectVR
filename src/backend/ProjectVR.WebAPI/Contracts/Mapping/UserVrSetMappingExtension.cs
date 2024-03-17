@@ -2,7 +2,7 @@
 
 internal static class UserVrSetMappingExtension
 {
-    internal static UserVrSet MapToApi(this Domain.Models.UserVrSet domainUserVrSet)
+    internal static UserVrSet MapToApi(this Domain.Models.User.UserVrSet domainUserVrSet)
     {
         var userVrSet = new UserVrSet
         {

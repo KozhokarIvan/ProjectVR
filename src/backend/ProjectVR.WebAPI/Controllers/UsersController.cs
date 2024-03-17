@@ -132,4 +132,18 @@ public class UsersController : ControllerBase
             .ToArray();
         return Ok(foundUsers);
     }
+
+    [HttpGet("vrsets")]
+    public async Task<IActionResult> GetUserVrSets([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+        [FromQuery] GetUserVrSetsRequest request)
+    {
+        if (!Guid.TryParse(loggedUserHeader, out var loggedUserGuid))
+            return Unauthorized();
+        if (request.Limit <= 0) return BadRequest("limit can not be less than 1");
+        if (request.Offset < 0) return BadRequest("offset can not be less than 0");
+        var offset = request.Offset ?? 0;
+        var limit = request.Limit;
+        var userVrSets = await _usersService.GetUserVrSets(loggedUserGuid, limit, offset);
+        return Ok(userVrSets);
+    }
 }

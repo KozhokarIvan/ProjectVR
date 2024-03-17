@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using ProjectVR.DataAccess.Entities;
 using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Interfaces.Repositories;
-using ProjectVR.Domain.Models;
 using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.DataAccess.Repositories;
@@ -172,4 +171,17 @@ public class UsersRepository : IUsersRepository
 
     public Task<bool> DoesUsernameExist(string username)
         => _context.Usersinfo.AnyAsync(u => EF.Functions.ILike(u.Username, username));
+
+    public async Task<Domain.Models.User.UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset)
+    {
+        var vrSetsFromDb = await _context.UserVrSets
+            .Where(vrset => vrset.OwnerGuid == userGuid)
+            .OrderBy(vrSet => vrSet.VrSet.Name)
+            .Skip(offset)
+            .Take(limit)
+            .Include(userVrSet => userVrSet.VrSet)
+            .ToArrayAsync();
+        var vrSets = vrSetsFromDb.Select(vrSet => vrSet.MapToDomain()).ToArray();
+        return vrSets;
+    }
 }
