@@ -3,20 +3,18 @@ import FavoriteIcon from "@/components/icons/FavoriteIcon";
 import HoverIcon from "@/components/icons/HoverIcon";
 import { VrSet } from "@/types";
 import { Card } from "@nextui-org/react";
-import { useState } from "react";
 
 export interface VrSetCardProps {
-  vrset: VrSet;
+  vrSet: VrSet;
   vrSets: VrSet[];
   setVrSets: (vrSets: VrSet[]) => void;
 }
 
 export default function VrSetCard({
-  vrset,
+  vrSet,
   vrSets,
   setVrSets,
 }: VrSetCardProps) {
-  const [vrSet, setVrSet] = useState<VrSet>(vrset);
   return (
     <Card key={vrSet.vrSetId} radius="none" className="mt-5 bg-transparent">
       <div className="relative">
@@ -27,13 +25,16 @@ export default function VrSetCard({
               props: {
                 className: `${
                   vrSet.isFavorite
-                    ? "fill-yellow-500 hover:fill-none"
-                    : "hover:fill-yellow-500"
-                } stroke-yellow-500 w-8 h-8`,
+                    ? "fill-primary hover:fill-none"
+                    : "hover:fill-primary"
+                } stroke-primary w-8 h-8`,
                 onClick: () => {
-                  setVrSet(oldVrset => {
-                    return { ...oldVrset, isFavorite: !oldVrset.isFavorite };
-                  });
+                  const newVrSets = vrSets.map(vs =>
+                    vs.vrSetId == vrSet.vrSetId
+                      ? { ...vs, isFavorite: !vs.isFavorite }
+                      : vs
+                  );
+                  setVrSets(newVrSets);
                 },
               },
             }}
@@ -42,17 +43,17 @@ export default function VrSetCard({
             svgProps={{
               Icon: DeleteIcon,
               props: {
-                className: "w-8 h-8 hover:fill-red-500",
+                className: "w-8 h-8 hover:fill-danger",
                 onClick: () => {
-                  setVrSets(vrSets.filter(vs => vs.vrSetId != vrset.vrSetId));
+                  setVrSets(vrSets.filter(vs => vs.vrSetId != vrSet.vrSetId));
                 },
               },
             }}
           />
         </div>
-        <img src={vrset.vrSetIcon} />
+        <img src={vrSet.vrSetIcon} />
       </div>
-      <h6 className="text-center">{vrset.vrSetName}</h6>
+      <h6 className="text-center">{vrSet.vrSetName}</h6>
       <div className="grid grid-cols-2"></div>
     </Card>
   );

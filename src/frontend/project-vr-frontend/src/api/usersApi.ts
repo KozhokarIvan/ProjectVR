@@ -1,6 +1,11 @@
-import { UserDetails, UserSummary } from "@/types";
+import { UserDetails, UserSummary, VrSet } from "@/types";
 import { HOST } from "./urls";
-import { RANDOM_ROUTE, SEARCH_ROUTE, USERS_ROUTE } from "./routes";
+import {
+  RANDOM_ROUTE,
+  SEARCH_ROUTE,
+  USERS_ROUTE,
+  USER_VRSETS_ROUTE,
+} from "./routes";
 import { RegisterRequest, RegisterResponse } from "./contracts/user/register";
 import { Response } from "@/api/contracts/response";
 export const searchUsers = async (
@@ -92,6 +97,29 @@ export const createUser = async (
       message: response.statusText,
       data: data,
     };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getUserVrSets = async (
+  loggedUserGuid: string,
+  limit: number,
+  offset?: number
+): Promise<VrSet[]> => {
+  const headers = new Headers();
+  if (loggedUserGuid) headers.set("loggedUserGuid", loggedUserGuid);
+  const requestParameters = {
+    method: "get",
+    headers: headers,
+  };
+  const requestUrl =
+    HOST + USER_VRSETS_ROUTE + `?limit=${limit}&offset=${offset}`;
+  try {
+    const response = await fetch(requestUrl, requestParameters);
+    const vrSets: VrSet[] = await response.json();
+    return vrSets;
   } catch (err) {
     console.error(err);
     throw err;
