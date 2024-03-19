@@ -108,8 +108,7 @@ export const getUserVrSets = async (
   limit: number,
   offset?: number
 ): Promise<VrSet[]> => {
-  const headers = new Headers();
-  if (loggedUserGuid) headers.set("loggedUserGuid", loggedUserGuid);
+  const headers = new Headers({ loggedUserGuid: loggedUserGuid });
   const requestParameters = {
     method: "get",
     headers: headers,
@@ -120,6 +119,41 @@ export const getUserVrSets = async (
     const response = await fetch(requestUrl, requestParameters);
     const vrSets: VrSet[] = await response.json();
     return vrSets;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const setUserVrSets = async (
+  loggedUserGuid: string,
+  vrSets: VrSet[]
+): Promise<globalThis.Response> => {
+  const headers = new Headers({
+    loggedUserGuid: loggedUserGuid,
+    "Content-Type": "application/json;",
+  });
+  const requestParameters = {
+    method: "put",
+    headers: headers,
+    body: JSON.stringify(
+      {
+        vrSets: vrSets.map(vs => {
+          return {
+            vrSetId: vs.vrSetId,
+            isFavorite: vs.isFavorite,
+          };
+        }),
+      },
+      null
+    ),
+  };
+  const requestUrl = HOST + USER_VRSETS_ROUTE;
+  try {
+    const response = await fetch(requestUrl, requestParameters);
+    console.log("Request", requestParameters);
+    console.log("Response", response);
+    return response;
   } catch (err) {
     console.error(err);
     throw err;

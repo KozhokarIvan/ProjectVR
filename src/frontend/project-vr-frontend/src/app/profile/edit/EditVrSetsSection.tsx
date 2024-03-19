@@ -2,7 +2,7 @@ import { VrSet } from "@/types";
 import { Button, ButtonProps, Divider, Spinner } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import VrSetCard from "./VrSetCard";
-import { getUserVrSets } from "@/api/usersApi";
+import { getUserVrSets, setUserVrSets } from "@/api/usersApi";
 import { useLoggedUser } from "@/hooks/use-logged-user";
 import { redirect } from "next/navigation";
 
@@ -27,14 +27,15 @@ export default function EditDevicesSection({
     fullWidth: true,
     variant: "light",
   };
+  const applyFetchedVrSets = (newVrSets: VrSet[]) => {
+    initialVrSets.current = [...newVrSets];
+    setVrSets([...initialVrSets.current]);
+    setIsVrSetsLoaded(true);
+  };
   useEffect(() => {
     let userGuid: string = loggedUser?.userGuid ?? redirect("/");
     getUserVrSets(userGuid, 15, 0)
-      .then(fetchedVrSets => {
-        initialVrSets.current = [...fetchedVrSets];
-        setVrSets([...initialVrSets.current]);
-        setIsVrSetsLoaded(true);
-      })
+      .then(applyFetchedVrSets)
       .catch(err => console.error("Error:", err));
     return setVrSets([]);
   }, []);
@@ -109,6 +110,13 @@ export default function EditDevicesSection({
           fullWidth={false}
           variant="ghost"
           color={isSaveReasonable() ? "success" : "default"}
+          onClick={() => {
+            let userGuid: string = loggedUser?.userGuid ?? redirect("/");
+            setIsVrSetsLoaded(false);
+            setUserVrSets(userGuid, vrSets).then(res =>
+              getUserVrSets(userGuid, 15, 0).then(applyFetchedVrSets)
+            );
+          }}
           isDisabled={!isSaveReasonable()}
         >
           Save changes
