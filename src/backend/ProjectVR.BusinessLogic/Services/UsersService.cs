@@ -22,7 +22,7 @@ public class UsersService : IUsersService
         => _usersRepository.FindUsersByQuery(query, offset, limit, signedUserGuid);
 
 
-    public Task<UserSummary[]> FindUsersByGameAndVrset(string? game, string? vrset, int offset, int limit,
+    public Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrset, int offset, int limit,
         Guid? signedUserGuid = null)
         => _usersRepository.FindUsersByGameAndVrSet(game, vrset, offset, limit, signedUserGuid);
 
@@ -32,7 +32,8 @@ public class UsersService : IUsersService
     public Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? signedUserGuid = null)
         => _usersRepository.GetUserDetailsByUsername(username, signedUserGuid);
 
-    public async Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar, string password)
+    public async Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar,
+        string password)
     {
         var result = RegisterUserModel.Create(username, email, avatar, password);
         if (result.IsSuccess)
@@ -44,6 +45,7 @@ public class UsersService : IUsersService
             var user = await _usersRepository.CreateUser(validatedUser.Username, validatedUser.Avatar);
             return new Result<UserDetails, RegisterUserError>(user);
         }
+
         RegisterUserError error;
         switch (result.ErrorStatus)
         {
@@ -62,10 +64,34 @@ public class UsersService : IUsersService
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
         return new Result<UserDetails, RegisterUserError>(error);
     }
 
     public Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset)
         => _usersRepository.GetUserVrSets(userGuid, limit, offset);
 
+    public async Task SetUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets)
+    {
+        var allVrSets = await _usersRepository.GetAllUserVrSets(userGuid);
+        var newVrSets = vrSets
+            .Where(vs => allVrSets
+                .All(oldVs => vs.VrSetId != oldVs.VrSetId))
+            .ToArray();
+        var addNewVrSetsTask = _usersRepository.AddUserVrSets(userGuid, newVrSets);
+        var detachedVrSetIds = allVrSets
+            .Select(v => v.VrSetId)
+            .Except(vrSets
+                .Select(v => v.VrSetId))
+            .ToArray();
+        await addNewVrSetsTask;
+        var detachVrSetsTask = _usersRepository.DetachUserVrSets(userGuid, detachedVrSetIds);
+        var editedVrSets = vrSets
+            .Where(vs =>
+                allVrSets
+                    .FirstOrDefault(oldVs => oldVs.VrSetId == vs.VrSetId)?.IsFavorite != vs.IsFavorite)
+            .ToArray();
+        await detachVrSetsTask;
+        await _usersRepository.EditUserVrSets(userGuid, editedVrSets);
+    }
 }

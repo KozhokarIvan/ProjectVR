@@ -29,13 +29,12 @@ public class Program
             // Add services to the container.
 
             builder.Services.AddCors(options =>
-                options.AddPolicy("CorsPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000", "https://localhost:3000")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    }));
+                options.AddPolicy("CorsPolicy", policyBuilder
+                    => policyBuilder
+                        .WithOrigins("http://localhost:3000", "https://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                ));
             builder.Services.AddControllers();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -57,13 +56,12 @@ public class Program
             }
 
             app.UseHttpsRedirection();
-
             app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
             app.MapControllers();
-            
+
             app.Run();
         }
         catch (Exception ex)

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectVR.Domain.Interfaces.Services;
 using ProjectVR.Domain.Models.User.Enums;
 using ProjectVR.WebAPI.Contracts.Mapping;
+using ProjectVR.WebAPI.Contracts.Mapping.Request;
 using ProjectVR.WebAPI.Contracts.Mapping.Responses;
 using ProjectVR.WebAPI.Contracts.Requests;
 using ProjectVR.WebAPI.Contracts.Responses;
@@ -39,7 +39,7 @@ public class UsersController : ControllerBase
             Guid.TryParse(loggedUserHeader, out var loggedUserGuidFromParse))
             loggedUserGuid = loggedUserGuidFromParse;
         var users = await _usersService
-            .FindUsersByGameAndVrset(request.Game, request.VrSet, request.Offset, request.Limit, loggedUserGuid);
+            .FindUsersByGameAndVrSet(request.Game, request.VrSet, request.Offset, request.Limit, loggedUserGuid);
         var result = users
             .Select(GetUsersResponseMappingExtension.MapToApi)
             .ToArray();
@@ -145,5 +145,15 @@ public class UsersController : ControllerBase
         var limit = request.Limit;
         var userVrSets = await _usersService.GetUserVrSets(loggedUserGuid, limit, offset);
         return Ok(userVrSets);
+    }
+
+    [HttpPut("vrsets")]
+    public async Task<IActionResult> SetUserVrSets([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+        [FromBody] SetUserVrSetsRequest request)
+    {
+        if (!Guid.TryParse(loggedUserHeader, out var loggedUserGuid))
+            return Unauthorized();
+        await _usersService.SetUserVrSets(loggedUserGuid, request.VrSets.MapToDomain());
+        return Ok();
     }
 }

@@ -20,7 +20,7 @@ internal class UserVrSetConfiguration : IEntityTypeConfiguration<UserVrSet>
     {
         builder
             .HasKey(uVrSet => uVrSet.Id);
-
+        
         builder
             .HasOne(uVrSet => uVrSet.Owner)
             .WithMany(user => user.VrSets)
@@ -33,6 +33,6 @@ internal class UserVrSetConfiguration : IEntityTypeConfiguration<UserVrSet>
         builder
             .HasOne(uVrSet => uVrSet.VrSet)
             .WithMany()
-            .HasForeignKey(vrset => vrset.VrSetId);
+            .HasForeignKey(vrSet => vrSet.VrSetId);
     }
 }

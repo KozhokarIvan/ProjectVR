@@ -51,7 +51,7 @@ public class UsersRepository : IUsersRepository
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
-        
+
         var users = usersFromDb
             .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
@@ -96,7 +96,7 @@ public class UsersRepository : IUsersRepository
             .Take(limit)
             .OrderByDescending(u => u.CreatedAt)
             .ToArrayAsync();
-        
+
         var users = usersFromDb
             .Select(u => u.MapToDomainUserSummary(ignoredUserGuid))
             .ToArray();
@@ -147,7 +147,7 @@ public class UsersRepository : IUsersRepository
             .Include(u => u.VrSets)
             .ThenInclude(u => u.VrSet)
             .Include(u => u.IncomingRequests)
-            .ThenInclude(f=> f.From)
+            .ThenInclude(f => f.From)
             .Include(u => u.OutgoingRequests)
             .ThenInclude(f => f.To)
             .FirstOrDefaultAsync();
@@ -162,7 +162,6 @@ public class UsersRepository : IUsersRepository
             Username = username,
             Avatar = avatar,
             CreatedAt = DateTimeOffset.Now
-                
         };
         _context.Usersinfo.Add(user);
         await _context.SaveChangesAsync();
@@ -183,5 +182,66 @@ public class UsersRepository : IUsersRepository
             .ToArrayAsync();
         var vrSets = vrSetsFromDb.Select(vrSet => vrSet.MapToDomain()).ToArray();
         return vrSets;
+    }
+
+    public async Task<Domain.Models.User.UserVrSet[]> GetAllUserVrSets(Guid userGuid)
+    {
+        var vrSetsFromDb = await _context.UserVrSets
+            .Where(vrset => vrset.OwnerGuid == userGuid)
+            .OrderBy(vrSet => vrSet.VrSet.Name)
+            .Include(userVrSet => userVrSet.VrSet)
+            .ToArrayAsync();
+        var vrSets = vrSetsFromDb.Select(vrSet => vrSet.MapToDomain()).ToArray();
+        return vrSets;
+    }
+
+    public async Task AddUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets)
+    {
+        var user = await _context.Usersinfo
+            .Where(u => u.Guid == userGuid)
+            .Include(u => u.VrSets)
+            .FirstAsync();
+        foreach (var vrSet in vrSets)
+        {
+            if (user.VrSets.FirstOrDefault(vs => vs.VrSetId == vrSet.VrSetId) is not null)
+                continue;
+            user.VrSets.Add(new Entities.UserVrSet()
+            {
+                OwnerGuid = userGuid,
+                VrSetId = vrSet.VrSetId,
+                IsFavorite = vrSet.IsFavorite
+            });
+        }
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task EditUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets)
+    {
+        var user = await _context.Usersinfo
+            .Where(u => u.Guid == userGuid)
+            .Include(u => u.VrSets)
+            .FirstAsync();
+        foreach (var vrSet in vrSets)
+        {
+            var vrSetToEdit = user.VrSets.FirstOrDefault(vs => vs.VrSetId == vrSet.VrSetId);
+            if (vrSetToEdit is null) continue;
+            vrSetToEdit.IsFavorite = vrSet.IsFavorite;
+        }
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DetachUserVrSets(Guid userGuid, int[] vrSetIds)
+    {
+        var user = await _context.Usersinfo
+            .Where(u => u.Guid == userGuid)
+            .Include(u => u.VrSets)
+            .FirstAsync();
+        foreach (var vrSetId in vrSetIds)
+        {
+            var vrSetToRemove = user.VrSets.FirstOrDefault(vs => vs.VrSetId == vrSetId);
+            if (vrSetToRemove is null) continue;
+            _context.Remove(vrSetToRemove);
+        }
+        await _context.SaveChangesAsync();
     }
 }

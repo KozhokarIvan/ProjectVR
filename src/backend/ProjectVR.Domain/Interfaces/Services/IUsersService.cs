@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ProjectVR.Domain.Models;
 using ProjectVR.Domain.Models.User;
 using ProjectVR.Domain.Models.User.Enums;
 
@@ -36,7 +35,7 @@ public interface IUsersService
     ///     Если <paramref name="signedUserGuid" /> не null, то пользователь с таким Guid и его друзья, входящие заявки и
     ///     исходящие заявки не попадают в поиск
     /// </returns>
-    Task<UserSummary[]> FindUsersByGameAndVrset(string? game, string? vrset, int offset, int limit,
+    Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrset, int offset, int limit,
         Guid? signedUserGuid = null);
 
     /// <summary>
@@ -66,4 +65,5 @@ public interface IUsersService
     Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar, string password);
 
     Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
+    Task SetUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);
 }
