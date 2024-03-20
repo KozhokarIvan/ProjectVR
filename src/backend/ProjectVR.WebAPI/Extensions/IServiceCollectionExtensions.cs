@@ -17,6 +17,7 @@ internal static class IServiceCollectionExtensions
         serviceCollection.AddScoped<IUsersService, UsersService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();
         serviceCollection.AddScoped<IFriendsService, FriendsService>();
+        serviceCollection.AddScoped<IVrSetsService, VrSetsService>();
         return serviceCollection;
     }
 
@@ -30,6 +31,8 @@ internal static class IServiceCollectionExtensions
             options.UseNpgsql(connectionString));
         serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
         serviceCollection.AddScoped<IRequestsRepository, RequestsRepository>();
+        serviceCollection.AddScoped<IVrSetsRepository, VrSetsRepository>();
+        
         return serviceCollection;
     }
 }
