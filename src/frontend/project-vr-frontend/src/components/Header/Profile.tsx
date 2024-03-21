@@ -8,13 +8,14 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Link,
+  Skeleton,
   User,
 } from "@nextui-org/react";
 
 export default function Profile() {
   const logout = useLogout();
-  const { user: loggedUser } = useLoggedUser();
-  if (!loggedUser)
+  const { user: loggedUser, isDone } = useLoggedUser();
+  if (isDone && !loggedUser)
     return (
       <Link href="/login">
         <Button variant="ghost" color="primary">
@@ -26,12 +27,13 @@ export default function Profile() {
     <Dropdown>
       <DropdownTrigger>
         <User
-          name={loggedUser.username}
+          name={isDone && loggedUser ? loggedUser.username : ""}
           avatarProps={{
-            src: loggedUser.avatar,
+            isBordered: true,
             showFallback: true,
-            name: undefined,
-            radius: "lg",
+            src: isDone && loggedUser ? loggedUser.avatar : "",
+            name: " ",
+            radius: "none",
           }}
           className=" hover:cursor-pointer"
         />

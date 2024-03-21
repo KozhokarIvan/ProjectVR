@@ -12,14 +12,13 @@ import { redirect } from "next/navigation";
 
 export default function Page() {
   const [user, setUser] = useState<UserDetails | null>(null);
-  const { user: loggedUser, isDone: isDoneGrappingLoggedUser } =
-    useLoggedUser();
+  const { user: loggedUser, isDone: isLoggingDone } = useLoggedUser();
   useEffect(() => {
-    if (!isDoneGrappingLoggedUser) return;
-    if (!loggedUser) redirect("/login");
-    getUser(loggedUser.username, loggedUser.userGuid).then(user => {
-      setUser(user);
-    });
+    if (!loggedUser && isLoggingDone) redirect("/login");
+    if (loggedUser)
+      getUser(loggedUser.username, loggedUser.userGuid).then(user => {
+        setUser(user);
+      });
   }, [loggedUser]);
   return (
     <main className="grid gap-10 mx-14">
