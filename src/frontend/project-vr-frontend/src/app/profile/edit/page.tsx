@@ -29,7 +29,7 @@ export default function EditPage() {
   const getButtonColor = (thisTab: TabState) =>
     tab == thisTab ? "primary" : buttonProps.color;
   return (
-    <main className="px-[400px] pt-40">
+    <main className="px-[400px] pt-12">
       <div className="grid grid-cols-[300px_1fr]">
         <div>
           <Button

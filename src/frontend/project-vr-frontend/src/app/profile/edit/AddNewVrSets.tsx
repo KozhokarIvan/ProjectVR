@@ -13,46 +13,54 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface AddNewVrSetsProps {
   vrSets: VrSet[];
-  setVrSets: (value: SetStateAction<VrSet[]>) => void;
   isVrSetsLoaded: boolean;
   userVrSets: UserVrSet[];
-  setUserVrSets: (value: SetStateAction<UserVrSet[]>) => void;
   selectedVrSets: VrSet[];
-  setSelectedVrSets: (value: SetStateAction<VrSet[]>) => void;
-  selectedKeys: any;
-  setSelectedKeys: (value: SetStateAction<any>) => void;
+  addSelectionToUserVrSets: () => void;
+  cancelSelection: () => void;
+  addVrSetToSelection: (vrSet: VrSet) => void;
   buttonProps: ButtonProps;
   className?: string;
 }
 
 export default function AddNewVrSets({
   vrSets,
-  setVrSets,
   isVrSetsLoaded,
   userVrSets,
-  setUserVrSets,
   selectedVrSets,
-  setSelectedVrSets,
-  selectedKeys,
-  setSelectedKeys,
+  addSelectionToUserVrSets,
+  cancelSelection,
+  addVrSetToSelection,
   buttonProps,
   className,
 }: AddNewVrSetsProps) {
+  buttonProps = {
+    ...buttonProps,
+    fullWidth: false,
+    variant: "ghost",
+    className: selectedVrSets.length > 0 ? "" : "hidden",
+  };
   const [queryText, setQueryText] = useState<string>("");
   const [searchResults, setSearchResult] = useState<VrSet[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<any>();
   const searchVrSets = async (query: string) => {
     if (query.length < 3) return;
     setSearchResult(
       vrSets.filter(vs => vs.name.toUpperCase().includes(query.toUpperCase()))
     );
   };
+  const onInputChange = async (event: { target: { value: string } }) => {
+    const newText = event.target.value;
+    setQueryText(newText);
+    searchVrSets(newText);
+  };
   useEffect(() => {
     setSearchResult(vrSets);
-    setSelectedVrSets([]);
+    setSelectedKeys([]);
   }, [vrSets, userVrSets]);
   useEffect(() => {
     if (queryText.length == 0) setSearchResult(vrSets);
@@ -67,22 +75,8 @@ export default function AddNewVrSets({
         size="sm"
         isClearable
         value={queryText}
-        onChange={async (event: { target: { value: string } }) => {
-          try {
-            const newText = event.target.value;
-            setQueryText(newText);
-            searchVrSets(newText);
-          } catch (err) {
-            console.error("Error:", err);
-          }
-        }}
-        onClear={async () => {
-          try {
-            setQueryText("");
-          } catch (err) {
-            console.error("Error:", err);
-          }
-        }}
+        onChange={onInputChange}
+        onClear={() => setQueryText("")}
       />
       <ScrollShadow className="h-[520px]">
         <Table
@@ -109,16 +103,7 @@ export default function AddNewVrSets({
             loadingContent={<Spinner label="Loading..." />}
           >
             {searchResults.map(vs => (
-              <TableRow
-                key={vs.id}
-                onClick={() => {
-                  if (selectedVrSets.map(v => v.id).includes(vs.id))
-                    setSelectedVrSets(
-                      selectedVrSets.filter(v => v.id != vs.id)
-                    );
-                  else setSelectedVrSets([...selectedVrSets, vs]);
-                }}
-              >
+              <TableRow key={vs.id} onClick={() => addVrSetToSelection(vs)}>
                 <TableCell className="flex gap-3 items-center">
                   <Image src={vs.icon} width={150}></Image>
                   <h6 className="text-xl">{vs.name}</h6>
@@ -131,43 +116,15 @@ export default function AddNewVrSets({
       <div className={`flex justify-between mt-2 mb-40 ${className}`}>
         <Button
           {...buttonProps}
-          fullWidth={false}
-          variant="ghost"
           color="success"
-          className={selectedVrSets.length > 0 ? "" : "hidden"}
-          onClick={() => {
-            {
-              setUserVrSets([
-                ...userVrSets,
-                ...selectedVrSets.map(vs => {
-                  return {
-                    vrSetId: vs.id,
-                    vrSetName: vs.name,
-                    vrSetIcon: vs.icon,
-                    isFavorite: false,
-                  };
-                }),
-              ]);
-              setVrSets(
-                vrSets.filter(
-                  vs => !selectedVrSets.map(v => v.id).includes(vs.id)
-                )
-              );
-            }
-          }}
+          onClick={() => addSelectionToUserVrSets()}
         >
           Add selected vr sets to your collection
         </Button>
         <Button
           {...buttonProps}
-          fullWidth={false}
-          variant="ghost"
           color="danger"
-          className={selectedVrSets.length > 0 ? "" : "hidden"}
-          onClick={() => {
-            setSelectedVrSets([]);
-            setSelectedKeys([]);
-          }}
+          onClick={() => cancelSelection()}
         >
           Deselect all
         </Button>

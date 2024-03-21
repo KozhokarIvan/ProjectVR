@@ -1,43 +1,28 @@
-import { AuthUser, UserVrSet, VrSet } from "@/types";
-import VrSetCard from "./VrSetCard";
+import { UserVrSet } from "@/types";
 import { Button, ButtonProps, Spinner } from "@nextui-org/react";
-import { MutableRefObject, SetStateAction } from "react";
-import { redirect } from "next/navigation";
-import {
-  getUserVrSets,
-  setUserVrSets as requestSetUserVrSets,
-} from "@/api/usersApi";
+import { MutableRefObject } from "react";
+import VrSetCard from "./VrSetCard";
 
 export interface EditMyVrSetsProps {
-  isVrSetsLoaded: boolean;
-  setIsVrSetsLoaded: (value: SetStateAction<boolean>) => void;
-  applyFetchedVrSets: (newVrSets: UserVrSet[]) => void;
   initialUserVrSets: MutableRefObject<UserVrSet[]>;
+  isUserVrSetsLoaded: boolean;
   userVrSets: UserVrSet[];
-  setUserVrSets: (value: SetStateAction<UserVrSet[]>) => void;
-  initialVrSets: MutableRefObject<VrSet[]>;
-  vrSets: VrSet[];
-  setVrSets: (value: SetStateAction<VrSet[]>) => void;
-  selectedVrSets: VrSet[];
-  setSelectedKeys: (value: SetStateAction<any>) => void;
+  resetUserVrSets: () => void;
+  requestSaveUserVrSets: () => void;
+  removeVrSetFromUserVrSets: (userVrSet: UserVrSet) => void;
+  addVrSetToFavorites: (userVrSet: UserVrSet) => void;
   buttonProps: ButtonProps;
-  loggedUser: AuthUser | null;
   className?: string;
 }
 export default function EditMyVrSets({
-  isVrSetsLoaded,
   initialUserVrSets,
+  isUserVrSetsLoaded,
   userVrSets,
-  setUserVrSets,
-  initialVrSets,
-  vrSets,
-  setVrSets,
-  setIsVrSetsLoaded,
-  selectedVrSets,
-  setSelectedKeys,
+  resetUserVrSets,
+  requestSaveUserVrSets,
+  removeVrSetFromUserVrSets,
+  addVrSetToFavorites,
   buttonProps,
-  loggedUser,
-  applyFetchedVrSets,
   className,
 }: EditMyVrSetsProps) {
   const isSaveReasonable = () => {
@@ -51,13 +36,19 @@ export default function EditMyVrSets({
     }
     return false;
   };
-  if (!isVrSetsLoaded) {
+  if (!isUserVrSetsLoaded) {
     return (
       <div className={`flex items-center justify-center ${className}`}>
         <Spinner size="lg" />
       </div>
     );
   }
+  buttonProps = {
+    ...buttonProps,
+    fullWidth: false,
+    variant: "ghost",
+    isDisabled: !isSaveReasonable(),
+  };
   return (
     <>
       {userVrSets.length > 0 ? (
@@ -65,9 +56,9 @@ export default function EditMyVrSets({
           {userVrSets.map(vrset => (
             <VrSetCard
               key={vrset.vrSetId}
-              vrSet={vrset}
-              vrSets={userVrSets}
-              setVrSets={setUserVrSets}
+              userVrSet={vrset}
+              removeVrSetFromUserVrSets={removeVrSetFromUserVrSets}
+              addVrSetToFavorites={addVrSetToFavorites}
             />
           ))}
         </div>
@@ -81,35 +72,15 @@ export default function EditMyVrSets({
       >
         <Button
           {...buttonProps}
-          fullWidth={false}
-          variant="ghost"
           color={isSaveReasonable() ? "danger" : "default"}
-          onClick={() => {
-            setUserVrSets([...initialUserVrSets.current]);
-            const filteredVrSets = initialVrSets.current.filter(
-              vs =>
-                !initialUserVrSets.current.map(v => v.vrSetId).includes(vs.id)
-            );
-            setVrSets(filteredVrSets);
-            setSelectedKeys([]);
-          }}
-          isDisabled={!isSaveReasonable()}
+          onClick={() => resetUserVrSets()}
         >
           Reset changes
         </Button>
         <Button
           {...buttonProps}
-          fullWidth={false}
-          variant="ghost"
           color={isSaveReasonable() ? "success" : "default"}
-          onClick={() => {
-            let userGuid: string = loggedUser?.userGuid ?? redirect("/");
-            setIsVrSetsLoaded(false);
-            requestSetUserVrSets(userGuid, userVrSets).then(res =>
-              getUserVrSets(userGuid, 15, 0).then(applyFetchedVrSets)
-            );
-          }}
-          isDisabled={!isSaveReasonable()}
+          onClick={() => requestSaveUserVrSets()}
         >
           Save changes
         </Button>
