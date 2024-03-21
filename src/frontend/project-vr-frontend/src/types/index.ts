@@ -5,8 +5,8 @@ export interface UserSummary {
   username: string;
   avatar?: string;
   friendStatus: FriendStatus;
-  vrSets: VrSet[];
-  games: Game[];
+  vrSets: UserVrSet[];
+  games: UserGame[];
 }
 
 export interface UserDetails {
@@ -15,8 +15,8 @@ export interface UserDetails {
   username: string;
   friendStatus: FriendStatus;
   createdAt: Date;
-  vrSets: VrSet[];
-  games: Game[];
+  vrSets: UserVrSet[];
+  games: UserGame[];
   friends: FriendInfo[];
 }
 
@@ -25,7 +25,7 @@ export interface FriendInfo {
   avatar?: string;
 }
 
-export interface Game {
+export interface UserGame {
   gameId: number;
   gameName: string;
   isFavorite: boolean;
@@ -33,7 +33,7 @@ export interface Game {
   gameIcon?: string;
 }
 
-export interface VrSet {
+export interface UserVrSet {
   vrSetId: number;
   vrSetName: string;
   isFavorite: boolean;
@@ -44,4 +44,9 @@ export interface AuthUser {
   userGuid: string;
   username: string;
   avatar?: string;
+}
+export interface VrSet {
+  id: number;
+  name: string;
+  icon?: string;
 }

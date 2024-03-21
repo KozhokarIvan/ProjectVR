@@ -1,8 +1,8 @@
-import { Game } from "@/types";
+import { UserGame } from "@/types";
 import TitledIconsCard from "./TitledIconsCard";
 
 export interface GamesBarProps {
-  games: Game[];
+  games: UserGame[];
 }
 
 export default function GamesBar({ games }: GamesBarProps) {

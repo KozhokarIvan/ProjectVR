@@ -1,8 +1,8 @@
-import { Game, VrSet } from "@/types";
+import { UserGame, UserVrSet } from "@/types";
 import Icon from "../../../components/Icon";
 export interface UserSummaryBadgesProps {
-  vrsets: VrSet[];
-  games: Game[];
+  vrsets: UserVrSet[];
+  games: UserGame[];
 }
 
 export default function UserSummaryBadges(props: UserSummaryBadgesProps) {

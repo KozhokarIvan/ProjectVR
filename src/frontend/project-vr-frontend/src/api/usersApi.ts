@@ -1,4 +1,4 @@
-import { UserDetails, UserSummary, VrSet } from "@/types";
+import { UserDetails, UserSummary, UserVrSet } from "@/types";
 import { HOST } from "./urls";
 import {
   RANDOM_ROUTE,
@@ -107,7 +107,7 @@ export const getUserVrSets = async (
   loggedUserGuid: string,
   limit: number,
   offset?: number
-): Promise<VrSet[]> => {
+): Promise<UserVrSet[]> => {
   const headers = new Headers({ loggedUserGuid: loggedUserGuid });
   const requestParameters = {
     method: "get",
@@ -117,7 +117,7 @@ export const getUserVrSets = async (
     HOST + USER_VRSETS_ROUTE + `?limit=${limit}&offset=${offset}`;
   try {
     const response = await fetch(requestUrl, requestParameters);
-    const vrSets: VrSet[] = await response.json();
+    const vrSets: UserVrSet[] = await response.json();
     return vrSets;
   } catch (err) {
     console.error(err);
@@ -127,7 +127,7 @@ export const getUserVrSets = async (
 
 export const setUserVrSets = async (
   loggedUserGuid: string,
-  vrSets: VrSet[]
+  vrSets: UserVrSet[]
 ): Promise<globalThis.Response> => {
   const headers = new Headers({
     loggedUserGuid: loggedUserGuid,
@@ -151,8 +151,6 @@ export const setUserVrSets = async (
   const requestUrl = HOST + USER_VRSETS_ROUTE;
   try {
     const response = await fetch(requestUrl, requestParameters);
-    console.log("Request", requestParameters);
-    console.log("Response", response);
     return response;
   } catch (err) {
     console.error(err);

@@ -1,8 +1,8 @@
-import { VrSet } from "@/types";
+import { UserVrSet } from "@/types";
 import TitledIconsCard from "./TitledIconsCard";
 
 export interface DevicesBarProps {
-  devices: VrSet[];
+  devices: UserVrSet[];
 }
 
 export default function DevicesBar({ devices }: DevicesBarProps) {

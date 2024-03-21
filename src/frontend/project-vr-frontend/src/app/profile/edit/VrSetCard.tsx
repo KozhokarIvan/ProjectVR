@@ -1,13 +1,13 @@
 import DeleteIcon from "@/components/icons/DeleteIcon";
 import FavoriteIcon from "@/components/icons/FavoriteIcon";
 import HoverIcon from "@/components/icons/HoverIcon";
-import { VrSet } from "@/types";
+import { UserVrSet } from "@/types";
 import { Card } from "@nextui-org/react";
 
 export interface VrSetCardProps {
-  vrSet: VrSet;
-  vrSets: VrSet[];
-  setVrSets: (vrSets: VrSet[]) => void;
+  vrSet: UserVrSet;
+  vrSets: UserVrSet[];
+  setVrSets: (vrSets: UserVrSet[]) => void;
 }
 
 export default function VrSetCard({

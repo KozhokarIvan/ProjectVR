@@ -10,3 +10,5 @@ export const USER_VRSETS_ROUTE = `${USERS_ROUTE}/vrsets`;
 //friends
 export const FRIENDS_ROUTE = `${API_ROUTE}/friends`;
 export const REQUESTS_ROUTE = `${FRIENDS_ROUTE}/requests`;
+//vrsets
+export const VRSETS_ROUTE = `${API_ROUTE}/vrsets`;
