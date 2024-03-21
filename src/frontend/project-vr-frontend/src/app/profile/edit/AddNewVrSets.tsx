@@ -4,6 +4,7 @@ import {
   ButtonProps,
   Image,
   Input,
+  InputProps,
   ScrollShadow,
   Spinner,
   Table,
@@ -11,9 +12,10 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
+  TableProps,
   TableRow,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface AddNewVrSetsProps {
   vrSets: VrSet[];
@@ -46,7 +48,6 @@ export default function AddNewVrSets({
   };
   const [queryText, setQueryText] = useState<string>("");
   const [searchResults, setSearchResult] = useState<VrSet[]>([]);
-  const [selectedKeys, setSelectedKeys] = useState<any>();
   const searchVrSets = async (query: string) => {
     if (query.length < 3) return;
     setSearchResult(
@@ -60,41 +61,51 @@ export default function AddNewVrSets({
   };
   useEffect(() => {
     setSearchResult(vrSets);
-    setSelectedKeys([]);
   }, [vrSets, userVrSets]);
   useEffect(() => {
     if (queryText.length == 0) setSearchResult(vrSets);
   }, [queryText]);
+  const inputProps: InputProps = {
+    variant: "bordered",
+    placeholder: "Find a user...",
+    color: "primary",
+    radius: "none",
+    size: "sm",
+    isClearable: true,
+    value: queryText,
+    onChange: onInputChange,
+    onClear: () => setQueryText(""),
+  };
+  const tableProps: TableProps = {
+    removeWrapper: true,
+    hideHeader: true,
+    selectionMode: "multiple",
+    selectedKeys: selectedVrSets.map(vs => vs.id.toString()),
+    classNames: {
+      td: [
+        "group-data-[first=true]:first:before:rounded-none",
+        "group-data-[first=true]:last:before:rounded-none",
+        "group-data-[middle=true]:before:rounded-none",
+        "group-data-[last=true]:first:before:rounded-none",
+        "group-data-[last=true]:last:before:rounded-none",
+      ],
+    },
+  };
+  const addButtonProps: ButtonProps = {
+    ...buttonProps,
+    color: "success",
+    onClick: () => addSelectionToUserVrSets(),
+  };
+  const deselectButtonProps: ButtonProps = {
+    ...buttonProps,
+    color: "danger",
+    onClick: () => cancelSelection(),
+  };
   return (
     <div className={className}>
-      <Input
-        variant="bordered"
-        placeholder="Find a user..."
-        color="primary"
-        radius="none"
-        size="sm"
-        isClearable
-        value={queryText}
-        onChange={onInputChange}
-        onClear={() => setQueryText("")}
-      />
+      <Input {...inputProps} />
       <ScrollShadow className="h-[520px]">
-        <Table
-          removeWrapper
-          hideHeader
-          selectionMode="multiple"
-          selectedKeys={selectedKeys}
-          onSelectionChange={setSelectedKeys}
-          classNames={{
-            td: [
-              "group-data-[first=true]:first:before:rounded-none",
-              "group-data-[first=true]:last:before:rounded-none",
-              "group-data-[middle=true]:before:rounded-none",
-              "group-data-[last=true]:first:before:rounded-none",
-              "group-data-[last=true]:last:before:rounded-none",
-            ],
-          }}
-        >
+        <Table {...tableProps}>
           <TableHeader>
             <TableColumn>Name</TableColumn>
           </TableHeader>
@@ -114,20 +125,10 @@ export default function AddNewVrSets({
         </Table>
       </ScrollShadow>
       <div className={`flex justify-between mt-2 mb-40 ${className}`}>
-        <Button
-          {...buttonProps}
-          color="success"
-          onClick={() => addSelectionToUserVrSets()}
-        >
+        <Button {...addButtonProps}>
           Add selected vr sets to your collection
         </Button>
-        <Button
-          {...buttonProps}
-          color="danger"
-          onClick={() => cancelSelection()}
-        >
-          Deselect all
-        </Button>
+        <Button {...deselectButtonProps}>Deselect all</Button>
       </div>
     </div>
   );

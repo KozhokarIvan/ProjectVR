@@ -1,4 +1,4 @@
-import { useVrSetsEditor } from "@/hooks/user-vrsets-editor";
+import { useVrSetsEditor } from "@/hooks/use-vrsets-editor";
 import { Button, ButtonProps, Divider } from "@nextui-org/react";
 import { useState } from "react";
 import AddNewVrSets from "./AddNewVrSets";

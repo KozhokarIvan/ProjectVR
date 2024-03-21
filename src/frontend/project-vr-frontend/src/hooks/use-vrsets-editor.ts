@@ -1,31 +1,24 @@
+import { UserVrSet, VrSet } from "@/types";
 import {
   Dispatch,
   MutableRefObject,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { useLoggedUser } from "./use-logged-user";
-import { UserVrSet, VrSet } from "@/types";
-import { getUserVrSets } from "@/api/usersApi";
-import { getVrSets } from "@/api/vrSetsApi";
-import { redirect } from "next/navigation";
-import { setUserVrSets as requestSetUserVrSets } from "@/api/usersApi";
+import { useFetchVrSets } from "./use-fetch-vrsets";
+
 export interface VrSetsEditor {
   initialVrSets: MutableRefObject<VrSet[]>;
   initialUserVrSets: MutableRefObject<UserVrSet[]>;
   isUserVrSetsLoaded: boolean;
-  setIsUserVrSetsLoaded: Dispatch<SetStateAction<boolean>>;
   vrSets: VrSet[];
   setVrSets: Dispatch<SetStateAction<VrSet[]>>;
   userVrSets: UserVrSet[];
   setUserVrSets: Dispatch<SetStateAction<UserVrSet[]>>;
   isVrSetsLoaded: boolean;
-  setIsVrSetsLoaded: Dispatch<SetStateAction<boolean>>;
   selectedVrSets: VrSet[];
   setSelectedVrSets: Dispatch<SetStateAction<VrSet[]>>;
-  applyFetchedUserVrSets: (userVrSets: UserVrSet[]) => void;
   addSelectionToUserVrSets: () => void;
   cancelSelection: () => void;
   addVrSetToSelection: (vrSet: VrSet) => void;
@@ -36,27 +29,23 @@ export interface VrSetsEditor {
 }
 
 export function useVrSetsEditor(): VrSetsEditor {
-  const { user: loggedUser } = useLoggedUser();
-  const [isUserVrSetsLoaded, setIsUserVrSetsLoaded] = useState<boolean>(false);
-  const initialUserVrSets = useRef<UserVrSet[]>([]);
-  const [userVrSets, setUserVrSets] = useState<UserVrSet[]>([]);
-  const [isVrSetsLoaded, setIsVrSetsLoaded] = useState<boolean>(false);
-  const initialVrSets = useRef<VrSet[]>([]);
-  const [vrSets, setVrSets] = useState<VrSet[]>([]);
+  const {
+    isVrSetsLoaded,
+    initialVrSets,
+    vrSets,
+    setVrSets,
+    useFetchUserVrSetsResult,
+  } = useFetchVrSets();
+  const {
+    isUserVrSetsLoaded,
+    initialUserVrSets,
+    userVrSets,
+    setUserVrSets,
+    requestSaveUserVrSets,
+  } = useFetchUserVrSetsResult;
+
   const [selectedVrSets, setSelectedVrSets] = useState<VrSet[]>([]);
-  const applyFetchedUserVrSets = (userVrSets: UserVrSet[]) => {
-    initialUserVrSets.current = [...userVrSets];
-    setUserVrSets([...initialUserVrSets.current]);
-    setIsUserVrSetsLoaded(true);
-  };
-  const applyFetchedVrSets = (vrSets: VrSet[], userVrSets: UserVrSet[]) => {
-    initialVrSets.current = [...vrSets];
-    const filteredVrSets = initialVrSets.current.filter(
-      vs => !userVrSets.map(v => v.vrSetId).includes(vs.id)
-    );
-    setVrSets(filteredVrSets);
-    setIsVrSetsLoaded(true);
-  };
+
   const addSelectionToUserVrSets = () => {
     setUserVrSets([
       ...userVrSets,
@@ -88,13 +77,6 @@ export function useVrSetsEditor(): VrSetsEditor {
     );
     setVrSets(filteredVrSets);
   };
-  const requestSaveUserVrSets = () => {
-    let userGuid: string = loggedUser?.userGuid ?? redirect("/");
-    setIsUserVrSetsLoaded(false);
-    requestSetUserVrSets(userGuid, userVrSets).then(res =>
-      getUserVrSets(userGuid, 15, 0).then(applyFetchedUserVrSets)
-    );
-  };
   const removeVrSetFromUserVrSets = (userVrSet: UserVrSet) => {
     setUserVrSets(userVrSets.filter(vs => vs.vrSetId != userVrSet.vrSetId));
     setVrSets([
@@ -115,35 +97,19 @@ export function useVrSetsEditor(): VrSetsEditor {
     setUserVrSets(newVrSets);
   };
   useEffect(() => {
-    const userGuid: string = loggedUser?.userGuid ?? redirect("/");
-    const getUserVrSetsTask = getUserVrSets(userGuid, 15, 0);
-    const getVrSetsTask = getVrSets(15, 0);
-    getUserVrSetsTask
-      .then(userVrSets => {
-        applyFetchedUserVrSets(userVrSets);
-        getVrSetsTask
-          .then(vrSets => applyFetchedVrSets(vrSets, userVrSets))
-          .catch(err => console.error("Error:", err));
-      })
-      .catch(err => console.error("Error:", err));
-  }, []);
-  useEffect(() => {
     setSelectedVrSets([]);
   }, [vrSets, userVrSets]);
   return {
     initialVrSets,
     initialUserVrSets,
     isUserVrSetsLoaded,
-    setIsUserVrSetsLoaded,
-    vrSets: vrSets,
-    setVrSets: setVrSets,
-    userVrSets: userVrSets,
-    setUserVrSets: setUserVrSets,
-    isVrSetsLoaded: isVrSetsLoaded,
-    setIsVrSetsLoaded,
+    vrSets,
+    setVrSets,
+    userVrSets,
+    setUserVrSets,
+    isVrSetsLoaded,
     selectedVrSets,
     setSelectedVrSets,
-    applyFetchedUserVrSets,
     addSelectionToUserVrSets,
     cancelSelection,
     addVrSetToSelection,
