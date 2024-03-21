@@ -41,7 +41,7 @@ export default function EditMyVrSets({
   className,
 }: EditMyVrSetsProps) {
   const isSaveReasonable = () => {
-    if (userVrSets.length != initialVrSets.current.length) return true;
+    if (userVrSets.length != initialUserVrSets.current.length) return true;
     for (let i = 0; i < userVrSets.length; i++) {
       const initialVrSet = initialUserVrSets.current.find(
         vs => vs.vrSetId == userVrSets[i].vrSetId
