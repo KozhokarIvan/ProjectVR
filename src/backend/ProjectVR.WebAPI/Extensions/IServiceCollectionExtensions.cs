@@ -32,7 +32,7 @@ internal static class IServiceCollectionExtensions
         serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
         serviceCollection.AddScoped<IRequestsRepository, RequestsRepository>();
         serviceCollection.AddScoped<IVrSetsRepository, VrSetsRepository>();
-        
+
         return serviceCollection;
     }
 }

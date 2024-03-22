@@ -24,13 +24,13 @@ public class ProjectVRDbContext : DbContext
 
 
         modelBuilder.Entity<Game>().HasData(data.Games);
-        
+
         modelBuilder.Entity<VrSet>().HasData(data.VrSets);
-        
+
         modelBuilder.Entity<Users>().HasData(data.Users);
-        
+
         modelBuilder.Entity<UserGame>().HasData(data.UserGames);
-        
+
         modelBuilder.Entity<UserVrSet>().HasData(data.UserVrSets);
 
 

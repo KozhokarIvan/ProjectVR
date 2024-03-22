@@ -5,11 +5,6 @@ namespace ProjectVR.Domain.Models.User;
 
 public class UserPreview
 {
-    public Guid Guid { get; }
-    public string Username { get; }
-    public string? Avatar { get; }
-    public FriendStatus FriendStatus { get; }
-
     private UserPreview(Guid guid, string username, string? avatar, FriendStatus friendStatus)
     {
         Guid = guid;
@@ -18,6 +13,13 @@ public class UserPreview
         FriendStatus = friendStatus;
     }
 
+    public Guid Guid { get; }
+    public string Username { get; }
+    public string? Avatar { get; }
+    public FriendStatus FriendStatus { get; }
+
     public static UserPreview Create(Guid guid, string username, string? avatar, FriendStatus friendStatus)
-        => new(guid, username, avatar, friendStatus);
+    {
+        return new UserPreview(guid, username, avatar, friendStatus);
+    }
 }

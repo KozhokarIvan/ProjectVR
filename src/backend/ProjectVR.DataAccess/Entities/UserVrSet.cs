@@ -20,7 +20,7 @@ internal class UserVrSetConfiguration : IEntityTypeConfiguration<UserVrSet>
     {
         builder
             .HasKey(uVrSet => uVrSet.Id);
-        
+
         builder
             .HasOne(uVrSet => uVrSet.Owner)
             .WithMany(user => user.VrSets)

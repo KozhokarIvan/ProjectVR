@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ProjectVR.Domain.Models;
 using ProjectVR.Domain.Models.User;
 
 namespace ProjectVR.Domain.Interfaces.Repositories;
@@ -56,18 +55,20 @@ public interface IUsersRepository
     Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? ignoredUserGuid = null);
 
     /// <summary>
-    /// Создает пользователя и возвращает данные о нем
+    ///     Создает пользователя и возвращает данные о нем
     /// </summary>
     /// <param name="username">Имя пользователя</param>
     /// <param name="avatar">Адрес изображения пользователя</param>
     /// <returns>Новый пользователь</returns>
     Task<UserDetails> CreateUser(string username, string? avatar);
+
     /// <summary>
-    /// Проверяет существует ли пользователь с таким именем
+    ///     Проверяет существует ли пользователь с таким именем
     /// </summary>
     /// <param name="username">Имя пользователя</param>
     /// <returns>Существует ли пользователь с таким именем</returns>
     Task<bool> DoesUsernameExist(string username);
+
     Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
     Task<UserVrSet[]> GetAllUserVrSets(Guid userGuid);
     Task AddUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);

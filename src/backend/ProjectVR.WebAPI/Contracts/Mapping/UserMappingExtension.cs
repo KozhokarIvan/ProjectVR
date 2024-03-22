@@ -27,5 +27,5 @@ public static class UserMappingExtension
             FriendStatus = domainUser.FriendStatus.MapToResponse()
         };
         return user;
-    } 
+    }
 }

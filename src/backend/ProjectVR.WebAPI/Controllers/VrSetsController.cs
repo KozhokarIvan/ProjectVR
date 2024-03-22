@@ -6,13 +6,15 @@ namespace ProjectVR.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/vrsets/")]
-public class VrSetsController: ControllerBase
+public class VrSetsController : ControllerBase
 {
     private readonly IVrSetsService _vrSetsService;
+
     public VrSetsController(IVrSetsService vrSetsService)
     {
         _vrSetsService = vrSetsService;
     }
+
     [HttpGet]
     public async Task<IActionResult> GetAllVrSets([FromQuery] int limit, [FromQuery] int offset)
     {

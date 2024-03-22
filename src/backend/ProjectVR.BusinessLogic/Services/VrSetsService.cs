@@ -7,11 +7,14 @@ namespace ProjectVR.BusinessLogic.Services;
 public class VrSetsService : IVrSetsService
 {
     private readonly IVrSetsRepository _vrSetsRepository;
+
     public VrSetsService(IVrSetsRepository vrSetsRepository)
     {
         _vrSetsRepository = vrSetsRepository;
     }
 
     public Task<VrSet[]> GetVrSets(int limit, int offset)
-        => _vrSetsRepository.GetVrSets(limit, offset);
+    {
+        return _vrSetsRepository.GetVrSets(limit, offset);
+    }
 }

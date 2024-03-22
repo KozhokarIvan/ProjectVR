@@ -28,5 +28,5 @@ internal static class GetDetailedUserInfoResponseMappingExtension
             FriendStatus = domainUser.FriendStatus.MapToResponse()
         };
         return user;
-    } 
+    }
 }

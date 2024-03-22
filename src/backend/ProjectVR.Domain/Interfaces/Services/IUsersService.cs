@@ -47,7 +47,7 @@ public interface IUsersService
     Task<UserSummary[]> GetRandomUsers(int numberOfUsers, Guid? signedUserGuid = null);
 
     /// <summary>
-    /// Получает полную информацию о пользователе
+    ///     Получает полную информацию о пользователе
     /// </summary>
     /// <param name="username">Уникальное имя пользователя</param>
     /// <param name="signedUserGuid">Guid авторизованного пользователя</param>
@@ -55,14 +55,15 @@ public interface IUsersService
     Task<UserDetails?> GetUserDetailsByUsername(string username, Guid? signedUserGuid = null);
 
     /// <summary>
-    /// Создает пользователя если учетные данные корректны
+    ///     Создает пользователя если учетные данные корректны
     /// </summary>
     /// <param name="username">Имя пользователя</param>
     /// <param name="email">Почта</param>
     /// <param name="avatar">Адрес изображения профиля</param>
     /// <param name="password">Пароль</param>
     /// <returns>Статус создания и созданный пользователь</returns>
-    Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar, string password);
+    Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar,
+        string password);
 
     Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
     Task SetUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);

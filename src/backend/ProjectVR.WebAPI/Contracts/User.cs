@@ -4,7 +4,6 @@ namespace ProjectVR.WebAPI.Contracts;
 
 public class User
 {
-    
     public Guid Guid { get; init; }
     public string Username { get; init; } = null!;
     public string? Avatar { get; init; }

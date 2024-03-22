@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ProjectVR.DataAccess.Entities;
 using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Models;
@@ -60,7 +61,7 @@ public class RequestsRepository : IRequestsRepository
 
     public async Task CreateRequest(Guid fromUserGuid, Guid toUserGuid)
     {
-        var friendEntry = new Entities.Request
+        var friendEntry = new Request
         {
             FromUserGuid = fromUserGuid,
             ToUserGuid = toUserGuid

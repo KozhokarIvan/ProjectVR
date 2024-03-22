@@ -6,6 +6,7 @@ using ProjectVR.DataAccess.Entities;
 using ProjectVR.DataAccess.Mapping;
 using ProjectVR.Domain.Interfaces.Repositories;
 using ProjectVR.Domain.Models.User;
+using UserVrSet = ProjectVR.Domain.Models.User.UserVrSet;
 
 namespace ProjectVR.DataAccess.Repositories;
 
@@ -169,9 +170,11 @@ public class UsersRepository : IUsersRepository
     }
 
     public Task<bool> DoesUsernameExist(string username)
-        => _context.Usersinfo.AnyAsync(u => EF.Functions.ILike(u.Username, username));
+    {
+        return _context.Usersinfo.AnyAsync(u => EF.Functions.ILike(u.Username, username));
+    }
 
-    public async Task<Domain.Models.User.UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset)
+    public async Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset)
     {
         var vrSetsFromDb = await _context.UserVrSets
             .Where(vrset => vrset.OwnerGuid == userGuid)
@@ -184,7 +187,7 @@ public class UsersRepository : IUsersRepository
         return vrSets;
     }
 
-    public async Task<Domain.Models.User.UserVrSet[]> GetAllUserVrSets(Guid userGuid)
+    public async Task<UserVrSet[]> GetAllUserVrSets(Guid userGuid)
     {
         var vrSetsFromDb = await _context.UserVrSets
             .Where(vrset => vrset.OwnerGuid == userGuid)
@@ -205,13 +208,14 @@ public class UsersRepository : IUsersRepository
         {
             if (user.VrSets.FirstOrDefault(vs => vs.VrSetId == vrSet.VrSetId) is not null)
                 continue;
-            user.VrSets.Add(new Entities.UserVrSet()
+            user.VrSets.Add(new Entities.UserVrSet
             {
                 OwnerGuid = userGuid,
                 VrSetId = vrSet.VrSetId,
                 IsFavorite = vrSet.IsFavorite
             });
         }
+
         await _context.SaveChangesAsync();
     }
 
@@ -227,6 +231,7 @@ public class UsersRepository : IUsersRepository
             if (vrSetToEdit is null) continue;
             vrSetToEdit.IsFavorite = vrSet.IsFavorite;
         }
+
         await _context.SaveChangesAsync();
     }
 
@@ -242,6 +247,7 @@ public class UsersRepository : IUsersRepository
             if (vrSetToRemove is null) continue;
             _context.Remove(vrSetToRemove);
         }
+
         await _context.SaveChangesAsync();
     }
 }

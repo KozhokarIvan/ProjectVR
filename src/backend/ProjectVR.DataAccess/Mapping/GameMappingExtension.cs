@@ -1,5 +1,4 @@
-﻿using ProjectVR.Domain.Models;
-using ProjectVR.Domain.Models.Game;
+﻿using ProjectVR.Domain.Models.Game;
 
 namespace ProjectVR.DataAccess.Mapping;
 

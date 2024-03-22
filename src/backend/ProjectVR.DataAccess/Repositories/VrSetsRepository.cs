@@ -10,6 +10,7 @@ namespace ProjectVR.DataAccess.Repositories;
 public class VrSetsRepository : IVrSetsRepository
 {
     private readonly ProjectVRDbContext _context;
+
     public VrSetsRepository(ProjectVRDbContext context)
     {
         _context = context;
