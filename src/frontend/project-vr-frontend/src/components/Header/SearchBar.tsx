@@ -46,7 +46,7 @@ export default function SearchBar({ loggedUser }: SearchBarProps) {
         }}
       />
       <Link href="/random">
-        <Button variant="ghost" color="primary">
+        <Button radius="none" variant="ghost" color="primary">
           Random
         </Button>
       </Link>

@@ -18,7 +18,7 @@ export default function Profile() {
   if (isDone && !loggedUser)
     return (
       <Link href="/login">
-        <Button variant="ghost" color="primary">
+        <Button radius="none" variant="ghost" color="primary">
           Sign In
         </Button>
       </Link>
