@@ -29,7 +29,6 @@ export default function Page({ params }: { params: { username: string } }) {
             avatar={user.avatar}
             registeredAt={new Date(user.createdAt)}
             friendStatus={user.friendStatus}
-            isEditableProfile
           />
           <div className="grid gap-10 grid-cols-[1fr_3fr]">
             <FriendsBar friends={user.friends} />
