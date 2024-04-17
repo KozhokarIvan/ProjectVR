@@ -8,12 +8,15 @@ namespace ProjectVR.DataAccess.DataSeeding;
 
 internal class SeedingData
 {
-    internal readonly List<Game> Games;
-    internal readonly List<UserGame> UserGames;
+    internal List<Game> Games { get; }
 
-    internal readonly List<Users> Users;
-    internal readonly List<UserVrSet> UserVrSets;
-    internal readonly List<VrSet> VrSets;
+    internal List<UserGame> UserGames { get; }
+
+    internal List<Users> Users { get; }
+
+    internal List<UserVrSet> UserVrSets { get; }
+
+    internal List<VrSet> VrSets { get; }
 
     internal SeedingData()
     {

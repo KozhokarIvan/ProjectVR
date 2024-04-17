@@ -173,3 +173,6 @@ dotnet_diagnostic.SA1642.severity = none
 dotnet_diagnostic.SA1643.severity = none
 dotnet_diagnostic.SA1503.severity = none
 dotnet_diagnostic.SA1515.severity = warning
+dotnet_diagnostic.SA1401.severity = error
+dotnet_diagnostic.SA1400.severity = error
+dotnet_diagnostic.SA1403.severity = error
