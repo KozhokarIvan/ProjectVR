@@ -1,4 +1,5 @@
 using System;
+using AspNetCore.Serilog.RequestLoggingMiddleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -59,6 +60,8 @@ public static class Program
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseSerilogRequestLogging();
 
             app.Run();
         }
