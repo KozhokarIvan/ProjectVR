@@ -43,9 +43,9 @@ public class FriendsService : IFriendsService
         return result;
     }
 
-    public async Task<bool> DeleteFriend(Guid userGuid, Guid deletedUserGuid)
+    public async Task<bool> DeleteFriend(Guid userGuid, Guid deletedFriendUserGuid)
     {
-        var friend = await _requestsRepository.GetRequestByUserGuids(userGuid, deletedUserGuid);
+        var friend = await _requestsRepository.GetRequestByUserGuids(userGuid, deletedFriendUserGuid);
         if (friend is null)
             return false;
         if (friend.SenderUserGuid == userGuid)
@@ -53,7 +53,7 @@ public class FriendsService : IFriendsService
             var isDeleted = await _requestsRepository.DeleteRequest(friend.Id);
             if (!isDeleted)
                 return false;
-            await _requestsRepository.CreateRequest(deletedUserGuid, userGuid);
+            await _requestsRepository.CreateRequest(deletedFriendUserGuid, userGuid);
             return true;
         }
 

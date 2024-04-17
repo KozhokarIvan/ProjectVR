@@ -64,7 +64,7 @@ public class UsersController : ControllerBase
 
         var error = creationResult.ErrorStatus.ToString();
         if (string.IsNullOrWhiteSpace(error))
-            throw new NullReferenceException();
+            return BadRequest(error);
         var response = new CreateUserResponse
         {
             UserCreationStatus = error
@@ -79,12 +79,12 @@ public class UsersController : ControllerBase
             case RegisterUserError.EmailIsTaken:
                 return Conflict(response);
             default:
-                throw new NullReferenceException();
+                return BadRequest("Unknown error on creating user");
         }
     }
 
     [HttpGet("{username}")]
-    public async Task<IActionResult> GetUser(
+    public async Task<IActionResult> GetUserByUsername(
         [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         string username)
     {

@@ -78,7 +78,7 @@ public class UsersService : IUsersService
                 error = RegisterUserError.InvalidAvatar;
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(result.ErrorStatus.ToString());
         }
 
         return new Result<UserDetails, RegisterUserError>(error);

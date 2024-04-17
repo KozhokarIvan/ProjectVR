@@ -8,7 +8,7 @@ using Serilog;
 
 namespace ProjectVR.WebAPI;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {

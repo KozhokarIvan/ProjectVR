@@ -18,11 +18,11 @@ public class RequestsRepository : IRequestsRepository
         _context = context;
     }
 
-    public async Task<Friend?> GetExactRequestByUsersGuids(Guid fromUserGuid, Guid toUserGuid)
+    public async Task<Friend?> GetExactRequestByUsersGuids(Guid userGuid, Guid friendUserGuid)
     {
         var friend = await _context.Requests
             .AsNoTracking()
-            .Where(f => f.FromUserGuid == fromUserGuid && f.ToUserGuid == toUserGuid)
+            .Where(f => f.FromUserGuid == userGuid && f.ToUserGuid == friendUserGuid)
             .FirstOrDefaultAsync();
         return friend?.MapToDomain();
     }
@@ -59,12 +59,12 @@ public class RequestsRepository : IRequestsRepository
         return true;
     }
 
-    public async Task CreateRequest(Guid fromUserGuid, Guid toUserGuid)
+    public async Task CreateRequest(Guid userGuid, Guid friendUserGuid)
     {
         var friendEntry = new Request
         {
-            FromUserGuid = fromUserGuid,
-            ToUserGuid = toUserGuid
+            FromUserGuid = userGuid,
+            ToUserGuid = friendUserGuid
         };
         await _context.Requests.AddAsync(friendEntry);
         await _context.SaveChangesAsync();

@@ -466,7 +466,7 @@ internal class SeedingData
             {
                 Id = 12, OwnerGuid = Users[9].Guid, VrSetId = VrSets.First(
                     vs => vs.Name.Contains("vive pro", StringComparison.OrdinalIgnoreCase)
-                          && !vs.Name.Contains("2")).Id,
+                          && !vs.Name.Contains('2')).Id,
                 IsFavorite = true
             },
 

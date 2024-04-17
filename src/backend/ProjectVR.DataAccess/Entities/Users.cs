@@ -18,13 +18,13 @@ public class Users
 
     public DateTimeOffset LastSeen { get; set; }
 
-    public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
+    public ICollection<UserGame> Games { get; } = new List<UserGame>();
 
-    public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
+    public ICollection<UserVrSet> VrSets { get; } = new List<UserVrSet>();
 
-    public ICollection<Request> OutgoingRequests { get; set; } = new List<Request>();
+    public ICollection<Request> OutgoingRequests { get; } = new List<Request>();
 
-    public ICollection<Request> IncomingRequests { get; set; } = new List<Request>();
+    public ICollection<Request> IncomingRequests { get; } = new List<Request>();
 }
 
 internal class UsersConfiguration : IEntityTypeConfiguration<Users>
