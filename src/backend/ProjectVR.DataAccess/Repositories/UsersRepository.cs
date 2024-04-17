@@ -80,7 +80,7 @@ public class UsersRepository : IUsersRepository
                     || u.Games.Any(g => EF.Functions.ILike(g.Game.Name, query))
                     | u.VrSets.Any(v => EF.Functions.ILike(v.VrSet.Name, query)))
 
-                //if ignored user variable isnt empty we exclude him from results
+                // if ignored user variable isnt empty we exclude him from results
                 && (!ignoredUserGuid.HasValue || u.Guid != ignoredUserGuid)
 
                 // if ignored user variable isnt empty we exclude ignored user's friends from results
@@ -95,7 +95,7 @@ public class UsersRepository : IUsersRepository
             .Include(ui => ui.VrSets)
             .ThenInclude(userVrSet => userVrSet.VrSet)
 
-            //if ignored user variable isnt empty and request is unaccepted we include his relation with the ignored user
+            // if ignored user variable isnt empty and request is unaccepted we include his relation with the ignored user
             .Include(u =>
                 u.OutgoingRequests.Where(f => ignoredUserGuid.HasValue
                                               && f.ToUserGuid == ignoredUserGuid.Value))

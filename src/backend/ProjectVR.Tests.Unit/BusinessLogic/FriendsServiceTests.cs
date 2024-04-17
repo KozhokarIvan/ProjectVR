@@ -14,7 +14,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Успешно отправляет заявку в друзья")]
     public void SendFriendRequestToOtherUser_ShouldSendRequest()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         Friend? friendEntry = null;
@@ -25,10 +25,10 @@ public class FriendsServiceTests
         friendsRepository.GetRequestByUserGuids(friendGuid, userGuid).Returns(Task.FromResult(friendEntry));
         friendsRepository.CreateRequest(userGuid, friendGuid).Returns(Task.CompletedTask);
 
-        //act
+        // act
         var result = friendsService.SendFriendRequest(userGuid, friendGuid).Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1).GetRequestByUserGuids(userGuid, friendGuid);
         friendsRepository.Received(1).CreateRequest(userGuid, friendGuid);
 
@@ -38,7 +38,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не отправляет заявку в друзья, если идентичная заявка уже существует")]
     public void SendFriendRequestWhenAlreadyExists_ShouldNotSendRequest()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         var friendEntry = new Friend();
@@ -49,10 +49,10 @@ public class FriendsServiceTests
         friendsRepository.GetRequestByUserGuids(friendGuid, userGuid)!.Returns(Task.FromResult(friendEntry));
         friendsRepository.CreateRequest(userGuid, friendGuid).Returns(Task.CompletedTask);
 
-        //act
+        // act
         var result = friendsService.SendFriendRequest(userGuid, friendGuid).Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1).GetRequestByUserGuids(userGuid, friendGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().CreateRequest(userGuid, friendGuid);
 
@@ -62,7 +62,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не отправляет заявку в друзья самому себе")]
     public void SendFriendRequestToSelf_ShouldNotSendRequest()
     {
-        //arrange
+        // arrange
         var selfGuid = Guid.NewGuid();
         Friend? friendEntry = null;
 
@@ -71,10 +71,10 @@ public class FriendsServiceTests
         friendsRepository.GetRequestByUserGuids(selfGuid, selfGuid).Returns(Task.FromResult(friendEntry));
         friendsRepository.CreateRequest(selfGuid, selfGuid).Returns(Task.CompletedTask);
 
-        //act
+        // act
         var result = friendsService.SendFriendRequest(selfGuid, selfGuid).Result;
 
-        //assert
+        // assert
         friendsRepository.DidNotReceive().GetRequestByUserGuids(selfGuid, selfGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().CreateRequest(selfGuid, selfGuid);
 
@@ -84,7 +84,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Успешно принимает заявку в друзья от другого пользователя")]
     public void AcceptExistingFriendRequestFromOtherUserToYourself_ShouldAccept()
     {
-        //arrange
+        // arrange
         var senderUserGuid = Guid.NewGuid();
         var accepterUserGuid = Guid.NewGuid();
         var friend = new Friend
@@ -100,12 +100,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>()).Returns(Task.FromResult(true));
 
-        //act
+        // act
         var result = friendsService
             .AcceptFriendRequest(accepterUserGuid, senderUserGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.Received(1).AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>());
 
@@ -115,7 +115,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не принимает исходящую заявку от себя же для другого пользователя")]
     public void AcceptExistingFriendRequestFromYourselfToOtherUser_ShouldNotAccept()
     {
-        //arrange
+        // arrange
         var senderUserGuid = Guid.NewGuid();
         var accepterUserGuid = Guid.NewGuid();
         var friend = new Friend
@@ -131,12 +131,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>()).Returns(Task.FromResult(true));
 
-        //act
+        // act
         var result = friendsService
             .AcceptFriendRequest(accepterUserGuid, senderUserGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().AddAcceptedAtDate(friend.Id, Arg.Any<DateTimeOffset>());
 
@@ -146,7 +146,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не принимает несуществующую заявку в друзья")]
     public void AcceptNonExistingFriendRequest_ShouldNotAccept()
     {
-        //arrange
+        // arrange
         var senderUserGuid = Guid.NewGuid();
         var accepterUserGuid = Guid.NewGuid();
         Friend? friend = null;
@@ -157,12 +157,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.AddAcceptedAtDate(default, default).Returns(Task.FromResult(false));
 
-        //act
+        // act
         var result = friendsService
             .AcceptFriendRequest(accepterUserGuid, senderUserGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1).GetExactRequestByUsersGuids(senderUserGuid, accepterUserGuid);
         friendsRepository.DidNotReceiveWithAnyArgs().AddAcceptedAtDate(Arg.Any<int>(), Arg.Any<DateTimeOffset>());
 
@@ -172,7 +172,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Отклоняет входящую заявку от другого пользователя")]
     public void DeclineExistingFriendRequestFromOtherPersonToYourself_ShouldDecline()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         var friend = new Friend
@@ -190,12 +190,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.DeleteRequest(friend.Id).Returns(Task.FromResult(true));
 
-        //act
+        // act
         var result = friendsService
             .DeclineFriendRequest(friendGuid, userGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1)
             .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
@@ -208,7 +208,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Отменяет исходящую заявку от себя для другого пользователя")]
     public void DeclineExistingFriendRequestFromYourselfToOtherPerson_ShouldDecline()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         var friend = new Friend
@@ -226,12 +226,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.DeleteRequest(friend.Id).Returns(Task.FromResult(true));
 
-        //act
+        // act
         var result = friendsService
             .DeclineFriendRequest(userGuid, friendGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1)
             .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
@@ -244,7 +244,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не отклоняет не существующую заявку")]
     public void DeclineNonExistingRequest_ShouldNotDecline()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         Friend? friend = null;
@@ -255,12 +255,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.DeleteRequest(default).Returns(false);
 
-        //act
+        // act
         var result = friendsService
             .DeclineFriendRequest(friendGuid, userGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1)
             .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
@@ -273,7 +273,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Удаляет друга из списка друзей")]
     public void DeleteExistingFriend_ShouldDelete()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         var friend = new Friend
@@ -291,12 +291,12 @@ public class FriendsServiceTests
             Task.FromResult(friend));
         friendsRepository.ClearAcceptedAtDate(friend.Id).Returns(Task.FromResult(true));
 
-        //act
+        // act
         var result = friendsService
             .DeleteFriend(friendGuid, userGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1)
             .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),
@@ -309,7 +309,7 @@ public class FriendsServiceTests
     [Fact(DisplayName = "Не удаляет из друзей пользователя, которого и так нет в списке друзей")]
     public void DeleteNonExistingFriend_ShouldNotDelete()
     {
-        //arrange
+        // arrange
         var userGuid = Guid.NewGuid();
         var friendGuid = Guid.NewGuid();
         Friend? friend = null;
@@ -319,12 +319,12 @@ public class FriendsServiceTests
         friendsRepository.GetExactRequestByUsersGuids(userGuid, friendGuid)!.Returns(
             Task.FromResult(friend));
 
-        //act
+        // act
         var result = friendsService
             .DeleteFriend(friendGuid, userGuid)
             .Result;
 
-        //assert
+        // assert
         friendsRepository.Received(1)
             .GetRequestByUserGuids(
                 Arg.Is<Guid>(guid => guid == friendGuid || guid == userGuid),

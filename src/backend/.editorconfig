@@ -209,3 +209,4 @@ dotnet_diagnostic.SA1101.severity = none
 dotnet_diagnostic.SA1413.severity = none
 dotnet_diagnostic.SA1115.severity = warning
 dotnet_diagnostic.SA1118.severity = silent
+dotnet_diagnostic.SA1009.severity = silent
