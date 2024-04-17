@@ -6,7 +6,8 @@ namespace ProjectVR.DataAccess;
 
 public class ProjectVRDbContext : DbContext
 {
-    public ProjectVRDbContext(DbContextOptions<ProjectVRDbContext> options) : base(options)
+    public ProjectVRDbContext(DbContextOptions<ProjectVRDbContext> options)
+        : base(options)
     {
     }
 

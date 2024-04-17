@@ -6,9 +6,16 @@ namespace ProjectVR.Domain.Models.User;
 
 public class UserDetails
 {
-    private UserDetails(Guid guid, string username, string? avatar, FriendStatus friendStatus,
-        ICollection<UserGame> games, ICollection<UserVrSet> vrSets,
-        ICollection<UserPreview> friends, DateTimeOffset createdAt, DateTimeOffset lastSeen)
+    private UserDetails(
+        Guid guid,
+        string username,
+        string? avatar,
+        FriendStatus friendStatus,
+        ICollection<UserGame> games,
+        ICollection<UserVrSet> vrSets,
+        ICollection<UserPreview> friends,
+        DateTimeOffset createdAt,
+        DateTimeOffset lastSeen)
     {
         Guid = guid;
         Username = username;

@@ -205,3 +205,7 @@ dotnet_diagnostic.SA1211.severity = error
 dotnet_diagnostic.SA1212.severity = error
 dotnet_diagnostic.SA1213.severity = error
 dotnet_diagnostic.SA1214.severity = error
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1115.severity = warning
+dotnet_diagnostic.SA1118.severity = silent

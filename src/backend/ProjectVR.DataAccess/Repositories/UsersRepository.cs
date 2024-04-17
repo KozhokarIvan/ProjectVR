@@ -19,14 +19,18 @@ public class UsersRepository : IUsersRepository
         _context = context;
     }
 
-    public async Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrSet, int offset, int limit,
+    public async Task<UserSummary[]> FindUsersByGameAndVrSet(
+        string? gameName,
+        string? vrSet,
+        int offset,
+        int limit,
         Guid? ignoredUserGuid = null)
     {
         var usersFromDb = await _context.Usersinfo
             .AsNoTracking()
             .Where(u =>
-                (string.IsNullOrWhiteSpace(game) || u.Games.Any(g
-                    => EF.Functions.ILike(g.Game.Name, '%' + game + '%')))
+                (string.IsNullOrWhiteSpace(gameName) || u.Games.Any(g
+                    => EF.Functions.ILike(g.Game.Name, '%' + gameName + '%')))
                 &&
                 (string.IsNullOrWhiteSpace(vrSet) || u.VrSets.Any(v
                     => EF.Functions.ILike(v.VrSet.Name, '%' + vrSet + '%')))
@@ -36,8 +40,7 @@ public class UsersRepository : IUsersRepository
                         f.AcceptedAt != null && f.ToUserGuid == ignoredUserGuid)
                     ||
                     !u.IncomingRequests.Any(f =>
-                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid))
-            )
+                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid)))
             .Include(user => user.Games)
             .ThenInclude(userGame => userGame.Game)
             .Include(ui => ui.VrSets)
@@ -59,7 +62,10 @@ public class UsersRepository : IUsersRepository
         return users;
     }
 
-    public async Task<UserSummary[]> FindUsersByQuery(string query, int offset, int limit,
+    public async Task<UserSummary[]> FindUsersByQuery(
+        string query,
+        int offset,
+        int limit,
         Guid? ignoredUserGuid = null)
     {
         var isQueryEmpty = string.IsNullOrWhiteSpace(query);
@@ -83,8 +89,7 @@ public class UsersRepository : IUsersRepository
                         f.AcceptedAt != null && f.ToUserGuid == ignoredUserGuid)
                     ||
                     !u.IncomingRequests.Any(f =>
-                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid))
-            )
+                        f.AcceptedAt != null && f.FromUserGuid == ignoredUserGuid)))
             .Include(user => user.Games)
             .ThenInclude(userGame => userGame.Game)
             .Include(ui => ui.VrSets)

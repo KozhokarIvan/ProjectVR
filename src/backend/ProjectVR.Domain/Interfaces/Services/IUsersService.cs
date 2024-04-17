@@ -35,7 +35,11 @@ public interface IUsersService
     ///     Если <paramref name="signedUserGuid" /> не null, то пользователь с таким Guid и его друзья, входящие заявки и
     ///     исходящие заявки не попадают в поиск
     /// </returns>
-    Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrset, int offset, int limit,
+    Task<UserSummary[]> FindUsersByGameAndVrSet(
+        string? game,
+        string? vrset,
+        int offset,
+        int limit,
         Guid? signedUserGuid = null);
 
     /// <summary>

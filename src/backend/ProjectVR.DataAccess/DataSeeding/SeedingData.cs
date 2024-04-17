@@ -488,5 +488,4 @@ internal class SeedingData
     internal List<UserVrSet> UserVrSets { get; }
 
     internal List<VrSet> VrSets { get; }
-
 }

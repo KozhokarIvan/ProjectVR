@@ -2,7 +2,8 @@
 
 namespace ProjectVR.Domain;
 
-public class Result<TValue, TStatus> where TStatus : struct, Enum
+public class Result<TValue, TStatus>
+    where TStatus : struct, Enum
 {
     private readonly TValue? _value;
 

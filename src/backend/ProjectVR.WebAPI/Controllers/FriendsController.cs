@@ -17,7 +17,8 @@ public class FriendsController : ControllerBase
     }
 
     [HttpPost("{friendGuid:guid}")]
-    public async Task<IActionResult> SendFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> SendFriendRequest(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         Guid friendGuid)
     {
         if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
@@ -30,7 +31,8 @@ public class FriendsController : ControllerBase
     }
 
     [HttpPut("requests/{userGuid:guid}")]
-    public async Task<IActionResult> AcceptFriendRequest([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> AcceptFriendRequest(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         Guid userGuid)
     {
         if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");
@@ -56,7 +58,8 @@ public class FriendsController : ControllerBase
     }
 
     [HttpDelete("{friendGuid:guid}")]
-    public async Task<IActionResult> DeleteFriend([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> DeleteFriend(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         Guid friendGuid)
     {
         if (loggedUserHeader is null) return BadRequest("Missing 'loggedUserGuid' header");

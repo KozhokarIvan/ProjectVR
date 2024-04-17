@@ -27,7 +27,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> GetUsers(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         [FromQuery] GetUsersRequest request)
     {
         if (request.Limit < 1)
@@ -83,7 +84,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{username}")]
-    public async Task<IActionResult> GetUser([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> GetUser(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         string username)
     {
         if (string.IsNullOrWhiteSpace(username))
@@ -99,7 +101,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<IActionResult> SearchUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> SearchUsers(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         [FromQuery] SearchUsersRequest request)
     {
         if (request.Limit < 1)
@@ -117,7 +120,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("random/{limit:int}")]
-    public async Task<IActionResult> GetRandomUsers([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> GetRandomUsers(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         int limit)
     {
         Guid? loggedUserGuid = null;
@@ -134,7 +138,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("vrsets")]
-    public async Task<IActionResult> GetUserVrSets([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> GetUserVrSets(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         [FromQuery] GetUserVrSetsRequest request)
     {
         if (!Guid.TryParse(loggedUserHeader, out var loggedUserGuid))
@@ -148,7 +153,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("vrsets")]
-    public async Task<IActionResult> SetUserVrSets([FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
+    public async Task<IActionResult> SetUserVrSets(
+        [FromHeader(Name = "loggedUserGuid")] string? loggedUserHeader,
         [FromBody] SetUserVrSetsRequest request)
     {
         if (!Guid.TryParse(loggedUserHeader, out var loggedUserGuid))

@@ -14,8 +14,7 @@ internal static class UserMappingExtensions
             userinfoEntity.Guid,
             userinfoEntity.Username,
             userinfoEntity.Avatar,
-            ignoredUserGuid.HasValue ? userinfoEntity.GetFriendStatus(ignoredUserGuid) : FriendStatus.Unauthorized
-        );
+            ignoredUserGuid.HasValue ? userinfoEntity.GetFriendStatus(ignoredUserGuid) : FriendStatus.Unauthorized);
         return userinfo;
     }
 
@@ -27,8 +26,7 @@ internal static class UserMappingExtensions
             userinfoEntity.Avatar,
             ignoredUserGuid.HasValue ? userinfoEntity.GetFriendStatus(ignoredUserGuid) : FriendStatus.Unauthorized,
             userinfoEntity.Games.Select(game => game.MapToDomain()).ToArray(),
-            userinfoEntity.VrSets.Select(vrSet => vrSet.MapToDomain()).ToArray()
-        );
+            userinfoEntity.VrSets.Select(vrSet => vrSet.MapToDomain()).ToArray());
         return userinfo;
     }
 
@@ -43,8 +41,7 @@ internal static class UserMappingExtensions
             userinfoEntity.VrSets.Select(vrSet => vrSet.MapToDomain()).ToArray(),
             userinfoEntity.IncludeOnlyFriends(),
             userinfoEntity.CreatedAt,
-            userinfoEntity.LastSeen
-        );
+            userinfoEntity.LastSeen);
         return userDetails;
     }
 
@@ -72,15 +69,14 @@ internal static class UserMappingExtensions
                 r.From.Guid,
                 r.From.Username,
                 r.From.Avatar,
-                r.From.GetFriendStatus(userinfoEntity.Guid))
-            ).Where(r => r.FriendStatus != FriendStatus.Incoming && r.FriendStatus != FriendStatus.Outgoing)
-            .Concat(userinfoEntity.OutgoingRequests.Select(
-                    r => UserPreview.Create(
+                r.From.GetFriendStatus(userinfoEntity.Guid)))
+            .Where(r => r.FriendStatus != FriendStatus.Incoming && r.FriendStatus != FriendStatus.Outgoing)
+            .Concat(userinfoEntity.OutgoingRequests
+                .Select(r => UserPreview.Create(
                         r.To.Guid,
                         r.To.Username,
                         r.To.Avatar,
-                        r.To.GetFriendStatus(userinfoEntity.Guid)
-                    ))
+                        r.To.GetFriendStatus(userinfoEntity.Guid)))
                 .Where(r => r.FriendStatus != FriendStatus.Incoming && r.FriendStatus != FriendStatus.Outgoing))
             .ToArray();
     }

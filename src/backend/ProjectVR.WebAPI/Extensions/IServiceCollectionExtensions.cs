@@ -21,7 +21,8 @@ internal static class IServiceCollectionExtensions
         return serviceCollection;
     }
 
-    internal static IServiceCollection AddDataAccess(this IServiceCollection serviceCollection,
+    internal static IServiceCollection AddDataAccess(
+        this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString(nameof(ProjectVRDbContext))

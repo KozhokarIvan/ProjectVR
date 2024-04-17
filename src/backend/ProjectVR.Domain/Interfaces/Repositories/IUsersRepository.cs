@@ -28,7 +28,11 @@ public interface IUsersRepository
     /// <param name="limit">Нужное количество записей</param>
     /// <param name="ignoredUserGuid">Guid пользователя, которого нужно игнорировать при поиске</param>
     /// <returns>Массив пользователей удовлетворяющих запросу</returns>
-    Task<UserSummary[]> FindUsersByGameAndVrSet(string? gameName, string? vrSet, int offset, int limit,
+    Task<UserSummary[]> FindUsersByGameAndVrSet(
+        string? gameName,
+        string? vrSet,
+        int offset,
+        int limit,
         Guid? ignoredUserGuid = null);
 
     /// <summary>

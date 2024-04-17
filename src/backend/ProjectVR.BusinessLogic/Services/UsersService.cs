@@ -16,13 +16,20 @@ public class UsersService : IUsersService
         _usersRepository = userRepository;
     }
 
-    public Task<UserSummary[]> FindUsersByGameOrVrSet(string query, int offset, int limit,
+    public Task<UserSummary[]> FindUsersByGameOrVrSet(
+        string query,
+        int offset,
+        int limit,
         Guid? signedUserGuid = null)
     {
         return _usersRepository.FindUsersByQuery(query, offset, limit, signedUserGuid);
     }
 
-    public Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrset, int offset, int limit,
+    public Task<UserSummary[]> FindUsersByGameAndVrSet(
+        string? game,
+        string? vrset,
+        int offset,
+        int limit,
         Guid? signedUserGuid = null)
     {
         return _usersRepository.FindUsersByGameAndVrSet(game, vrset, offset, limit, signedUserGuid);
@@ -38,7 +45,10 @@ public class UsersService : IUsersService
         return _usersRepository.GetUserDetailsByUsername(username, signedUserGuid);
     }
 
-    public async Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar,
+    public async Task<Result<UserDetails, RegisterUserError>> CreateUser(
+        string username,
+        string email,
+        string? avatar,
         string password)
     {
         var result = RegisterUserModel.Create(username, email, avatar, password);

@@ -34,8 +34,13 @@ public class UserSummary
 
     public ICollection<UserVrSet> VrSets { get; }
 
-    public static UserSummary Create(Guid guid, string username, string? avatar, FriendStatus friendStatus,
-        ICollection<UserGame> games, ICollection<UserVrSet> vrSets)
+    public static UserSummary Create(
+        Guid guid,
+        string username,
+        string? avatar,
+        FriendStatus friendStatus,
+        ICollection<UserGame> games,
+        ICollection<UserVrSet> vrSets)
     {
         return new UserSummary(guid, username, avatar, friendStatus, games, vrSets);
     }
