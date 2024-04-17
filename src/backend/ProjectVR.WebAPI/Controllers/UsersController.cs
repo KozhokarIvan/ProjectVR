@@ -17,12 +17,10 @@ namespace ProjectVR.WebAPI.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly ILogger<UsersController> _logger;
     private readonly IUsersService _usersService;
 
-    public UsersController(ILogger<UsersController> logger, IUsersService usersService)
+    public UsersController(IUsersService usersService)
     {
-        _logger = logger;
         _usersService = usersService;
     }
 
@@ -69,18 +67,12 @@ public class UsersController : ControllerBase
         {
             UserCreationStatus = error
         };
-        switch (creationResult.ErrorStatus)
+        return creationResult.ErrorStatus switch
         {
-            case RegisterUserError.InvalidUsername:
-            case RegisterUserError.InvalidEmail:
-            case RegisterUserError.InvalidAvatar:
-                return BadRequest(response);
-            case RegisterUserError.UsernameIsTaken:
-            case RegisterUserError.EmailIsTaken:
-                return Conflict(response);
-            default:
-                return BadRequest("Unknown error on creating user");
-        }
+            RegisterUserError.InvalidUsername or RegisterUserError.InvalidEmail or RegisterUserError.InvalidAvatar => BadRequest(response),
+            RegisterUserError.UsernameIsTaken or RegisterUserError.EmailIsTaken => Conflict(response),
+            _ => BadRequest("Unknown error on creating user"),
+        };
     }
 
     [HttpGet("{username}")]

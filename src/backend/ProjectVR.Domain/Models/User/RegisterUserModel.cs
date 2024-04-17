@@ -26,8 +26,7 @@ public class RegisterUserModel
         string? avatar,
         string password)
     {
-        RegisterUserModel? user = null;
-        UserValidationError? status = null;
+        UserValidationError? status;
         avatar = string.IsNullOrWhiteSpace(avatar) ? null : avatar;
         if (username.IsUsernameTooShort())
         {
@@ -55,7 +54,7 @@ public class RegisterUserModel
         }
         else
         {
-            user = new RegisterUserModel(username, email, avatar, password);
+            var user = new RegisterUserModel(username, email, avatar, password);
             return new Result<RegisterUserModel, UserValidationError>(user);
         }
 

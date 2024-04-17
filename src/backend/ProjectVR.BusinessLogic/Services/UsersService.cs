@@ -62,25 +62,13 @@ public class UsersService : IUsersService
             return new Result<UserDetails, RegisterUserError>(user);
         }
 
-        RegisterUserError error;
-        switch (result.ErrorStatus)
+        var error = result.ErrorStatus switch
         {
-            case UserValidationError.TooShortUsername:
-            case UserValidationError.TooLongUsername:
-            case UserValidationError.InvalidUsername:
-                error = RegisterUserError.InvalidUsername;
-                break;
-            case UserValidationError.InvalidEmail:
-                error = RegisterUserError.InvalidEmail;
-                break;
-            case UserValidationError.TooLongAvatar:
-            case UserValidationError.InvalidAvatar:
-                error = RegisterUserError.InvalidAvatar;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(result.ErrorStatus.ToString());
-        }
-
+            UserValidationError.TooShortUsername or UserValidationError.TooLongUsername or UserValidationError.InvalidUsername => RegisterUserError.InvalidUsername,
+            UserValidationError.InvalidEmail => RegisterUserError.InvalidEmail,
+            UserValidationError.TooLongAvatar or UserValidationError.InvalidAvatar => RegisterUserError.InvalidAvatar,
+            _ => throw new ArgumentOutOfRangeException(result.ErrorStatus.ToString()),
+        };
         return new Result<UserDetails, RegisterUserError>(error);
     }
 
