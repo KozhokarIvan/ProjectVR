@@ -70,8 +70,12 @@ public interface IUsersRepository
     Task<bool> DoesUsernameExist(string username);
 
     Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
+
     Task<UserVrSet[]> GetAllUserVrSets(Guid userGuid);
+
     Task AddUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);
+
     Task EditUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);
+
     Task DetachUserVrSets(Guid userGuid, int[] vrSetIds);
 }

@@ -27,7 +27,6 @@ public class Program
             });
 
             // Add services to the container.
-
             builder.Services.AddCors(options =>
                 options.AddPolicy("CorsPolicy", policyBuilder
                     => policyBuilder

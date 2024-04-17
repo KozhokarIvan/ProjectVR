@@ -217,14 +217,12 @@ internal class SeedingData
                 IsFavorite = false, Rating = 95
             },
 
-
             new()
             {
                 Id = 5, OwnerGuid = Users[1].Guid,
                 GameId = Games.First(g => g.Name.Contains("Skyrim", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = true, Rating = 100
             },
-
 
             new()
             {
@@ -233,7 +231,6 @@ internal class SeedingData
                 IsFavorite = true, Rating = 100
             },
 
-
             new()
             {
                 Id = 7, OwnerGuid = Users[3].Guid,
@@ -241,14 +238,12 @@ internal class SeedingData
                 IsFavorite = true, Rating = 100
             },
 
-
             new()
             {
                 Id = 8, OwnerGuid = Users[4].Guid,
                 GameId = Games.First(g => g.Name.Contains("forest", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = true, Rating = 100
             },
-
 
             new()
             {
@@ -275,7 +270,6 @@ internal class SeedingData
                 IsFavorite = false, Rating = 65
             },
 
-
             new()
             {
                 Id = 13, OwnerGuid = Users[6].Guid,
@@ -300,7 +294,6 @@ internal class SeedingData
                 GameId = Games.First(g => g.Name.Contains("Blade", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = false, Rating = 77
             },
-
 
             new()
             {
@@ -327,7 +320,6 @@ internal class SeedingData
                 IsFavorite = false, Rating = 50
             },
 
-
             new()
             {
                 Id = 21, OwnerGuid = Users[8].Guid,
@@ -353,7 +345,6 @@ internal class SeedingData
                 IsFavorite = true, Rating = 100
             },
 
-
             new()
             {
                 Id = 25, OwnerGuid = Users[9].Guid,
@@ -378,7 +369,6 @@ internal class SeedingData
                 GameId = Games.First(g => g.Name.Contains("Blade", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = false, Rating = 62
             },
-
 
             new()
             {
@@ -427,13 +417,11 @@ internal class SeedingData
                 IsFavorite = true
             },
 
-
             new()
             {
                 Id = 4, OwnerGuid = Users[1].Guid,
                 VrSetId = VrSets.First(vs => vs.Name.Contains("quest 3", StringComparison.OrdinalIgnoreCase)).Id
             },
-
 
             new()
             {
@@ -441,20 +429,17 @@ internal class SeedingData
                 VrSetId = VrSets.First(vs => vs.Name.Contains("quest 3", StringComparison.OrdinalIgnoreCase)).Id
             },
 
-
             new()
             {
                 Id = 6, OwnerGuid = Users[3].Guid,
                 VrSetId = VrSets.First(vs => vs.Name.Contains("quest 3", StringComparison.OrdinalIgnoreCase)).Id
             },
 
-
             new()
             {
                 Id = 7, OwnerGuid = Users[4].Guid,
                 VrSetId = VrSets.First(vs => vs.Name.Contains("quest 3", StringComparison.OrdinalIgnoreCase)).Id
             },
-
 
             new()
             {
@@ -463,14 +448,12 @@ internal class SeedingData
                 IsFavorite = true
             },
 
-
             new()
             {
                 Id = 9, OwnerGuid = Users[6].Guid,
                 VrSetId = VrSets.First(vs => vs.Name.Contains("quest 3", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = true
             },
-
 
             new()
             {
@@ -479,14 +462,12 @@ internal class SeedingData
                 IsFavorite = true
             },
 
-
             new()
             {
                 Id = 11, OwnerGuid = Users[8].Guid,
                 VrSetId = VrSets.First(vs => vs.Name.Contains("index", StringComparison.OrdinalIgnoreCase)).Id,
                 IsFavorite = true
             },
-
 
             new()
             {
@@ -495,7 +476,6 @@ internal class SeedingData
                           && !vs.Name.Contains("2")).Id,
                 IsFavorite = true
             },
-
 
             new()
             {

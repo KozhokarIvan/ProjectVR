@@ -62,9 +62,13 @@ public interface IUsersService
     /// <param name="avatar">Адрес изображения профиля</param>
     /// <param name="password">Пароль</param>
     /// <returns>Статус создания и созданный пользователь</returns>
-    Task<Result<UserDetails, RegisterUserError>> CreateUser(string username, string email, string? avatar,
+    Task<Result<UserDetails, RegisterUserError>> CreateUser(
+        string username,
+        string email,
+        string? avatar,
         string password);
 
     Task<UserVrSet[]> GetUserVrSets(Guid userGuid, int limit, int offset);
+
     Task SetUserVrSets(Guid userGuid, UpdateUserVrSet[] vrSets);
 }

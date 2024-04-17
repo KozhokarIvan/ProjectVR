@@ -171,3 +171,5 @@ dotnet_diagnostic.SA1640.severity = none
 dotnet_diagnostic.SA1641.severity = none
 dotnet_diagnostic.SA1642.severity = none
 dotnet_diagnostic.SA1643.severity = none
+dotnet_diagnostic.SA1503.severity = none
+dotnet_diagnostic.SA1515.severity = warning

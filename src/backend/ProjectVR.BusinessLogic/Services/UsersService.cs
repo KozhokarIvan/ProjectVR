@@ -22,7 +22,6 @@ public class UsersService : IUsersService
         return _usersRepository.FindUsersByQuery(query, offset, limit, signedUserGuid);
     }
 
-
     public Task<UserSummary[]> FindUsersByGameAndVrSet(string? game, string? vrset, int offset, int limit,
         Guid? signedUserGuid = null)
     {

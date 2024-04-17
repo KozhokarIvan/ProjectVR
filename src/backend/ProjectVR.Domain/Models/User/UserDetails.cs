@@ -22,18 +22,33 @@ public class UserDetails
     }
 
     public Guid Guid { get; }
+
     public string Username { get; }
+
     public string? Avatar { get; }
+
     public FriendStatus FriendStatus { get; }
+
     public ICollection<UserGame> Games { get; }
+
     public ICollection<UserVrSet> VrSets { get; }
+
     public ICollection<UserPreview> Friends { get; }
+
     public DateTimeOffset CreatedAt { get; }
+
     public DateTimeOffset LastSeen { get; }
 
-    public static UserDetails Create(Guid guid, string username, string? avatar, FriendStatus friendStatus,
-        ICollection<UserGame> games, ICollection<UserVrSet> vrSets,
-        ICollection<UserPreview> friends, DateTimeOffset createdAt, DateTimeOffset lastSeen)
+    public static UserDetails Create(
+        Guid guid,
+        string username,
+        string? avatar,
+        FriendStatus friendStatus,
+        ICollection<UserGame> games,
+        ICollection<UserVrSet> vrSets,
+        ICollection<UserPreview> friends,
+        DateTimeOffset createdAt,
+        DateTimeOffset lastSeen)
     {
         return new UserDetails(guid, username, avatar, friendStatus, games, vrSets, friends, createdAt, lastSeen);
     }

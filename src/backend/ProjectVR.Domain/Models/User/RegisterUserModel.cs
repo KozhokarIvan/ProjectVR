@@ -13,11 +13,17 @@ public class RegisterUserModel
     }
 
     public string Username { get; }
+
     public string Email { get; }
+
     public string? Avatar { get; }
+
     public string Password { get; }
 
-    public static Result<RegisterUserModel, UserValidationError> Create(string username, string email, string? avatar,
+    public static Result<RegisterUserModel, UserValidationError> Create(
+        string username,
+        string email,
+        string? avatar,
         string password)
     {
         RegisterUserModel? user = null;

@@ -7,10 +7,15 @@ namespace ProjectVR.DataAccess.Entities;
 public class Request
 {
     public int Id { get; set; }
+
     public Users From { get; set; } = null!;
+
     public Guid FromUserGuid { get; set; }
+
     public Users To { get; set; } = null!;
+
     public Guid ToUserGuid { get; set; }
+
     public DateTimeOffset? AcceptedAt { get; set; }
 }
 

@@ -9,13 +9,21 @@ namespace ProjectVR.DataAccess.Entities;
 public class Users
 {
     public Guid Guid { get; set; }
+
     public string Username { get; set; } = null!;
+
     public string? Avatar { get; set; }
+
     public DateTimeOffset CreatedAt { get; set; }
+
     public DateTimeOffset LastSeen { get; set; }
+
     public ICollection<UserGame> Games { get; set; } = new List<UserGame>();
+
     public ICollection<UserVrSet> VrSets { get; set; } = new List<UserVrSet>();
+
     public ICollection<Request> OutgoingRequests { get; set; } = new List<Request>();
+
     public ICollection<Request> IncomingRequests { get; set; } = new List<Request>();
 }
 

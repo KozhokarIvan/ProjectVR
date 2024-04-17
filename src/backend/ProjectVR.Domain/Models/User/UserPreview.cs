@@ -14,8 +14,11 @@ public class UserPreview
     }
 
     public Guid Guid { get; }
+
     public string Username { get; }
+
     public string? Avatar { get; }
+
     public FriendStatus FriendStatus { get; }
 
     public static UserPreview Create(Guid guid, string username, string? avatar, FriendStatus friendStatus)

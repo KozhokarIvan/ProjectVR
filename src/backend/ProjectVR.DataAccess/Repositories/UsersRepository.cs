@@ -68,13 +68,13 @@ public class UsersRepository : IUsersRepository
             .AsNoTracking()
             .Where(u =>
                 (
-                    //if query is empty then dont even apply the search
+                    // if query is empty then dont even apply the search
                     isQueryEmpty
                     || u.Games.Any(g => EF.Functions.ILike(g.Game.Name, query))
                     | u.VrSets.Any(v => EF.Functions.ILike(v.VrSet.Name, query)))
                 //if ignored user variable isnt empty we exclude him from results
                 && (!ignoredUserGuid.HasValue || u.Guid != ignoredUserGuid)
-                //if ignored user variable isnt empty we exclude ignored user's friends from results
+                // if ignored user variable isnt empty we exclude ignored user's friends from results
                 && (!ignoredUserGuid.HasValue ||
                     !u.OutgoingRequests.Any(f =>
                         f.AcceptedAt != null && f.ToUserGuid == ignoredUserGuid)

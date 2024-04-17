@@ -21,7 +21,10 @@ public class Result<TValue, TStatus> where TStatus : struct, Enum
     }
 
     public TStatus? ErrorStatus { get; }
+
     public TValue Value => IsSuccess && _value is not null ? _value : throw new InvalidOperationException();
+
     public bool IsSuccess => ErrorStatus is null && _value is not null;
+
     public string? ErrorMessage { get; }
 }

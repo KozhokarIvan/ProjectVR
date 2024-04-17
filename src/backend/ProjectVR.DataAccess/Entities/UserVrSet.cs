@@ -7,10 +7,15 @@ namespace ProjectVR.DataAccess.Entities;
 public class UserVrSet
 {
     public int Id { get; set; }
+
     public Users Owner { get; set; } = null!;
+
     public Guid OwnerGuid { get; set; }
+
     public VrSet VrSet { get; set; } = null!;
+
     public int VrSetId { get; set; }
+
     public bool IsFavorite { get; set; }
 }
 
