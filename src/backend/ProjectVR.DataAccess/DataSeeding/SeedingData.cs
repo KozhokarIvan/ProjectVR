@@ -8,16 +8,6 @@ namespace ProjectVR.DataAccess.DataSeeding;
 
 internal class SeedingData
 {
-    internal List<Game> Games { get; }
-
-    internal List<UserGame> UserGames { get; }
-
-    internal List<Users> Users { get; }
-
-    internal List<UserVrSet> UserVrSets { get; }
-
-    internal List<VrSet> VrSets { get; }
-
     internal SeedingData()
     {
         VrSets = new List<VrSet>
@@ -488,4 +478,15 @@ internal class SeedingData
             }
         };
     }
+
+    internal List<Game> Games { get; }
+
+    internal List<UserGame> UserGames { get; }
+
+    internal List<Users> Users { get; }
+
+    internal List<UserVrSet> UserVrSets { get; }
+
+    internal List<VrSet> VrSets { get; }
+
 }

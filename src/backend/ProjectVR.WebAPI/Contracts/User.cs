@@ -16,7 +16,7 @@ public class User
 
     public UserPreview[] Friends { get; init; } = Array.Empty<UserPreview>();
 
-    public required string FriendStatus { get; init; }
+    required public string FriendStatus { get; init; }
 
     public DateTimeOffset CreatedAt { get; init; }
 

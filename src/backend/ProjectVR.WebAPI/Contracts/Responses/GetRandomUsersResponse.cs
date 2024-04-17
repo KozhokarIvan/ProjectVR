@@ -14,5 +14,5 @@ public class GetRandomUsersResponse
 
     public UserVrSet[] VrSets { get; init; } = Array.Empty<UserVrSet>();
 
-    public required string FriendStatus { get; init; }
+    required public string FriendStatus { get; init; }
 }
