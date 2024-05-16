@@ -29,6 +29,7 @@ services:
       - Monitoring__SeqPort=${PROJECTVR_API_SEQ_INTERNAL_PORT}
       - Monitoring__SeqHost=${PROJECTVR_API_SEQ_CONTAINER_NAME}
       - ConnectionStrings__ProjectVRDbContext=Host=${PROJECTVR_DATABASE_CONTAINER_NAME};Port=${PROJECTVR_DATABASE_INTERNAL_PORT};Database=${PROJECTVR_DATABASE_NAME};Username=${PROJECTVR_DATABASE_USERNAME};Password=${PROJECTVR_DATABASE_PASSWORD};
+      - Otel__Endpoint=${PROJECTVR_OTEL_HOST}:${PROJECTVR_OTEL_PORT}/metrics
   
   projectvr_seq:
     container_name: ${PROJECTVR_API_SEQ_CONTAINER_NAME}
@@ -40,5 +41,30 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: "Y"
+      
+  projectvr_prometheus:
+    container_name: ${PROJECTVR_PROMETHEUS_CONTAINER_NAME}
+    image: prom/prometheus
+    ports:
+      - "${PROJECTVR_PROMETHEUS_EXTERNAL_PORT}:${PROJECTVR_PROMETHEUS_INTERNAL_PORT}"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - projectvr_webapi
+
+  projectvr_grafana:
+    container_name: ${PROJECTVR_GRAFANA_CONTAINER_NAME}
+    image: grafana/grafana-oss
+    ports:
+      - "${PROJECTVR_GRAFANA_EXTERNAL_PORT}:${PROJECTVR_GRAFANA_INTERNAL_PORT}"
+    volumes: 
+      - projectvr-grafana-data:/var/lib/grafana
+    depends_on: 
+      - projectvr_prometheus
+
 volumes:
   projectvrdb:    
+  prometheus-data:
+  projectvr-prometheus-config:
+  projectvr-grafana-data:
